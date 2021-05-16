@@ -1,0 +1,9 @@
+A (creator)
+B (assignee)
+
+status
+OPEN 		creator creates issue
+IN PROGRESS	assignee starts working
+RESOLVED 	assignee solves the issue
+CLOSED 		creator confirms that issue is solved
+REOPENED	creator reopens the issue
