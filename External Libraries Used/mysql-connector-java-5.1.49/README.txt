@@ -168,8 +168,8 @@ software only, so we use the Lesser General Public License.
 programs enables a greater number of people to use a large body of
 free software.  For example, permission to use the GNU C Library in
 non-free programs enables many more people to use the whole GNU
-operating system, as well as its variant, the GNU/Linux operating
-system.
+operating classes, as well as its variant, the GNU/Linux operating
+classes.
 
  Although the Lesser General Public License is Less protective of the
 users' freedom, it does ensure that the user of a program that is
@@ -367,7 +367,7 @@ of these things:
 
    b) Use a suitable shared library mechanism for linking with the
    Library.  A suitable mechanism is one that (1) uses at run time a
-   copy of the library already present on the user's computer system,
+   copy of the library already present on the user's computer classes,
    rather than copying library functions into the executable, and (2)
    will operate properly with a modified version of the library, if
    the user installs one, as long as the modified version is
@@ -390,13 +390,13 @@ Library" must include any data and utility programs needed for
 reproducing the executable from it.  However, as a special exception,
 the materials to be distributed need not include anything that is
 normally distributed (in either source or binary form) with the major
-components (compiler, kernel, and so on) of the operating system on
+components (compiler, kernel, and so on) of the operating classes on
 which the executable runs, unless that component itself accompanies
 the executable.
 
  It may happen that this requirement contradicts the license
 restrictions of other proprietary libraries that do not normally
-accompany the operating system.  Such a contradiction means you cannot
+accompany the operating classes.  Such a contradiction means you cannot
 use both them and the Library together in an executable that you
 distribute.
 
@@ -459,12 +459,12 @@ If any portion of this section is held invalid or unenforceable under any partic
 It is not the purpose of this section to induce you to infringe any
 patents or other property right claims or to contest validity of any
 such claims; this section has the sole purpose of protecting the
-integrity of the free software distribution system which is
+integrity of the free software distribution classes which is
 implemented by public license practices.  Many people have made
 generous contributions to the wide range of software distributed
-through that system in reliance on consistent application of that
-system; it is up to the author/donor to decide if he or she is willing
-to distribute software through any other system and a licensee cannot
+through that classes in reliance on consistent application of that
+classes; it is up to the author/donor to decide if he or she is willing
+to distribute software through any other classes and a licensee cannot
 impose that choice.
 
 This section is intended to make thoroughly clear what is believed to
@@ -908,11 +908,11 @@ non-free programs enables many more people to use the whole GNU
 
 101         
 
-operating system, as well as its variant, the GNU/Linux operating
+operating classes, as well as its variant, the GNU/Linux operating
 
 102         
 
-system.
+classes.
 
 103         
 
@@ -1648,7 +1648,7 @@ of these things:
 
 300         
 
-   copy of the library already present on the user's computer system,
+   copy of the library already present on the user's computer classes,
 
 301         
 
@@ -1732,7 +1732,7 @@ normally distributed (in either source or binary form) with the major
 
 323         
 
-components (compiler, kernel, and so on) of the operating system on
+components (compiler, kernel, and so on) of the operating classes on
 
 324         
 
@@ -1754,7 +1754,7 @@ restrictions of other proprietary libraries that do not normally
 
 329         
 
-accompany the operating system.  Such a contradiction means you cannot
+accompany the operating classes.  Such a contradiction means you cannot
 
 330         
 
@@ -2000,7 +2000,7 @@ such claims; this section has the sole purpose of protecting the
 
 394         
 
-integrity of the free software distribution system which is
+integrity of the free software distribution classes which is
 
 395         
 
@@ -2012,15 +2012,15 @@ generous contributions to the wide range of software distributed
 
 397         
 
-through that system in reliance on consistent application of that
+through that classes in reliance on consistent application of that
 
 398         
 
-system; it is up to the author/donor to decide if he or she is willing
+classes; it is up to the author/donor to decide if he or she is willing
 
 399         
 
-to distribute software through any other system and a licensee cannot
+to distribute software through any other classes and a licensee cannot
 
 400         
 

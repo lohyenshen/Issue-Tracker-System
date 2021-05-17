@@ -1,14 +1,12 @@
-package system;
+package classes;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Issue {
     private int issueID;
-    private int projectID;
-    private User creator;
-    private User assignee;
+    private int projectID;///
+    private User creator;///
+    private User assignee;///
     private String title;
     private String description;
     private Timestamp time;
@@ -73,6 +71,18 @@ public class Issue {
 
     public Comment[] getComments() {
         return comments;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public void setAssignee(User assignee) {
+        this.assignee = assignee;
     }
 
     @Override

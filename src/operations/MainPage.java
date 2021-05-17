@@ -80,7 +80,8 @@ public class MainPage extends Operations {
                 case "b"   -> initialize_Projects_SearchBy_ProjectName();
                 case "c"   -> {
                     JSON_import_export();
-                    System.exit(0);
+                    projects = ProjectQuery.getProjects_Unsorted();
+//                    System.exit(0);
                 }
                 case "all" -> initialize_Projects_Unsorted();
                 case "e"   -> register_and_login();

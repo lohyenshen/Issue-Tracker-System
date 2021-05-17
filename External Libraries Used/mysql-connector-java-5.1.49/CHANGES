@@ -1445,7 +1445,7 @@ Version 5.1.42
       throw Exceptions when at least a single load-balanced server is available.
 
     - Fixed BUG#43071 - Specifying ASCII encoding for converting seed String to
-      byte array; allowing system default encoding to be used causes auth failures
+      byte array; allowing classes default encoding to be used causes auth failures
       on EBCDIC platforms.
 
     - Fixed BUG#43070 - traceProtocol parameter isn't configured early enough to
@@ -1684,7 +1684,7 @@ Version 5.1.42
       the server's certificate when "useSSL" is set to "true".
       
       When using this feature, the keystore parameters should be specified by the 
-      "clientCertificateKeyStore*" properties, rather than system properties, as the JSSE doesn't
+      "clientCertificateKeyStore*" properties, rather than classes properties, as the JSSE doesn't
       make it straightforward to have a non-verifying trust store and the "default" key store.
       
     - Fixed ResultSetMetadata.getColumnName() for result sets returned from
@@ -3066,7 +3066,7 @@ nn-nn-07 - Version 3.1.15
 	  "overrideSupportsIntegrityEnhancementFacility" to "true" causes
 	  the driver to return "true" for this method.
 
-    - Added "com.mysql.jdbc.testsuite.url.default" system property to
+    - Added "com.mysql.jdbc.testsuite.url.default" classes property to
 	  set default JDBC url for testsuite (to speed up bug resolution
 	  when I'm working in Eclipse).
 
@@ -3261,7 +3261,7 @@ nn-nn-07 - Version 3.1.15
 	  values for unsigned TINYINT, SMALLINT, INT and Long.
 
 	- Fixed BUG#11540 - Incorrect year conversion in setDate(..) for
-	  system that use B.E. year in default locale.
+	  classes that use B.E. year in default locale.
 
 06-22-05 - Version 3.1.9-stable
 
@@ -3499,8 +3499,8 @@ nn-nn-07 - Version 3.1.15
 	- The performance metrics feature now gathers information about
 	  number of tables referenced in a SELECT.
 
-	- The logging system is now automatically configured. If the value has
-	  been set by the user, via the URL property "logger" or the system
+	- The logging classes is now automatically configured. If the value has
+	  been set by the user, via the URL property "logger" or the classes
 	  property "com.mysql.jdbc.logger", then use that, otherwise, autodetect
 	  it using the following steps:
 
@@ -4437,7 +4437,7 @@ nn-nn-07 - Version 3.1.15
       possible.
 
     - Fixed security exception when used in Applets (applets can't
-      read the system property 'file.encoding' which is needed
+      read the classes property 'file.encoding' which is needed
       for LOAD DATA LOCAL INFILE).
 
     - Use constants for SQLStates.

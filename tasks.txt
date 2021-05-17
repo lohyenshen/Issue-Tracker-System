@@ -1,22 +1,21 @@
 Requirement
 
 
-1) User
-2) Project Dashboard
-3) Issue Dashboard
-4) Issue Page
-5) Issue Lifecycle
-6) Search Feature
-7) Undo/Redo
-8) Data Storage
-9) Report Generation
+1) User                 -
+2) Project Dashboard    -
+3) Issue Dashboard      -
+4) Issue Page           -
+5) Issue Lifecycle      - TODO
+6) Search Feature       -
+7) Undo/Redo            - TODO
+8) Data Storage         -
 
 
 ---------------------------
 EXTRA FEATURES
 ---------------------------
 (Statistics)
-Report Generation
+(((((Report Generation)))))
     (Java R)
     - https://rforge.net/Rserve/files/
     - Rserve

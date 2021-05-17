@@ -1,6 +1,6 @@
 package database;
 
-import system.*;
+import classes.*;
 import java.sql.*;
 
 public class CommentQuery extends Query{
@@ -65,7 +65,7 @@ public class CommentQuery extends Query{
     /**
      * update the the reactions in comment table (based on commentIDToSearch)
      */
-    public static void updateComment(int commentIDToSearch, String newReactions) throws SQLException, ClassNotFoundException {
+    public static void updateComment( int commentIDToSearch, String newReactions) throws SQLException, ClassNotFoundException {
         String query =
                 "UPDATE comment \n" +
                 "SET reactions = \"" + newReactions + "\"\n" +

@@ -1,8 +1,8 @@
 package database;
 
-import system.Comment;
-import system.Issue;
-import system.User;
+import classes.Comment;
+import classes.Issue;
+import classes.User;
 
 import java.sql.*;
 
@@ -54,6 +54,16 @@ public class IssueQuery extends Query{
                 "WHERE issueID = " + issueIDToSearch + " ;";
         return constructIssues( constructResultSet( query ) )[0]; // 0 bcuz only 1 element in array
     }
+    /**
+     * return an issue (based on issue title)
+     */
+    public static Issue getIssue( String titleToSearch) throws SQLException, ClassNotFoundException{
+        String query =
+                "SELECT *\n" +
+                "FROM issue\n" +
+                "WHERE title = \"" + titleToSearch + "\" ;";
+        return constructIssues( constructResultSet( query ) )[0]; // 0 bcuz only 1 element in array
+    }
 
     /**
      * return an array of all issues that belong to a project sorted by 'priority'
@@ -71,7 +81,7 @@ public class IssueQuery extends Query{
     /**
      * return an array of all issues that belong to a project sorted by 'time'
      */
-    public static Issue[] getIssues_SortedBy_Time(int projectIDToSearch, boolean asc_or_desc) throws SQLException, ClassNotFoundException{
+    public static Issue[] getIssues_SortedBy_Time( int projectIDToSearch, boolean asc_or_desc) throws SQLException, ClassNotFoundException{
         String order = (asc_or_desc) ? "ASC" : "DESC";
         String query =
                 "SELECT *\n" +

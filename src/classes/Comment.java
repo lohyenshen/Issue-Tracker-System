@@ -1,11 +1,11 @@
-package system;
+package classes;
 
 import java.sql.Timestamp;
 
 public class Comment {
     private int commentID;
-    private int issueID;
-    private User commentUser;
+    private int issueID;///
+    private User commentUser;///
     private Timestamp time;
     private String description;
     private Reactions reactions;
@@ -44,6 +44,14 @@ public class Comment {
 
     public Reactions getReactions() {
         return reactions;
+    }
+
+    public void setIssueID(int issueID) {
+        this.issueID = issueID;
+    }
+
+    public void setCommentUser(User commentUser) {
+        this.commentUser = commentUser;
     }
 
     @Override

@@ -257,7 +257,7 @@
             "password": "password",
             "name": "jhoe"
           },
-          "title": "User is \"trapped\" on 404 page",
+          "title": "User is trapped on 404 page",
           "description": "When hitting the 404 page, the Nuxt layout isn't applied correctly.\n",
           "time": "2019-10-08 04:00:00",
           "tag": "Backend",

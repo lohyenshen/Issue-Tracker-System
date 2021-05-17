@@ -1,20 +1,14 @@
 package database;
 
-import system.User;
+import classes.*;
 
 import java.sql.*;
 
 public class UserQuery extends Query{
-
     /**
-     * return array of all users in the database
+     * return array of users based on result set
      */
-    public static User[] getUsers() throws SQLException, ClassNotFoundException{
-        String query = "SELECT * FROM user;";
-        Connection con = getConnection();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery( query );
-
+    private static User[] constructUsers( ResultSet rs) throws SQLException, ClassNotFoundException{
         int L = size( rs );
         User[] users = new User[L];
 
@@ -29,9 +23,36 @@ public class UserQuery extends Query{
             users[i] = new User(userID, name, email, password);
         }
 
-        st.close();
-        con.close();
         return users;
+    }
+
+    /**
+     * return array of all users in the database
+     */
+    public static User[] getUsers() throws SQLException, ClassNotFoundException{
+        String query = "SELECT * FROM user;";
+        return constructUsers( constructResultSet( query ) );
+    }
+
+    /**
+     * return a user based on "userID"
+     */
+    public static User getUser( int userIDToSearch) throws SQLException, ClassNotFoundException {
+        String query =
+                "SELECT *\n" +
+                "FROM user\n" +
+                "WHERE userID = " + userIDToSearch + " ;";
+        return constructUsers( constructResultSet( query ) )[0]; // 0 index bcuz it will only return 1 specific user (userID is PRIMARY KEY)
+    }
+    /**
+     * return a user based on "user name"
+     */
+    public static User getUser( String userNameToSearch) throws SQLException, ClassNotFoundException {
+        String query =
+                "SELECT *\n" +
+                "FROM user\n" +
+                "WHERE name = \"" + userNameToSearch + "\" ;";
+        return constructUsers( constructResultSet( query ) )[0]; // 0 index bcuz it will only return 1 specific user (userID is PRIMARY KEY)
     }
 
     /**
@@ -51,28 +72,5 @@ public class UserQuery extends Query{
 
         pst.close();
         con.close();
-    }
-
-    /**
-     * return a user based on userIDToSearch
-     */
-    public static User getUser(int userIDToSearch) throws SQLException, ClassNotFoundException {
-        String query =
-                "SELECT *\n" +
-                "FROM user\n" +
-                "WHERE userID = " + userIDToSearch + " ;";
-        Connection con = getConnection();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery( query );
-
-        rs.next();
-        int userID = rs.getInt("userID");
-        String name = rs.getString("name");
-        String email = rs.getString("email");
-        String password = rs.getString("password");
-
-        st.close();
-        con.close();
-        return new User(userID, name, email, password);
     }
 }

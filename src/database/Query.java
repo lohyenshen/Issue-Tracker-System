@@ -1,5 +1,6 @@
 package database;
 
+import javax.sql.rowset.*;
 import java.sql.*;
 public class Query {
     /*
@@ -68,18 +69,25 @@ public class Query {
     }
 
     /**
-     * return ResultSet rs based on query
+     * return ResultSet based on query
+     *
+     * ------------
+     * CachedRowSet - allow us to close database connection whilst preserving the data from database
+     * ------------
+     *
+     * https://www.codejava.net/java-se/jdbc/how-to-use-cachedrowset-in-jdbc
+     * https://www.youtube.com/watch?v=wilYFaDQPQs
      */
     protected static ResultSet constructResultSet( String query) throws SQLException, ClassNotFoundException{
         Connection con = getConnection();
         Statement st = con.createStatement();
         ResultSet rs =  st.executeQuery( query );
-        /*st.close();
-        con.close();*/
-        // both of them are automatically closed when
-        // (this method finishes) ->
-        // (current stack popped) ->
-        // (variables in current stack are garbage collected)
-        return rs;
+
+        RowSetFactory factory = RowSetProvider.newFactory();
+        CachedRowSet rowset  = factory.createCachedRowSet();
+        rowset.populate(rs);
+        con.close();
+        st.close();
+        return rowset;
     }
 }

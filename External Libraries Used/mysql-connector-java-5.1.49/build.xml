@@ -200,8 +200,8 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
     <!-- The following property is needed for building the docs and must be passed on the command line to ant via -D switch. -->
     <property name="com.mysql.jdbc.docs.sourceDir" value="/tmp/connectorj/docs/prebuilt" />
 
-    <!-- The following propertyset is used to forward tests setup configurations as system variables to JUnit tasks. -->
-    <propertyset id="junit.system.properties">
+    <!-- The following propertyset is used to forward tests setup configurations as classes variables to JUnit tasks. -->
+    <propertyset id="junit.classes.properties">
         <propertyref prefix="com.mysql.jdbc.test." />
         <!-- Exclude 'testsuite' properties ending with '.url', '.url.N', '.jvm' or '.jvm.N'. -->
         <propertyref regex="^com\.mysql\.jdbc\.testsuite\..*(?&lt;!(?:url|jvm)(?:\.\d)?)$" />

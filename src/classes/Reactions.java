@@ -1,4 +1,4 @@
-package system;
+package classes;
 
 public class Reactions {
     private int likeCount;
