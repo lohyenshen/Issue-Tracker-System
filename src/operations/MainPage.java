@@ -1,7 +1,7 @@
 package operations;
 import database.*;
-
 import java.sql.*;
+
 public class MainPage extends Operations {
 
     /**
@@ -49,16 +49,15 @@ public class MainPage extends Operations {
             System.out.print("Enter \n'l' to login\n'r' to register new account\nor 'e' to exit: ");
             opr = sc.nextLine();
 
-            if (opr.equals("l")){
-                if (loginSuccessfully())
-                    project_dashboard();
+            switch (opr) {
+                case "l" -> {
+                    if (loginSuccessfully())
+                        project_dashboard();
+                }
+                case "r" -> register();
+                case "e" -> System.exit(0);
+                default  -> System.out.println("INVALID OPERATION");
             }
-            else if (opr.equals("r"))
-                register();
-            else if (opr.equals("e"))
-                System.exit(0);
-            else
-                System.out.println("INVALID OPERATION");
         } while (true);
     }
 
@@ -72,34 +71,36 @@ public class MainPage extends Operations {
         initialize_Projects_Unsorted();
         do{
             display_Project_Dashboard();
-            System.out.print("\nEnter project ID to check project\nor 'a' to sort\nor 'b' to search\nor 'all' to display all projects\nor 'e' to exit to login page: ");
-
+            System.out.print("\nEnter project ID to check project\nor 'a' to sort\nor 'b' to search\nor 'c' to JSON\nor 'all' to display all projects\nor 'e' to exit to login page: ");
             opr = sc.nextLine();
-            if (opr.equals("a")){
-                initialize_Projects_SortedBy_Something();
-            }
-            else if (opr.equals("b")){
-                initialize_Projects_SearchBy_ProjectName();
-            }
-            else if (opr.equals("all")){
-                initialize_Projects_Unsorted();
-            }
-            else if (isNumber(opr)){
-                int projectIDToVerify = Integer.parseInt(opr);
-                if ( validProjectID( projectIDToVerify ) ) {          // valid 'selectedProjectID' entered
-                    selected_Project_ID = projectIDToVerify;
-                    currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-                    issue_dashboard();
+
+            switch (opr){
+                case "a"   -> initialize_Projects_SortedBy_Something();
+                case "b"   -> initialize_Projects_SearchBy_ProjectName();
+                case "c"   -> {
+                    JSON_import_export();
+                    System.exit(0);
                 }
-                else
-                    System.out.println("INVALID project ID!");
+                case "all" -> initialize_Projects_Unsorted();
+                case "e"   -> register_and_login();
+                default -> {
+                    if (isNumber(opr)){
+                        int projectIDToVerify = Integer.parseInt(opr);
+                        if ( validProjectID( projectIDToVerify ) ) {          // valid 'selectedProjectID' entered
+                            selected_Project_ID = projectIDToVerify;
+                            currrentProject     = ProjectQuery.getProject(selected_Project_ID);
+                            issue_dashboard();
+                        }
+                        else
+                            System.out.println("INVALID project ID!");
+                    }
+                    else
+                        System.out.println("INVALID OPERATION");
+                }
             }
-            else if (opr.equals("e"))
-                register_and_login();
-            else
-                System.out.println("INVALID OPERATION");
         } while (true);
     }
+
 
     /**
      * PRECONDITION -  user must have chosen a project (by selecting projectID)
@@ -114,37 +115,29 @@ public class MainPage extends Operations {
             System.out.print("\nEnter issue ID to check issue\nor 'a' to sort\nor 'b' to filter\nor 'c' to search\nor 'd' to create issue\nor 'all' to display all issues\nor 'e' to exit to project dashboard: ");
             opr = sc.nextLine();
 
-            if (opr.equals("a")){
-                initialise_Issues_SortedBy_Something(); // sort     - (priority) / (time)
-            }
-            else if (opr.equals("b")){
-                initialise_Issues_FilterBy_Something(); // filter   - (status) / (tag)
-            }
-            else if (opr.equals("c")){
-                initialize_Issues_SearchBy_Key_Word();  // search() - title / description / comments
-            }
-            else if (opr.equals("d")){
-                create_New_Issue();
-                initialise_Issues_Unsorted();
-            }
-            else if (opr.equals("all")){
-                initialise_Issues_Unsorted();
-            }
-            else if (isNumber(opr)){
-                int issueIDToVerify = Integer.parseInt(opr);
-                if (validIssueID(issueIDToVerify)){
-                    currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-                    selected_Issue_ID   = issueIDToVerify;
-                    currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
-                    issue_page();
+            switch (opr){
+                case "a"   -> initialise_Issues_SortedBy_Something(); // sort     - (priority) / (time)
+                case "b"   -> initialise_Issues_FilterBy_Something(); // filter   - (status) / (tag)
+                case "c"   -> initialize_Issues_SearchBy_Key_Word();  // search() - title / description / comments
+                case "d"   -> { create_New_Issue(); initialise_Issues_Unsorted();}
+                case "all" -> initialise_Issues_Unsorted();
+                case "e"   -> project_dashboard();
+                default    -> {
+                    if (isNumber(opr)){
+                        int issueIDToVerify = Integer.parseInt(opr);
+                        if (validIssueID(issueIDToVerify)){
+                            currrentProject     = ProjectQuery.getProject(selected_Project_ID);
+                            selected_Issue_ID   = issueIDToVerify;
+                            currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
+                            issue_page();
+                        }
+                        else
+                            System.out.println("INVALID issue ID!");
+                    }
+                    else
+                        System.out.println("INVALID OPERATION");
                 }
-                else
-                    System.out.println("INVALID issue ID!");
             }
-            else if (opr.equals("e"))
-                project_dashboard();
-            else
-                System.out.println("INVALID OPERATION");
         } while (true);
     }
 
@@ -160,23 +153,20 @@ public class MainPage extends Operations {
             System.out.print("Enter 'c' to comment\nor 'r' to react\nor 'e' to exit to issue dashboard: ");
             opr = sc.nextLine();
 
-            if (opr.equals("c")){
-                comment_On_Issue();
-
-                currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-                currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
+            switch (opr) {
+                case "c" -> {
+                    comment_On_Issue();
+                    currrentProject = ProjectQuery.getProject(selected_Project_ID);
+                    currentIssue = IssueQuery.getIssue(selected_Issue_ID);
+                }
+                case "r" -> {
+                    react_On_Comment();
+                    currrentProject = ProjectQuery.getProject(selected_Project_ID);
+                    currentIssue = IssueQuery.getIssue(selected_Issue_ID);
+                }
+                case "e" -> issue_dashboard();
+                default -> System.out.println("INVALID OPERATION");
             }
-            else if (opr.equals("r")){
-                react_On_Comment();
-
-                currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-                currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
-            }
-            else if (opr.equals("e")){
-                issue_dashboard();
-            }
-            else
-                System.out.println("INVALID OPERATION");
         } while (true);
     }
 }

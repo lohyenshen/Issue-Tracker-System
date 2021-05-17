@@ -1,0 +1,8 @@
+5) Issue Lifecycle
+7) Undo/Redo
+
+8) Data Storage
+https://github.com/jiuntian/IssueTrackerAssignment/issues/
+
+
+

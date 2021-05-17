@@ -5,13 +5,38 @@ Requirement
 2) Project Dashboard
 3) Issue Dashboard
 4) Issue Page
----------------------------
 5) Issue Lifecycle
 6) Search Feature
----------------------------
 7) Undo/Redo
 8) Data Storage
 9) Report Generation
 
 
-User -> Project -> Issues -> Comments -> Reaction
+---------------------------
+EXTRA FEATURES
+---------------------------
+(Statistics)
+Report Generation
+    (Java R)
+    - https://rforge.net/Rserve/files/
+    - Rserve
+
+    (SQL R)
+
+
+(Advance Searching)
+Full Text Fuzzy Searching
+    - SOUNDEX
+
+
+
+
+(Machine Learning in "Tagging")
+    Deeplearning4j
+
+
+(Clustering Analysis)
+    - KNN
+    - Word Embedding, PCA, t-SNE
+
+

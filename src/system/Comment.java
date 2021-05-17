@@ -45,6 +45,7 @@ public class Comment {
     public Reactions getReactions() {
         return reactions;
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

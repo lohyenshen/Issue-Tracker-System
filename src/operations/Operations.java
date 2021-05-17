@@ -1,7 +1,15 @@
 package operations;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import database.*;
 import system.*;
+
+import javax.swing.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
@@ -115,10 +123,8 @@ public class Operations {
             System.out.print("Enter password: ");
             password = sc.nextLine();
 
-            if (password.isEmpty() || password.isBlank()){
+            if (password.isEmpty() || password.isBlank())
                 System.out.println("password cannot be EMPTY OR BLANK !");
-                continue;
-            }
             else
                 break;
         } while (true);
@@ -128,10 +134,8 @@ public class Operations {
             System.out.print("Re-enter password to confirm: ");
             confirmPassword = sc.nextLine();
 
-            if (!confirmPassword.equals(password)){
+            if (!confirmPassword.equals(password))
                 System.out.println("PASSWORDS DO NOT MATCH !");
-                continue;
-            }
             else
                 break;
         } while (true);
@@ -143,10 +147,8 @@ public class Operations {
             System.out.print("Enter name: ");
             name = sc.nextLine();
 
-            if (name.isEmpty() || name.isBlank()){
+            if (name.isEmpty() || name.isBlank())
                 System.out.println("name cannot be EMPTY OR BLANK !");
-                continue;
-            }
             else
                 break;
         } while (true);
@@ -235,14 +237,14 @@ public class Operations {
      * PRECONDITION - must call ANY 'initialize_Projects' method before displaying
      * display all projects
      */
-    protected static void display_Project_Dashboard() throws SQLException, ClassNotFoundException {
+    protected static void display_Project_Dashboard(){
         String title = "Project Dashboard";
         int[] lengths = {3,113,10};
         StringBuilder sb = new StringBuilder("\n\n\n");
 
-        sb.append("-".repeat(title.length()) + "\n");
-        sb.append(title + "\n");
-        sb.append("-".repeat(title.length()) + "\n");
+        sb.append("-".repeat(title.length())).append("\n");
+        sb.append(title).append("\n");
+        sb.append("-".repeat(title.length())).append("\n");
 
         if (projects.length == 0){
             sb.append("No Project\n");
@@ -480,7 +482,7 @@ public class Operations {
             String s = sc.nextLine();
             if (s.equals("e"))
                 return sb.toString();
-            sb.append( s + "\n");
+            sb.append(s).append("\n");
         } while (true);
     }
 
@@ -524,13 +526,13 @@ public class Operations {
         StringBuilder sb = new StringBuilder("\n\n\n");
 
         String projectTitle =  "Project Title = " + currrentProject.getName();
-        sb.append("-".repeat(projectTitle.length()) + "\n");
-        sb.append( projectTitle + "\n" );
-        sb.append("-".repeat(projectTitle.length()) + "\n");
+        sb.append("-".repeat(projectTitle.length())).append("\n");
+        sb.append(projectTitle).append("\n");
+        sb.append("-".repeat(projectTitle.length())).append("\n");
 
-        sb.append("-".repeat(title.length()) + "\n");
-        sb.append(title + "\n");
-        sb.append("-".repeat(title.length()) + "\n");
+        sb.append("-".repeat(title.length())).append("\n");
+        sb.append(title).append("\n");
+        sb.append("-".repeat(title.length())).append("\n");
 
         if (issues.length == 0){
             sb.append("No Issues\n");
@@ -560,15 +562,15 @@ public class Operations {
     protected static void displayCurrentIssue() {
         StringBuilder sb = new StringBuilder("\n\n\n");
         String issueName = "Issue Title = " + currentIssue.getTitle();
-        sb.append("-".repeat(issueName.length()) + "\n");
-        sb.append(issueName + "\n");
-        sb.append("-".repeat(issueName.length()) + "\n");
+        sb.append("-".repeat(issueName.length())).append("\n");
+        sb.append(issueName).append("\n");
+        sb.append("-".repeat(issueName.length())).append("\n");
 
 
         String issuePage         = "Issue Page";
-        sb.append("-".repeat(issuePage.length()) + "\n");
-        sb.append(issuePage + "\n");
-        sb.append("-".repeat(issuePage.length()) + "\n");
+        sb.append("-".repeat(issuePage.length())).append("\n");
+        sb.append(issuePage).append("\n");
+        sb.append("-".repeat(issuePage.length())).append("\n");
 
         sb.append(String.format("%-20s%-50s\n", "Title:"         ,currentIssue.getTitle()));
         sb.append(String.format("%-20s%-50s\n", "Issue ID:"      , currentIssue.getIssueID()));
@@ -582,23 +584,23 @@ public class Operations {
 
 
         String issueDescription  = "Issue Description";
-        sb.append("-".repeat(issueDescription.length()) + "\n");
-        sb.append(issueDescription + "\n");
-        sb.append("-".repeat(issueDescription.length()) + "\n");
+        sb.append("-".repeat(issueDescription.length())).append("\n");
+        sb.append(issueDescription).append("\n");
+        sb.append("-".repeat(issueDescription.length())).append("\n");
         sb.append( currentIssue.getDescription() );
         sb.append("\n\n");
 
         String issueComments     = "Comments";
-        sb.append("-".repeat(issueComments.length()) + "\n");
-        sb.append(issueComments + "\n");
-        sb.append("-".repeat(issueComments.length()) + "\n");
-        for (int i = 0; i < currentIssue.getComments().length; i++)
-            sb.append( String.format("#%d      %s", (i+1), currentIssue.getComments()[i].toString()) );
+        sb.append("-".repeat(issueComments.length())).append("\n");
+        sb.append(issueComments).append("\n");
+        sb.append("-".repeat(issueComments.length())).append("\n");
+        Comment[] comments = currentIssue.getComments();
+        for (int i = 0; i < comments.length; i++)
+            sb.append( String.format("#%d      %s", (i+1), comments[i].toString()) );
 
 
         System.out.println( sb.toString() );
     }
-
     //////////COMMENT//////////////////////
     protected static void comment_On_Issue() throws SQLException, ClassNotFoundException {
         CommentQuery.insertNewComment( 0,
@@ -615,7 +617,7 @@ public class Operations {
             String s = sc.nextLine();
             if (s.equals("e"))
                 return sb.toString();
-            sb.append( s + "\n");
+            sb.append(s).append("\n");
         } while (true);
     }
 
@@ -662,12 +664,72 @@ public class Operations {
     private static void line( StringBuilder sb, int... lengths){
         sb.append("+");
         for (int length : lengths)
-            sb.append( "-".repeat(length) + "+");
+            sb.append("-".repeat(length)).append("+");
         sb.append("\n");
     }
 
+    /**
+     * allow user to either (import) or (export) JSON object
+     */
+    protected static void JSON_import_export() {
+        System.out.println("JSON objects");
+        System.out.print("Import(i) or Export(e): ");
+        do{
+            opr = sc.nextLine();
 
+            switch (opr){
+                case "i" -> {
+                    importJson();
+                    return;
+                }
+                case "e" -> {
+                    exportJson();
+                    return;
+                }
+                default  -> System.out.println("Invalid operation");
+            }
+        } while (true);
+    }
 
+    /**
+     * allow user to export all projects as .json file
+     */
+    private static void exportJson() {
+        File pathSelected = pathToExportJsonFile();
+
+        if (pathSelected == null){
+            System.out.println("Unable to export JSON file");
+            return;
+        }
+
+        try (Writer writer = new FileWriter(pathSelected + "\\data.json")) {
+            JsonObject jo = new JsonObject( projects, UserQuery.getUsers());
+
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+            gson.toJson( jo, writer);
+            System.out.println("Exported JSON file successfully");
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    private static File pathToExportJsonFile() {
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory( new File(System.getProperty("user.dir")) );
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setDialogTitle("Choose directory to export JSON file");
+        fc.setApproveButtonText("Export Here");
+
+        int result = fc.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION)
+            return fc.getSelectedFile();
+        else
+            return null;
+    }
+
+    private static void importJson() {
+    }
 
 
     protected static boolean isNumber(String input) {
