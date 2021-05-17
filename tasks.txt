@@ -27,6 +27,7 @@ Report Generation
 (Advance Searching)
 Full Text Fuzzy Searching
     - SOUNDEX
+    - https://github.com/xdrop/fuzzywuzzy
 
 
 

@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2002, 2019, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2019, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -993,7 +993,7 @@ public class UpdatableResultSet extends ResultSetImpl {
      * essentially a buffer where a new row may be constructed by calling the
      * updateXXX() methods prior to inserting the row into the result set. Only
      * the updateXXX(), getXXX(), and insertRow() methods may be called when the
-     * cursor is on the insert row. All of the columns in a result set must be
+     * cursor is on the insert row. Projects_And_Users of the columns in a result set must be
      * given a value each time this method is called before calling insertRow().
      * UpdateXXX()must be called before getXXX() on a column.
      * 
@@ -1219,7 +1219,7 @@ public class UpdatableResultSet extends ResultSetImpl {
      * call refreshRow() when caching or prefetching is being done by the JDBC
      * driver to fetch the latest value of a row from the database. The JDBC
      * driver may actually refresh multiple rows at once if the fetch size is
-     * greater than one. All values are refetched subject to the transaction
+     * greater than one. Projects_And_Users values are refetched subject to the transaction
      * isolation level and cursor sensitivity. If refreshRow() is called after
      * calling updateXXX(), but before calling updateRow() then the updates made
      * to the row are lost. Calling refreshRow() frequently will likely slow

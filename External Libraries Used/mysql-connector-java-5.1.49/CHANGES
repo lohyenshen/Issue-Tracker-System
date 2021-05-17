@@ -655,7 +655,7 @@ Version 5.1.42
  
     address=(host=hostname)(port=3306)(type=[master|slave])
 
-    In the absense of explicit type definitions, the driver will assume a single master listed first, with all subsequently-listed
+    In the absense of explicit type definitions, the driver will assume a single master listed first, with projectsAndUsers subsequently-listed
     hosts configured as slaves.
 
   - Fix for Bug#63354 (16443992), JDBC cannot make new connections if master is down.
@@ -684,7 +684,7 @@ Version 5.1.42
 
   - Fix for Bug#68400, useCompression=true and connect to server, zip native method cause out of memory.
     CompressedInputStream now does not keep reference to connection.
-    Thank Dominic Tootell for his investigation, proposed solution and all the help he provided.
+    Thank Dominic Tootell for his investigation, proposed solution and projectsAndUsers the help he provided.
 
   - Fix for Bug#65871, DatabaseMetaData.getColumns() throws an MySQLSyntaxErrorException.
     Delimited names of databases and tables are handled correctly now. The edge case is ANSI quoted
@@ -693,7 +693,7 @@ Version 5.1.42
     quoted form is not JDBC-compliant but used by third party tools. So when you pass the indentifier
     "`dbname`" in unquoted form (`dbname`) driver handles it as quoted by "`" symbol. To handle such
     identifiers correctly a new behavior was added to pedantic mode (connection property pedantic=true),
-    now if it set to true methods like DatabaseMetaData.getColumns() treat all parameters as unquoted.
+    now if it set to true methods like DatabaseMetaData.getColumns() treat projectsAndUsers parameters as unquoted.
 
   - Fix for Bug#45757 (11754192), Don't allow updateRow() to be called when updatable cursor is positioned on insert row.
 
@@ -704,7 +704,7 @@ Version 5.1.42
   - Fix for Bug#42267, PreparedStatementWrapper doesn't have a toString() implementation
 
   - Fix for Bug#44451 (11753081), Added missing fields in methods getColumns(), getProcedureColumns(), getTables() and getUDTs().
-    Methods getClientInfoProperties() and getFunctions() were made available in all *DatabaseMetaDataUsingInfoSchema implementations.
+    Methods getClientInfoProperties() and getFunctions() were made available in projectsAndUsers *DatabaseMetaDataUsingInfoSchema implementations.
 
 05-06-13 - Version 5.1.25
 
@@ -727,7 +727,7 @@ Version 5.1.42
     
   - Fix for Bug#68763 (16545334), ReplicationConnection.isMasterConnection() returns false always.
 
-  - Fix for Bug#68733 (16526938), ReplicationConnection doesn't ping all slaves.
+  - Fix for Bug#68733 (16526938), ReplicationConnection doesn't ping projectsAndUsers slaves.
 
   - Fix for Bug#68556, Tomcat can't stop a cleanup thread by clearReferencesStopThreads.
 
@@ -741,7 +741,7 @@ Version 5.1.42
 
   - Fix for Bug#16224249, Deadlock on concurrently used LoadBalancedMySQLConnection:
     1) abortInternal() method was moved from com.mysql.jdbc.MySQLConnection to com.mysql.jdbc.Connection interface;
-    2) load-balanced/failover proxy now broadcasts abortInternal() to all underlying physical connections;
+    2) load-balanced/failover proxy now broadcasts abortInternal() to projectsAndUsers underlying physical connections;
     3) load-balanced/failover proxy now prevents picking of new physical connection after close() or abortInternal() were called explicitly on proxy;
     4) connection synchronization mutex was refactored, now mutex is proxy instance for proxied connection or connection instance itself if there is no proxy.
 
@@ -782,7 +782,7 @@ Version 5.1.42
   - Added support of password expiration protocol. This introduces new boolean connection property disconnectOnExpiredPasswords.
     If disconnectOnExpiredPasswords = true and password expired then connection will be rejected by server with ErrorCode == 1820 (ER_MUST_CHANGE_PASSWORD).
     If disconnectOnExpiredPasswords = false then connection will enter to "sandbox" mode,
-    all commands except SET PASSWORD = ... and SET PASSWORD FOR CURRRENT_USER() = ... will cause an error to be thrown.
+    projectsAndUsers commands except SET PASSWORD = ... and SET PASSWORD FOR CURRRENT_USER() = ... will cause an error to be thrown.
 
   - Added tests for EXCHANGE PARTITION syntax introduced in 5.6GA.
 
@@ -936,7 +936,7 @@ Version 5.1.42
        nor it is one of the built-in plugins. It is an error to set as default a plugin
        which was disabled with "disabledAuthenticationPlugins" property. It is an error
        to set this value to null or the empty string (i.e. there must be at least a valid
-       default authentication plugin specified for the connection, meeting all constraints
+       default authentication plugin specified for the connection, meeting projectsAndUsers constraints
        listed above).
 
   - Fix for Bug#63526. The problem happens in com.mysql.jdbc.EscapeProcessor#escapeSQL.  The function recognizes the string in the create table statement as an escape sequence (line 136+138). The "if" construct beginning in line 182 tries to match a white-space collapsed version of the string to prefixes for valid jdbc-escapes (till line 300). Since no matching escape sequence is found and no "else" clause is defined, neither the token, nor replacement are added to the resulting escaped SQL string.
@@ -1309,7 +1309,7 @@ Version 5.1.42
       was set to "true", and in some cases their values were reversed.
 
     - Fix for Bug#51022 - conn.getMetaData().getProcedures("schema",null,"%"); 
-      returns all stored procedures from all databases and not only for given 
+      returns projectsAndUsers stored procedures from projectsAndUsers databases and not only for given
       one.
 	
     - Fixed Bug#50538 - ${svn.revno} shows up in DBMD.getDriverVersion().
@@ -1451,7 +1451,7 @@ Version 5.1.42
     - Fixed BUG#43070 - traceProtocol parameter isn't configured early enough to
       capture handshake protocol.
 
-    - Fixed BUG#41161 - PreparedStatement.addBatch() doesn't check for all parameters
+    - Fixed BUG#41161 - PreparedStatement.addBatch() doesn't check for projectsAndUsers parameters
       being set, which leads to a NullPointerException when calling executeBatch() and
       rewriting batched statements into multi-value or multi-statement statements.
 
@@ -1650,7 +1650,7 @@ Version 5.1.42
 	- Fixed BUG#34185 - Statement.getGeneratedKeys() does not raise exception when statement was not 
 	  created with Statement.RETURN_GENERATED_KEYS flags.
 	  
-	- Using autoGenerateTestcaseScript=true now logs all statements, regardless or not if they cause errors when processed by MySQL.
+	- Using autoGenerateTestcaseScript=true now logs projectsAndUsers statements, regardless or not if they cause errors when processed by MySQL.
 	  A "clock" value (millis since epoch) was added in the comment that is pre-pended with the idea that it can then be used
 	  when post-processing output to sequence things correctly for a multi-threaded testcase, or to replay the test case with the
 	  correct think times.
@@ -1667,7 +1667,7 @@ Version 5.1.42
       isn't UTF-8. (There was a server-side component of this that
       was fixed late in the 5.0 development cycle, it seems, this
       is the last piece that fixes some loose ends in the JDBC
-      driver). This fix touches *all* metadata information coming
+      driver). This fix touches *projectsAndUsers* metadata information coming
       from the MySQL server itself.
       
     - Fixed MysqlIO.nextRowFast() to only attempt to read server
@@ -1709,13 +1709,13 @@ Version 5.1.42
       code that can be switched on by "useLegacyDatetimeCode" being set to "false" as
       a JDBC configuration property. For Connector/J 5.1.x, the default is "true",
       in trunk and beyond it will be "false" (i.e. the old date/time handling code, warts
-      and all will be deprecated).
+      and projectsAndUsers will be deprecated).
       
     - Fixed BUG#32877 - Load balancing connection using best response time would incorrectly
       "stick" to hosts that were down when the connection was first created.
       
       We solve this problem with a black list that is used during the picking of new hosts.
-      If the black list ends up including all configured hosts, the driver will retry for
+      If the black list ends up including projectsAndUsers configured hosts, the driver will retry for
       a configurable number of times (the "retriesAllDown" configuration property, with a default
       of 120 times), sleeping 250ms between attempts to pick a new connection.
       
@@ -1744,7 +1744,7 @@ Version 5.1.42
       IDs to the server when the driver was setup to do auto-reconnect as the
       connection could get set up enough to start sending queries on one thread,
       while the thread that "noticed" the connection was down hasn't completed
-      re-preparing all of the server-side prepared statements that were open when
+      re-preparing projectsAndUsers of the server-side prepared statements that were open when
       the connection died.
       
       Potentially fixes cause for bug 28934. Potentially fixes other possible race
@@ -1862,7 +1862,7 @@ Version 5.1.42
 	  column names matching the given regex will still be treated
 	  as BLOBs The regex must follow the patterns used for the
 	  java.util.regex package. The default is to exclude no columns,
-	  and include all columns.
+	  and include projectsAndUsers columns.
 
 	  Set "utf8OutsideBmpIncludedColumnNamePattern" to specify exclusion
 	  rules to "utf8OutsideBmpExcludedColumnNamePattern". The regex must
@@ -1902,12 +1902,12 @@ Version 5.1.42
       BatchUpdateExceptions according to the setting of "continueBatchOnError".
       
       If "continueBatchOnError" is set to "true", the update counts for the
-      "chunk" that were sent as one unit will all be set to EXECUTE_FAILED, but
+      "chunk" that were sent as one unit will projectsAndUsers be set to EXECUTE_FAILED, but
       the driver will attempt to process the remainder of the batch. You can determine which
       "chunk" failed by looking at the update counts returned in the BatchUpdateException.
       
       If "continueBatchOnError" is set to "false", the update counts returned
-      will contain the failed "chunk", and stop with the failed chunk, with all 
+      will contain the failed "chunk", and stop with the failed chunk, with projectsAndUsers
       counts for the failed "chunk" set to EXECUTE_FAILED.
       
       Since MySQL doesn't return multiple error codes for multiple-statements, or
@@ -1943,7 +1943,7 @@ Version 5.1.42
       Connection.clientPrepareStatement().
 
       We've also added server and client prepareStatement() methods that cover
-      all of the variants in the JDBC API.
+      projectsAndUsers of the variants in the JDBC API.
 
     - Similar to Connection, we pulled out vendor extensions to Statement
       into an interface named "com.mysql.Statement", and moved the Statement
@@ -2093,7 +2093,7 @@ nn-nn-07 - Version 5.0.9
       connection property "noAccessToProcedureBodies" has been set to "true".
      
       The fix involves changing the behavior of "noAccessToProcedureBodies",in 
-      that the driver will now report all paramters as "IN" paramters
+      that the driver will now report projectsAndUsers paramters as "IN" paramters
       but allow callers to call registerOutParameter() on them without throwing
       an exception.
       
@@ -2110,7 +2110,7 @@ nn-nn-07 - Version 5.0.9
       that starts with "/* ping */" _exactly_ will cause the driver to 
       instead send a ping to the server and return a fake result set (much 
       lighter weight), and when using a ReplicationConnection or a LoadBalancedConnection, 
-      will send the ping across all active connections.
+      will send the ping across projectsAndUsers active connections.
       
     - Fixed Bug#30892 setObject(int, Object, int, int) delegate in
       PreparedStatmentWrapper delegates to wrong method.
@@ -2372,7 +2372,7 @@ nn-nn-07 - Version 5.0.9
 	  balances requests across a series of MySQL JDBC connections to the given hosts,
 	  where the balancing takes place after transaction commit.
 
-      Therefore, for this to work (at all), you must use transactions, even if only
+      Therefore, for this to work (at projectsAndUsers), you must use transactions, even if only
       reading data.
 
       Physical connections to the given hosts will not be created until needed.
@@ -2510,7 +2510,7 @@ nn-nn-07 - Version 5.0.9
 	  "useFastDateParsing=false" as a configuration parameter).
 
 	- Fixed BUG#24794 - DatabaseMetaData.getSQLKeywords() doesn't return
-	  all reserved words for current MySQL version. The current fix/implementation
+	  projectsAndUsers reserved words for current MySQL version. The current fix/implementation
 	  returns keywords for MySQL-5.1, and doesn't distinguish between different
 	  versions of the server.
 
@@ -2652,7 +2652,7 @@ nn-nn-07 - Version 5.0.9
     - Fixed BUG#18086 - Driver fails on non-ASCII platforms. The driver
       was assuming that the platform character set would be a superset
       of MySQL's "latin1" when doing the handshake for authentication,
-      and when reading error messages. We now use Cp1252 for all strings
+      and when reading error messages. We now use Cp1252 for projectsAndUsers strings
       sent to the server during the handshake phase, and a hard-coded mapping
       of the "language" server variable to the character set that
       is used for error messages.
@@ -2678,7 +2678,7 @@ nn-nn-07 - Version 5.0.9
 
 	- MysqlXaConnection.recover(int flags) now allows combinations of
 	  XAResource.TMSTARTRSCAN and TMENDRSCAN. To simulate the "scanning"
-	  nature of the interface, we return all prepared XIDs for TMSTARTRSCAN,
+	  nature of the interface, we return projectsAndUsers prepared XIDs for TMSTARTRSCAN,
 	  and no new XIDs for calls with TMNOFLAGS, or TMENDRSCAN when not in
 	  combination with TMSTARTRSCAN. This change was made for API compliance,
 	  as well as integration with IBM WebSphere's transaction manager.
@@ -2732,7 +2732,7 @@ nn-nn-07 - Version 5.0.9
     - Added support for Connector/MXJ integration via url subprotocol
       "jdbc:mysql:mxj://....".
 
-    - Moved all SQLException constructor usage to a factory in SQLError
+    - Moved projectsAndUsers SQLException constructor usage to a factory in SQLError
       (ground-work for JDBC-4.0 SQLState-based exception classes).
 
     - Removed Java5-specific calls to BigDecimal constructor (when
@@ -2740,7 +2740,7 @@ nn-nn-07 - Version 5.0.9
       in-directly via method return value. This signature doesn't exist
       prior to Java5.)
 
-    - Moved all SQLException creation to a factory method in SQLError,
+    - Moved projectsAndUsers SQLException creation to a factory method in SQLError,
       groundwork for JDBC-4.0 SQLState class-based exceptions.
 
     - Added service-provider entry to META-INF/services/java.sql.Driver
@@ -2803,7 +2803,7 @@ nn-nn-07 - Version 5.0.9
       Statement.setQueryTimeout() rather than one thread per potential cancellation.
 
       A new thread will be used to actually cancel a running query, as there's potential
-      for a cancel request to block other cancel requests if all run from the
+      for a cancel request to block other cancel requests if projectsAndUsers run from the
       same thread.
 
 nn-nn-07 - Version 3.1.15
@@ -2962,7 +2962,7 @@ nn-nn-07 - Version 3.1.15
 	  truncation exceptions to be thrown when truncation happens.
 
 	- Added performance feature, re-writing of batched executes for
-	  Statement.executeBatch() (for all DML statements) and
+	  Statement.executeBatch() (for projectsAndUsers DML statements) and
 	  PreparedStatement.executeBatch() (for INSERTs with VALUE clauses
 	  only). Enable by using "rewriteBatchedStatements=true" in your JDBC URL.
 
@@ -3189,11 +3189,11 @@ nn-nn-07 - Version 3.1.15
 	    - getProcedures() (and thus indirectly getProcedureColumns())
 	    - getTables()
 
-	  The "catalog" argument in all of these methods now behaves in the following
+	  The "catalog" argument in projectsAndUsers of these methods now behaves in the following
 	  way:
 
 	    - Specifying NULL means that catalog will not be used to filter the
-	      results (thus all databases will be searched), unless you've
+	      results (thus projectsAndUsers databases will be searched), unless you've
 	      set "nullCatalogMeansCurrent=true" in your JDBC URL properties.
 
 	    - Specifying "" means "current" catalog, even though this isn't quite
@@ -3291,7 +3291,7 @@ nn-nn-07 - Version 3.1.15
 	  work.
 
 	- Fixed BUG#10156 - Unsigned SMALLINT treated as signed for ResultSet.getInt(),
-	  fixed all cases for UNSIGNED integer values and server-side prepared statements,
+	  fixed projectsAndUsers cases for UNSIGNED integer values and server-side prepared statements,
 	  as well as ResultSet.getObject() for UNSIGNED TINYINT.
 
 	- Fixed BUG#10155, double quotes not recognized when parsing
@@ -3568,7 +3568,7 @@ nn-nn-07 - Version 3.1.15
       ServerPreparedStatement.serverPrepare() that could cause
       deadlocks/crashes if connection was shared between threads.
 
-    - By default, the driver now scans SQL you are preparing via all
+    - By default, the driver now scans SQL you are preparing via projectsAndUsers
       variants of Connection.prepareStatement() to determine if it is a
       supported type of statement to prepare on the server side, and if
       it is not supported by the server, it instead prepares it as a
@@ -3655,7 +3655,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Fixed BUG#5235 - Server-side prepared statements did not honor
       'zeroDateTimeBehavior' property, and would cause class-cast
-      exceptions when using ResultSet.getObject(), as the all-zero string
+      exceptions when using ResultSet.getObject(), as the projectsAndUsers-zero string
       was always returned.
 
     - Fixed batched updates with server prepared statements weren't looking if
@@ -3699,7 +3699,7 @@ nn-nn-07 - Version 3.1.15
 
     - Fixed BUG#6537, SUM() on Decimal with server-side prepared statement ignores
       scale if zero-padding is needed (this ends up being due to conversion to DOUBLE
-      by server, which when converted to a string to parse into BigDecimal, loses all
+      by server, which when converted to a string to parse into BigDecimal, loses projectsAndUsers
       'padding' zeros).
 
     - Use DatabaseMetaData.getIdentifierQuoteString() when building DBMD
@@ -3778,7 +3778,7 @@ nn-nn-07 - Version 3.1.15
       false (it is enabled by default, as this functionality is required
       for JDBC compliance).
 
-    - Added three ways to deal with all-zero datetimes when reading them from
+    - Added three ways to deal with projectsAndUsers-zero datetimes when reading them from
       a ResultSet, 'exception' (the default), which throws a SQLException
       with a SQLState of 'S1009', 'convertToNull', which returns NULL instead of
       the date, and 'round', which rounds the date to the nearest closest value
@@ -3959,7 +3959,7 @@ nn-nn-07 - Version 3.1.15
 	- Check for closed connection on delete/update/insert row operations in
 	  UpdatableResultSet.
 
-	- Fix support for table aliases when checking for all primary keys in
+	- Fix support for table aliases when checking for projectsAndUsers primary keys in
 	  UpdatableResultSet.
 
 	- Removed useFastDates connection property.
@@ -4043,7 +4043,7 @@ nn-nn-07 - Version 3.1.15
 	  via accessors, cleaned up ConnectionProperties code.
 
 	- Fixed BUG#2671, NULL fields not being encoded correctly in
-	  all cases in server side prepared statements.
+	  projectsAndUsers cases in server side prepared statements.
 
 	- Fixed rare buffer underflow when writing numbers into buffers
 	  for sending prepared statement execution requests.
@@ -4059,11 +4059,11 @@ nn-nn-07 - Version 3.1.15
       driver will use server-side prepared statements when the
       server version supports them (4.1 and newer) when this
       property is set to 'true'. It is currently set to 'false'
-      by default until all bind/fetch functionality has been
+      by default until projectsAndUsers bind/fetch functionality has been
       implemented. Currently only DML prepared statements are
       implemented for 4.1 server-side prepared statements.
 
-    - Track open Statements, close all when Connection.close()
+    - Track open Statements, close projectsAndUsers when Connection.close()
       is called (JDBC compliance).
 
 06-22-05 - Version 3.0.17-ga
@@ -4179,7 +4179,7 @@ nn-nn-07 - Version 3.1.15
 	  broken for GBK
 
 	- Fixed BUG#4334 - Failover for autoReconnect not using port #'s for any
-	  hosts, and not retrying all hosts. (WARN: This required a change to
+	  hosts, and not retrying projectsAndUsers hosts. (WARN: This required a change to
 	  the SocketFactory connect() method signature, which is now
 
 	    public Socket connect(String host, int portNumber, Properties props),
@@ -4202,7 +4202,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed BUG#4808, calling .close() twice on a PooledConnection causes NPE.
 
 	- Fixed BUG#4138 and BUG#4860, DBMD.getColumns() returns incorrect JDBC
-	  type for unsigned columns. This affects type mappings for all numeric
+	  type for unsigned columns. This affects type mappings for projectsAndUsers numeric
 	  types in the RSMD.getColumnType() and RSMD.getColumnTypeNames() methods
 	  as well, to ensure that 'like' types from DBMD.getColumns() match up
 	  with what RSMD.getColumnType() and getColumnTypeNames() return.
@@ -4296,7 +4296,7 @@ nn-nn-07 - Version 3.1.15
 
     - Only set character_set_results for MySQL >= 4.1.0.
 
-    - Fixed BUG#3511, StringUtils.escapeSJISByteStream() not covering all
+    - Fixed BUG#3511, StringUtils.escapeSJISByteStream() not covering projectsAndUsers
       eastern double-byte charsets correctly.
 
     - Renamed StringUtils.escapeSJISByteStream() to more appropriate
@@ -4311,14 +4311,14 @@ nn-nn-07 - Version 3.1.15
     - Added encoding names that are recognized on some JVMs to fix case
       where they were reverse-mapped to MySQL encoding names incorrectly.
 
-    - Use junit.textui.TestRunner for all unit tests (to allow them to be
+    - Use junit.textui.TestRunner for projectsAndUsers unit tests (to allow them to be
       run from the command line outside of Ant or Eclipse).
 
     - Fixed BUG#3557 - UpdatableResultSet not picking up default values
       for moveToInsertRow().
 
     - Fixed BUG#3570 - inconsistent reporting of column type. The server
-      still doesn't return all types for *BLOBs *TEXT correctly, so the
+      still doesn't return projectsAndUsers types for *BLOBs *TEXT correctly, so the
       driver won't return those correctly.
 
     - Fixed BUG#3520 -- DBMD.getSQLStateType() returns incorrect value.
@@ -4451,7 +4451,7 @@ nn-nn-07 - Version 3.1.15
 
     - Fixed mappings in SQLError to report deadlocks with SQLStates of '41000'.
 
-    - 'maxRows' property would affect internal statements, so check it for all
+    - 'maxRows' property would affect internal statements, so check it for projectsAndUsers
       statement creation internal to the driver, and set to 0 when it is not.
 
 10-07-03 - Version 3.0.9-stable
@@ -4548,7 +4548,7 @@ nn-nn-07 - Version 3.1.15
 	  'clobberStreamingResults' property to 'true' (the default is 'false').
 	  This will cause a 'streaming' ResultSet to be automatically
 	  closed, and any oustanding data still streaming from the server to
-	  be discarded if another query is executed before all the data has been
+	  be discarded if another query is executed before projectsAndUsers the data has been
 	  read from the server.
 
 05-23-03 - Version 3.0.8-stable
@@ -4714,7 +4714,7 @@ nn-nn-07 - Version 3.1.15
       of checking for 'correctness' of updatable result sets. Set this
       to 'false' if you want faster updatable result sets and you know
       that you create them from SELECTs on tables with primary keys and
-      that you have selected all primary keys in your query.
+      that you have selected projectsAndUsers primary keys in your query.
 
     - Added support for 4.0.8-style large packets.
 
@@ -4918,7 +4918,7 @@ nn-nn-07 - Version 3.1.15
     - Support for large packets (new addition to MySQL-4.0 protocol),
       see README for more information.
 
-    - JDBC Compliance -- Passes all tests besides stored procedure tests
+    - JDBC Compliance -- Passes projectsAndUsers tests besides stored procedure tests
 
 
     - Fix and sort primary key names in DBMetaData (SF bugs 582086 and 582086)
@@ -4927,8 +4927,8 @@ nn-nn-07 - Version 3.1.15
 
     - ResultSet.getTimestamp() now works for DATE types (SF bug 559134)
 
-    - ResultSet.getDate/Time/Timestamp now recognizes all forms of invalid
-      values that have been set to all zeroes by MySQL (SF bug 586058)
+    - ResultSet.getDate/Time/Timestamp now recognizes projectsAndUsers forms of invalid
+      values that have been set to projectsAndUsers zeroes by MySQL (SF bug 586058)
 
     - Testsuite now uses Junit (which you can get from www.junit.org)
 
@@ -4993,7 +4993,7 @@ nn-nn-07 - Version 3.1.15
 
     - Added getIdleFor() method to Connection and MysqlLogicalHandle.
 
-    - Relaxed synchronization in all classes, should fix 520615 and 520393.
+    - Relaxed synchronization in projectsAndUsers classes, should fix 520615 and 520393.
 
     - Added getTable/ColumnPrivileges() to DBMD (fixes 484502).
 
@@ -5013,7 +5013,7 @@ nn-nn-07 - Version 3.1.15
     - DataSources - fixed setUrl bug (511614, 525565),
       wrong datasource class name (532816, 528767)
 
-    - Added identifier quoting to all DatabaseMetaData methods
+    - Added identifier quoting to projectsAndUsers DatabaseMetaData methods
       that need them (should fix 518108)
 
     - Added support for YEAR type (533556)
@@ -5163,7 +5163,7 @@ Fixed PreparedStatement parameter checking
 
      - Added ISOLATION level support to Connection.setIsolationLevel()
 
-     - Fixed NPE on PreparedStatement.executeUpdate() when all columns
+     - Fixed NPE on PreparedStatement.executeUpdate() when projectsAndUsers columns
        have not been set.
 
      - Fixed data parsing of TIMESTAMPs with 2-digit years
@@ -5174,7 +5174,7 @@ Fixed PreparedStatement parameter checking
 
      - ResultSet has +/-Inf/inf support
 
-     - ResultSet.insertRow() works now, even if not all columns are
+     - ResultSet.insertRow() works now, even if not projectsAndUsers columns are
        set (they will be set to "NULL")
 
      - DataBaseMetaData.getCrossReference() no longer ArrayIndexOOB
@@ -5267,7 +5267,7 @@ Fixed PreparedStatement parameter checking
        The driver will load the appropriate interface classes at
        runtime by figuring out which JVM version you are using.
 
-     - Fixes for result sets with all nulls in the first row.
+     - Fixes for result sets with projectsAndUsers nulls in the first row.
        (Pointed out by Tim Endres)
 
      - Fixes to column numbers in SQLExceptions in ResultSet
@@ -5374,7 +5374,7 @@ Fixed PreparedStatement parameter checking
      - Fixed NullPointerException in Driver.getPropertyInfo.
        (thanks to Dave Potts)
 
-     - Fixes to MysqlDefs to allow all *text fields to be
+     - Fixes to MysqlDefs to allow projectsAndUsers *text fields to be
        retrieved as Strings.
        (thanks to Chris at Leverage)
 
@@ -5407,7 +5407,7 @@ Fixed PreparedStatement parameter checking
 
 12-31-98 - Version 1.1f
 
-     - Changed all ResultSet fields to Strings, this should allow
+     - Changed projectsAndUsers ResultSet fields to Strings, this should allow
        Unicode to work, but your JVM must be able to convert
        between the character sets. This should also make reading
        data from the server be a bit quicker, because there is now
@@ -5423,7 +5423,7 @@ Fixed PreparedStatement parameter checking
        via setObject() (code from Robert Currey).
 
      - IO no longer hangs in Buffer.readInt(), that bug was
-       introduced in 1.1d when changing to all byte-arrays for
+       introduced in 1.1d when changing to projectsAndUsers byte-arrays for
        result sets. (Pointed out by Samo Login)
 
 11-03-98 - Version 1.1b
@@ -5532,7 +5532,7 @@ Fixed PreparedStatement parameter checking
        Connection.rollback() now throws an SQLException
        per the JDBC spec.
 
-     - Added PreparedStatement that supports all JDBC API
+     - Added PreparedStatement that supports projectsAndUsers JDBC API
        methods for PreparedStatement including InputStreams.
        Please check this out and let me know if anything is
        broken.
@@ -5561,7 +5561,7 @@ Fixed PreparedStatement parameter checking
      - Split MysqlIO and Buffer to separate classes. Some
        ClassLoaders gave an IllegalAccess error for some
        fields in those two classes. Now mm.mysql works in
-       applets and all classloaders.
+       applets and projectsAndUsers classloaders.
 
        Thanks to Joe Ennis <jce@mail.boone.com> for pointing
        out the problem and working on a fix with me.

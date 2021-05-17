@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2002, 2019, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2019, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -1408,7 +1408,7 @@ public class MysqlIO {
      * Thus it is possible to replace built-in plugin with custom one, to do it custom plugin should return value
      * "mysql_native_password", "mysql_old_password", "mysql_clear_password" or "sha256_password" from it's own getProtocolPluginName() method.
      * 
-     * All plugin instances in the map are initialized by {@link Extension#init(Connection, Properties)} call
+     * Projects_And_Users plugin instances in the map are initialized by {@link Extension#init(Connection, Properties)} call
      * with this.connection and this.connection.getProperties() values.
      * 
      * @throws SQLException

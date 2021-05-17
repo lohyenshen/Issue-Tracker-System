@@ -1,7 +1,6 @@
 package database;
 
 import system.*;
-
 import java.sql.*;
 
 public class CommentQuery extends Query{
@@ -25,15 +24,15 @@ public class CommentQuery extends Query{
         for (int i = 0; i < comments.length; i++) {
             rs.next();
 
-            // commentID, issueID, userID, time, description, reactions
+            // commentID, issueID, userID, time, description, reaction
             int commentID       = rs.getInt("commentID");
             int issueID         = rs.getInt("issueID");
             User commentUser    = UserQuery.getUser( rs.getInt("userID") );
             Timestamp time      = rs.getTimestamp("time");
             String description  = rs.getString("description");
-            Reactions reactions = new Reactions( rs.getString("reactions") );
+            Reactions reaction = new Reactions( rs.getString("reactions") );
 
-            comments[i] = new Comment(commentID, issueID, commentUser, time, description, reactions);
+            comments[i] = new Comment(commentID, issueID, commentUser, time, description, reaction);
         }
 
         st.close();
@@ -54,13 +53,16 @@ public class CommentQuery extends Query{
         pst.setInt(3, userID);
         pst.setTimestamp(4, time);
         pst.setString(5, description);
-        pst.setString(6, "");       // new comment has no reactions initially
+        pst.setString(6, "0 0 0 0 0 0");       // new comment has no reactions initially
         pst.executeUpdate();
 
         pst.close();
         con.close();
     }
 
+    /**
+     * update the the reactions in comment table (based on commentIDToSearch)
+     */
     public static void updateComment(int commentIDToSearch, String newReactions) throws SQLException, ClassNotFoundException {
         String query =
                 "UPDATE comment \n" +

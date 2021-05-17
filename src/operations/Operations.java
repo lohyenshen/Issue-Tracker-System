@@ -4,16 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import database.*;
 import system.*;
-
 import javax.swing.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.Date;
 
 public class Operations {
     protected static Scanner sc = new Scanner(System.in);
@@ -606,7 +605,7 @@ public class Operations {
         CommentQuery.insertNewComment( 0,
                                        currentIssue.getIssueID(),
                                        currentUser.getUserID(), 
-                                       new Timestamp(new Date(System.currentTimeMillis()).getTime()), 
+                                       new Timestamp(new Date(System.currentTimeMillis()).getTime()),
                                        inputCommentDescription());
     }
 
@@ -624,13 +623,15 @@ public class Operations {
     ///////////////REACT//////////////////////////
     protected static void react_On_Comment() throws SQLException, ClassNotFoundException {
         int commentIndex       = inputCommentIndex();
-        Comment currentComment = currentIssue.getComments()[commentIndex];
-        String oldReactions    = currentComment.getReactions().asString();
-        String newReactions    = oldReactions + inputReaction() + ",";
-
-        CommentQuery.updateComment( currentComment.getCommentID(), newReactions);
+        Comment comment        = currentIssue.getComments()[commentIndex];
+        Reactions reactions    = comment.getReactions();
+        reactions.updateCounts( inputReaction() );
+        CommentQuery.updateComment( comment.getCommentID(), reactions.asDatabaseString());
     }
 
+    /**
+     * allow user to choose which reaction to add to a existing comment
+     */
     private static String inputReaction() {
         List<String> reactions = Arrays.asList("like",    "love",    "haha",    "wow",    "sad",    "angry");
         do{
@@ -643,6 +644,9 @@ public class Operations {
         } while (true);
     }
 
+    /**
+     * allow user to choose which comment to react on
+     */
     private static int inputCommentIndex(){
         int commentIndex;
         do{
@@ -690,6 +694,57 @@ public class Operations {
             }
         } while (true);
     }
+    private static void importJson() {
+        // validate filePath
+        File pathToJsonFile = pathToJsonFile();
+        if (pathToJsonFile == null){
+            System.out.println("Unable to import JSON file");
+            return;
+        }
+
+        // validate jsonString
+        String jsonString = jsonString( pathToJsonFile );
+        if (jsonString == null){
+            System.out.println("Unable to import JSON file");
+            return;
+        }
+
+        // instantiate 'projects_and_users' from jsonString
+        Gson g = new Gson();
+        Projects_And_Users projects_and_users = g.fromJson( jsonString, Projects_And_Users.class);
+
+        // insert "projects_and_users" into database
+        projects_and_users.insertIntoDatabase();
+    }
+
+    private static String jsonString( File pathToJsonFile) {
+        Path p = Path.of(pathToJsonFile.getAbsolutePath());
+        try{
+            String jsonString = Files.readString(p);
+            return jsonString;
+        }
+        catch (IOException e){
+            System.out.println( e );
+            return null;
+        }
+    }
+
+
+    private static File pathToJsonFile() {
+        JFileChooser f = new JFileChooser();
+        f.setCurrentDirectory( new File(System.getProperty("user.dir")) );
+        FileFilter filter = new FileNameExtensionFilter("JSON", "JSON");
+        f.setFileFilter(filter);
+        f.setAcceptAllFileFilterUsed(false);
+        f.setDialogTitle("Choose JSON file to IMPORT");
+        f.setApproveButtonText("Import this");
+
+        int result = f.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION)
+            return f.getSelectedFile();
+        else
+            return null;
+    }
 
     /**
      * allow user to export all projects as .json file
@@ -703,10 +758,10 @@ public class Operations {
         }
 
         try (Writer writer = new FileWriter(pathSelected + "\\data.json")) {
-            JsonObject jo = new JsonObject( projects, UserQuery.getUsers());
+            Projects_And_Users projects_and_users = new Projects_And_Users(  ProjectQuery.getProjects_SortedBy_projectID(true), UserQuery.getUsers());
 
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
-            gson.toJson( jo, writer);
+            Gson g = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+            g.toJson(projects_and_users, writer);
             System.out.println("Exported JSON file successfully");
         }
         catch (Exception e){
@@ -715,22 +770,18 @@ public class Operations {
     }
 
     private static File pathToExportJsonFile() {
-        JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory( new File(System.getProperty("user.dir")) );
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fc.setDialogTitle("Choose directory to export JSON file");
-        fc.setApproveButtonText("Export Here");
+        JFileChooser f = new JFileChooser();
+        f.setCurrentDirectory( new File(System.getProperty("user.dir")) );
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        f.setDialogTitle("Choose directory to EXPORT JSON file");
+        f.setApproveButtonText("Export Here");
 
-        int result = fc.showOpenDialog(null);
+        int result = f.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION)
-            return fc.getSelectedFile();
+            return f.getSelectedFile();
         else
             return null;
     }
-
-    private static void importJson() {
-    }
-
 
     protected static boolean isNumber(String input) {
         try{

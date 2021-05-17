@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2013, 2014, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2013, 2014, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -42,7 +42,7 @@ public class Client1_Fabric {
         System.out.println("Servers for employees.employees.50: " + fabricClient.getServersForKey("employees.employees", 50));
         System.out.println("Servers for employees.employees.10050: " + fabricClient.getServersForKey("employees.employees", 10050));
         System.out.flush();
-        System.out.println("All servers: " + fabricClient.getServerGroups());
+        System.out.println("Projects_And_Users servers: " + fabricClient.getServerGroups());
         //fabricClient.getGroup("NON_EXISTANT_GROUP");
     }
 }

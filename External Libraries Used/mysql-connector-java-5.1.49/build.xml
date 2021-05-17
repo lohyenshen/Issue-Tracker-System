@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!--
-  Copyright (c) 2002, 2020, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2020, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -31,7 +31,7 @@ with Java 8.
 The variables 'com.mysql.jdbc.jdk5' and 'com.mysql.jdbc.jdk8' are used to find the respective compilers when building the driver. Side by side
 with these, the variable 'com.mysql.jdbc.extra.libs' must point to the location of third-party libraries that we don't distribute and are required for
 compiling.
-Compiling all JDBC 4+ code with Java 8 alone produces some warnings since JDBC 4.0 and JDBC 4.1 classes don't require a compliler higher than Java 6. To get
+Compiling projectsAndUsers JDBC 4+ code with Java 8 alone produces some warnings since JDBC 4.0 and JDBC 4.1 classes don't require a compliler higher than Java 6. To get
 more precise results and avoid warnings use the property 'com.mysql.jdbc.jre6.rtjar' to point to the Java 6 'rt.jar' library (usually in 'jre/lib/rt.jar').
 Further details can be found in http://dev.mysql.com/doc/connector-j/en/connector-j-installing-source.html.
 
@@ -43,10 +43,10 @@ Testing Connector/J
 
 Connector/J 5.1 ships with an extensive test suite that can be run simply by providing a MySQL JDBC URL in the variable 'com.mysql.jdbc.testsuite.url' and by
 calling the target "test". If nothing more is set, these tests run with the JVMs referred in the variables 'com.mysql.jdbc.jdk5' and 'com.mysql.jdbc.jdk8' for
-JDBC 3 and JDBC 4+ related tests respectively. Alternatively, all tests can be run with a single JVM, provided that it is pointed out in the variable
+JDBC 3 and JDBC 4+ related tests respectively. Alternatively, projectsAndUsers tests can be run with a single JVM, provided that it is pointed out in the variable
 'com.mysql.jdbc.testsuite.jvm'.
 Running the full test suite with different JVMs and different MySQL servers at once is also possible. The variables 'com.mysql.jdbc.testsuite.jvm' and
-'com.mysql.jdbc.testsuite.url' can be suffixed with an index ".1" to ".9" to indicate the multiple alternatives which results in the matrix of all possible
+'com.mysql.jdbc.testsuite.url' can be suffixed with an index ".1" to ".9" to indicate the multiple alternatives which results in the matrix of projectsAndUsers possible
 combinations. The target "test-multijvm" must be called in this case.
 Running only one test set is possible by setting the variable 'test' with the class' fully qualified name. If also a comma separated list of test names is
 provided in the variable 'methods', then only these will be executed.
@@ -84,7 +84,7 @@ Targets: "test-coverage", "report-coverage"
 MySQL Fabric support and testing
 ================================
 
-Support for MySQL Fabric connections is seamlessly included in Connector/J, so when the driver is compiled it already includes all the required classes for it.
+Support for MySQL Fabric connections is seamlessly included in Connector/J, so when the driver is compiled it already includes projectsAndUsers the required classes for it.
 Testing MySQL Fabric support can be done by setting specific variables and running the respective targets. Further details can be found in the last targets in
 this file.
 
@@ -208,7 +208,7 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
     </propertyset>
 
     <!-- Java compiler arguments to widen warnings detection and fail on warnings. -->
-    <condition property="javac.compilerarg" value="-Xlint:all -Werror" else="">
+    <condition property="javac.compilerarg" value="-Xlint:projectsAndUsers -Werror" else="">
         <isset property="com.mysql.jdbc.failOnWarnings" />
     </condition>
 
@@ -786,7 +786,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
     </target>
 
 
-    <!-- Create a Maven bundle for upload to their repository (common files to all packaging modes). -->
+    <!-- Create a Maven bundle for upload to their repository (common files to projectsAndUsers packaging modes). -->
     <target name="-create-maven-archive-common">
         <tempfile destdir="${buildDir}" prefix="maven-bundle-" property="mavenUploadDir" />
 
@@ -1114,7 +1114,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
 
 
     <!-- Run the full test suite, single test set or single test, and compliance test suite, against multiple JVMs and server configs. -->
-    <target name="test-all-multi"
+    <target name="test-projectsAndUsers-multi"
             description="Runs the full test suite, single test set or single test, and compliance test suite, against multiple JVMs and server configs."
             depends="compile">
         <delete dir="${buildDir}/junit" />

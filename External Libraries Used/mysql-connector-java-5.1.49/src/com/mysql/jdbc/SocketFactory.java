@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2002, 2014, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2014, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -61,7 +61,7 @@ public interface SocketFactory {
 
     /**
      * Creates a new socket using the given properties. Properties are parsed by
-     * the driver from the URL. All properties other than sensitive ones (user
+     * the driver from the URL. Projects_And_Users properties other than sensitive ones (user
      * and password) are passed to this method. The driver will instantiate the
      * socket factory with the class name given in the property
      * &quot;socketFactory&quot;, where the standard is <code>com.mysql.jdbc.StandardSocketFactory</code> Implementing classes

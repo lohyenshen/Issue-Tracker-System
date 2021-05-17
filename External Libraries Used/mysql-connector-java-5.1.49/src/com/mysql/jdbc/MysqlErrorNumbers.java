@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2002, 2016, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2016, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -200,7 +200,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_WRONG_MRG_TABLE = 1168; //SQLSTATE: HY000 Message: Unable to open underlying table which is differently defined or of non-MyISAM type or doesn't exist
     public final static int ER_DUP_UNIQUE = 1169; //SQLSTATE: 23000 Message: Can't write, because of unique constraint, to table '%s'
     public final static int ER_BLOB_KEY_WITHOUT_LENGTH = 1170; //SQLSTATE: 42000 Message: BLOB/TEXT column '%s' used in key specification without a key length
-    public final static int ER_PRIMARY_CANT_HAVE_NULL = 1171; //SQLSTATE: 42000 Message: All parts of a PRIMARY KEY must be NOT NULL; if you need NULL in a key, use UNIQUE instead
+    public final static int ER_PRIMARY_CANT_HAVE_NULL = 1171; //SQLSTATE: 42000 Message: Projects_And_Users parts of a PRIMARY KEY must be NOT NULL; if you need NULL in a key, use UNIQUE instead
     public final static int ER_TOO_MANY_ROWS = 1172; //SQLSTATE: 42000 Message: Result consisted of more than one row
     public final static int ER_REQUIRES_PRIMARY_KEY = 1173; //SQLSTATE: 42000 Message: This table type requires a primary key
     public final static int ER_NO_RAID_COMPILED = 1174; //SQLSTATE: HY000 Message: This version of MySQL is not compiled with RAID support
@@ -281,7 +281,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_SELECT_REDUCED = 1249; //SQLSTATE: 01000 Message: Select %u was reduced during optimization
     public final static int ER_TABLENAME_NOT_ALLOWED_HERE = 1250; //SQLSTATE: 42000 Message: Table '%s' from one of the SELECTs cannot be used in %s
     public final static int ER_NOT_SUPPORTED_AUTH_MODE = 1251; //SQLSTATE: 08004 Message: Client does not support authentication protocol requested by server; consider upgrading MySQL client
-    public final static int ER_SPATIAL_CANT_HAVE_NULL = 1252; //SQLSTATE: 42000 Message: All parts of a SPATIAL index must be NOT NULL
+    public final static int ER_SPATIAL_CANT_HAVE_NULL = 1252; //SQLSTATE: 42000 Message: Projects_And_Users parts of a SPATIAL index must be NOT NULL
     public final static int ER_COLLATION_CHARSET_MISMATCH = 1253; //SQLSTATE: 42000 Message: COLLATION '%s' is not valid for CHARACTER SET '%s'
     public final static int ER_SLAVE_WAS_RUNNING = 1254; //SQLSTATE: HY000 Message: Slave is already running
     public final static int ER_SLAVE_WAS_NOT_RUNNING = 1255; //SQLSTATE: HY000 Message: Slave already has been stopped

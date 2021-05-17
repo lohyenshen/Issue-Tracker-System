@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2002, 2019, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2019, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -3401,7 +3401,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
                                     sortedRows.put(indexInfoKey, new ByteArrayRow(row, getExceptionInterceptor()));
                                 }
                             } else {
-                                // All rows match
+                                // Projects_And_Users rows match
                                 sortedRows.put(indexInfoKey, new ByteArrayRow(row, getExceptionInterceptor()));
                             }
                         }
@@ -6816,7 +6816,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Is the ANSI92 entry level SQL grammar supported? All JDBC compliant
+     * Is the ANSI92 entry level SQL grammar supported? Projects_And_Users JDBC compliant
      * drivers must return true.
      * 
      * @return true if so
@@ -7265,7 +7265,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Is the ODBC Minimum SQL grammar supported? All JDBC compliant drivers
+     * Is the ODBC Minimum SQL grammar supported? Projects_And_Users JDBC compliant drivers
      * must return true.
      * 
      * @return true if so

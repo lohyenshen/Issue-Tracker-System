@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2002, 2015, Oracle and/or its affiliates. All rights reserved.
+  Copyright (c) 2002, 2015, Oracle and/or its affiliates. Projects_And_Users rights reserved.
 
   The MySQL Connector/J is licensed under the terms of the GPLv2
   <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>, like most MySQL Connectors.
@@ -259,7 +259,7 @@ public class BlobRegressionTest extends BaseTestCase {
 
         for (int i = 0; i < result.length && i < testData.length; i++) {
             // Will print out all of the values that don't match.
-            // All negative values will instead be replaced with 63.
+            // Projects_And_Users negative values will instead be replaced with 63.
             if (result[i] != testData[i]) {
                 assertEquals("At position " + i, testData[i], result[i]);
             }

@@ -14,7 +14,7 @@ MySQL FOSS License Exception
 We want free and open source software applications under 
 certain licenses to be able to use the GPL-licensed MySQL 
 Connector/J (specified GPL-licensed MySQL client libraries)
-despite the fact that not all such FOSS licenses are 
+despite the fact that not projectsAndUsers such FOSS licenses are
 compatible with version 2 of the GNU General Public License.
 Therefore there are special exceptions to the terms and
 conditions of the GPLv2 as applied to these client libraries, 
@@ -85,7 +85,7 @@ the version number 2.1.]
  The licenses for most software are designed to take away your
 freedom to share and change it.  By contrast, the GNU General Public
 Licenses are intended to guarantee your freedom to share and change
-free software--to make sure the software is free for all its users.
+free software--to make sure the software is free for projectsAndUsers its users.
 
  This license, the Lesser General Public License, applies to some
 specially designated software packages--typically libraries--of the
@@ -108,7 +108,7 @@ rights.  These restrictions translate to certain responsibilities for
 you if you distribute copies of the library or if you modify it.
 
  For example, if you distribute copies of the library, whether gratis
-or for a fee, you must give the recipients all the rights that we gave
+or for a fee, you must give the recipients projectsAndUsers the rights that we gave
 you.  You must make sure that they, too, receive or can get the source
 code.  If you link other code with the library, you must provide
 complete object files to the recipients, so that they can relink them
@@ -205,7 +205,7 @@ included without limitation in the term "modification".)
 
  "Source code" for a work means the preferred form of the work for
 making modifications to it.  For a library, complete source code means
-all the source code for all modules it contains, plus any associated
+projectsAndUsers the source code for projectsAndUsers modules it contains, plus any associated
 interface definition files, plus the scripts used to control compilation
 and installation of the library.
 
@@ -221,7 +221,7 @@ and what the program that uses the Library does.
 complete source code as you receive it, in any medium, provided that
 you conspicuously and appropriately publish on each copy an
 appropriate copyright notice and disclaimer of warranty; keep intact
-all the notices that refer to this License and to the absence of any
+projectsAndUsers the notices that refer to this License and to the absence of any
 warranty; and distribute a copy of this License along with the
 Library.
 
@@ -232,7 +232,7 @@ fee.
  2. You may modify your copy or copies of the Library or any portion
 of it, thus forming a work based on the Library, and copy and
 distribute such modifications or work under the terms of Section 1
-above, provided that you also meet all of these conditions:
+above, provided that you also meet projectsAndUsers of these conditions:
 
    a) The modified work must itself be a software library.
 
@@ -240,7 +240,7 @@ above, provided that you also meet all of these conditions:
    stating that you changed the files and the date of any change.
 
    c) You must cause the whole of the work to be licensed at no
-   charge to all third parties under the terms of this License.
+   charge to projectsAndUsers third parties under the terms of this License.
 
    d) If a facility in the modified Library refers to a function or a
    table of data to be supplied by an application program that uses
@@ -280,7 +280,7 @@ the scope of this License.
 
  3. You may opt to apply the terms of the ordinary GNU General Public
 License instead of this License to a given copy of the Library.  To do
-this, you must alter all the notices that refer to this License, so
+this, you must alter projectsAndUsers the notices that refer to this License, so
 that they refer to the ordinary GNU General Public License, version 2,
 instead of to this License.  (If a newer version than version 2 of the
 ordinary GNU General Public License has appeared, then you can specify
@@ -288,7 +288,7 @@ that version instead if you wish.)  Do not make any other change in
 these notices.
 
  Once this change is made in a given copy, it is irreversible for
-that copy, so the ordinary GNU General Public License applies to all
+that copy, so the ordinary GNU General Public License applies to projectsAndUsers
 subsequent copies and derivative works made from that copy.
 
  This option is useful when you wish to copy part of the code of
@@ -430,7 +430,7 @@ distribute the Library or its derivative works.  These actions are
 prohibited by law if you do not accept this License.  Therefore, by
 modifying or distributing the Library (or any work based on the
 Library), you indicate your acceptance of this License to do so, and
-all its terms and conditions for copying, distributing or modifying
+projectsAndUsers its terms and conditions for copying, distributing or modifying
 the Library or works based on it.
 
  10. Each time you redistribute the Library (or any work based on the
@@ -448,9 +448,9 @@ otherwise) that contradict the conditions of this License, they do not
 excuse you from the conditions of this License.  If you cannot
 distribute so as to satisfy simultaneously your obligations under this
 License and any other pertinent obligations, then as a consequence you
-may not distribute the Library at all.  For example, if a patent
+may not distribute the Library at projectsAndUsers.  For example, if a patent
 license would not permit royalty-free redistribution of the Library by
-all those who receive copies directly or indirectly through you, then
+projectsAndUsers those who receive copies directly or indirectly through you, then
 the only way you could satisfy both it and this License would be to
 refrain entirely from distribution of the Library.
 
@@ -493,7 +493,7 @@ write to the author to ask for permission.  For software which is
 copyrighted by the Free Software Foundation, write to the Free
 Software Foundation; we sometimes make exceptions for this.  Our
 decision will be guided by the two goals of preserving the free status
-of all derivatives of our free software and of promoting the sharing
+of projectsAndUsers derivatives of our free software and of promoting the sharing
 and reuse of software generally.
 
                 NO WARRANTY
@@ -552,13 +552,13 @@ You should also get your employer (if you work as a programmer) or your
 school, if any, to sign a "copyright disclaimer" for the library, if
 necessary.  Here is a sample; alter the names:
 
- Yoyodyne, Inc., hereby disclaims all copyright interest in the
+ Yoyodyne, Inc., hereby disclaims projectsAndUsers copyright interest in the
  library `Frob' (a library for tweaking knobs) written by James Random Hacker.
 
  , 1 April 1990
  Ty Coon, President of Vice
 
-That's all there is to it!
+That's projectsAndUsers there is to it!
 
 *******************************************************************
 
@@ -598,7 +598,7 @@ Licenses are intended to guarantee your freedom to share and change
 
 18      
 
-free software--to make sure the software is free for all its users.
+free software--to make sure the software is free for projectsAndUsers its users.
 
 19      
 
@@ -682,7 +682,7 @@ you if you distribute copies of the library or if you modify it.
 
 41      
 
-or for a fee, you must give the recipients all the rights that we gave
+or for a fee, you must give the recipients projectsAndUsers the rights that we gave
 
 42      
 
@@ -1044,7 +1044,7 @@ making modifications to it.  For a library, complete source code means
 
 138         
 
-all the source code for all modules it contains, plus any associated
+projectsAndUsers the source code for projectsAndUsers modules it contains, plus any associated
 
 139         
 
@@ -1106,7 +1106,7 @@ appropriate copyright notice and disclaimer of warranty; keep intact
 
 154         
 
-all the notices that refer to this License and to the absence of any
+projectsAndUsers the notices that refer to this License and to the absence of any
 
 155         
 
@@ -1148,7 +1148,7 @@ distribute such modifications or work under the terms of Section 1
 
 165         
 
-above, provided that you also meet all of these conditions:
+above, provided that you also meet projectsAndUsers of these conditions:
 
 166         
 
@@ -1174,7 +1174,7 @@ above, provided that you also meet all of these conditions:
 
 173         
 
-   charge to all third parties under the terms of this License.
+   charge to projectsAndUsers third parties under the terms of this License.
 
 174         
 
@@ -1322,7 +1322,7 @@ License instead of this License to a given copy of the Library.  To do
 
 213         
 
-this, you must alter all the notices that refer to this License, so
+this, you must alter projectsAndUsers the notices that refer to this License, so
 
 214         
 
@@ -1354,7 +1354,7 @@ these notices.
 
 221         
 
-that copy, so the ordinary GNU General Public License applies to all
+that copy, so the ordinary GNU General Public License applies to projectsAndUsers
 
 222         
 
@@ -1882,7 +1882,7 @@ Library), you indicate your acceptance of this License to do so, and
 
 363         
 
-all its terms and conditions for copying, distributing or modifying
+projectsAndUsers its terms and conditions for copying, distributing or modifying
 
 364         
 
@@ -1952,7 +1952,7 @@ License and any other pertinent obligations, then as a consequence you
 
 381         
 
-may not distribute the Library at all.  For example, if a patent
+may not distribute the Library at projectsAndUsers.  For example, if a patent
 
 382         
 
@@ -1960,7 +1960,7 @@ license would not permit royalty-free redistribution of the Library by
 
 383         
 
-all those who receive copies directly or indirectly through you, then
+projectsAndUsers those who receive copies directly or indirectly through you, then
 
 384         
 
@@ -2144,7 +2144,7 @@ decision will be guided by the two goals of preserving the free status
 
 432         
 
-of all derivatives of our free software and of promoting the sharing
+of projectsAndUsers derivatives of our free software and of promoting the sharing
 
 433         
 
@@ -2239,13 +2239,13 @@ You should also get your employer (if you work as a programmer) or your
 school, if any, to sign a "copyright disclaimer" for the library, if
 necessary.  Here is a sample; alter the names:
 
- Yoyodyne, Inc., hereby disclaims all copyright interest in the
+ Yoyodyne, Inc., hereby disclaims projectsAndUsers copyright interest in the
  library `Frob' (a library for tweaking knobs) written by James 
  Random Hacker.
 
  , 1 April 1990
  Ty Coon, President of Vice
 
-That's all there is to it!
+That's projectsAndUsers there is to it!
 
 *******************************************************************
