@@ -37,13 +37,13 @@ public class UserQuery extends Query{
     /**
      * insert a record of user into database
      */
-    public static void insertNew(User u) throws SQLException, ClassNotFoundException {
+    public static void insertNewUser(User u) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO user VALUES(?,?,?,?)";
         Connection con = getConnection();
         PreparedStatement pst  = con.prepareStatement(query);
 
         // userID, name, email, password
-        pst.setInt(1, u.getUserID());
+        pst.setInt(1, 0);// PRIMARY KEY (auto_increment)
         pst.setString(2, u.getName());
         pst.setString(3, u.getEmail());
         pst.setString(4, u.getPassword());

@@ -1,6 +1,7 @@
 package system;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Project {
     private int projectID;
@@ -23,5 +24,15 @@ public class Project {
 
     public Issue[] getIssues() {
         return issues;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectID=" + projectID +
+                ", name='" + name + '\'' +
+                ", issues=" + Arrays.toString(issues) +
+                '}';
     }
 }

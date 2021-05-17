@@ -75,4 +75,18 @@ public class ProjectQuery extends Query{
                 "WHERE name REGEXP \""+ projectName +"\";";
         return constructProjects( constructResultSet( query ) );
     }
+
+
+    public static void insertNewProject(Project p) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO project VALUES(?,?)";
+        Connection con = getConnection();
+        PreparedStatement pst  = con.prepareStatement(query);
+
+        pst.setInt(1,   0);// PRIMARY KEY (auto_increment)
+        pst.setString(2, p.getName());
+        pst.executeUpdate();
+
+        pst.close();
+        con.close();
+    }
 }

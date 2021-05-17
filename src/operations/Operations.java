@@ -77,7 +77,7 @@ public class Operations {
         }
         else{
             System.out.println("Account created successfully, Please proceed to login");
-            UserQuery.insertNew(uniqueUser);
+            UserQuery.insertNewUser(uniqueUser);
         }
     }
 
@@ -425,16 +425,17 @@ public class Operations {
         System.out.println("\nProceeding to create new issue, please enter details of this issue as listed below");
         int issueID   = 0; // actual issueID will be handled by MySQL auto increment feature
         int projectID = selected_Project_ID;
-        int creatorID = currentUser.getUserID();
-        int assigneeID = inputAssigneeID();
+        User creator  = currentUser;
+        User assignee = UserQuery.getUser( inputAssigneeID() );
         String title = inputTitle();
         String description = inputIssueDescription();
         Timestamp time = new Timestamp(new Date(System.currentTimeMillis()).getTime());
         String tag    = inputTag();
         int priority = inputPriority();
-        String status = "OPEN";
+        String status = "Open";
 
-        IssueQuery.insertNewIssue( issueID, projectID, creatorID, assigneeID, title, description, time, tag, priority, status);
+        Issue newIssue = new Issue( issueID, projectID, creator, assignee, title, description, time, tag, priority, status, null);
+        IssueQuery.insertNewIssue( newIssue );
     }
 
 
@@ -602,11 +603,8 @@ public class Operations {
     }
     //////////COMMENT//////////////////////
     protected static void comment_On_Issue() throws SQLException, ClassNotFoundException {
-        CommentQuery.insertNewComment( 0,
-                                       currentIssue.getIssueID(),
-                                       currentUser.getUserID(), 
-                                       new Timestamp(new Date(System.currentTimeMillis()).getTime()),
-                                       inputCommentDescription());
+        Comment newComment = new Comment( 0,  currentIssue.getIssueID(), currentUser,  new Timestamp(new Date(System.currentTimeMillis()).getTime()), inputCommentDescription(), new Reactions("0 0 0 0 0 0"));
+        CommentQuery.insertNewComment( newComment );
     }
 
     private static String inputCommentDescription() {
@@ -675,7 +673,7 @@ public class Operations {
     /**
      * allow user to either (import) or (export) JSON object
      */
-    protected static void JSON_import_export() {
+    protected static void JSON_import_export() throws SQLException, ClassNotFoundException {
         System.out.println("JSON objects");
         System.out.print("Import(i) or Export(e): ");
         do{
@@ -694,7 +692,7 @@ public class Operations {
             }
         } while (true);
     }
-    private static void importJson() {
+    private static void importJson() throws SQLException, ClassNotFoundException {
         // validate filePath
         File pathToJsonFile = pathToJsonFile();
         if (pathToJsonFile == null){
@@ -710,11 +708,13 @@ public class Operations {
         }
 
         // instantiate 'projects_and_users' from jsonString
-        Gson g = new Gson();
+        Gson g = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
         Projects_And_Users projects_and_users = g.fromJson( jsonString, Projects_And_Users.class);
 
         // insert "projects_and_users" into database
         projects_and_users.insertIntoDatabase();
+
+        System.out.println("Imported JSON file into database successfully");
     }
 
     private static String jsonString( File pathToJsonFile) {

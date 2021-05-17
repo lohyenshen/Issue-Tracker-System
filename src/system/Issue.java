@@ -77,11 +77,18 @@ public class Issue {
 
     @Override
     public String toString() {
-        return String.format("");
-    }
-
-
-    public static void sort_By_Priority(){
-
+        return "Issue{" +
+                "issueID=" + issueID +
+                ", projectID=" + projectID +
+                ", creator=" + creator +
+                ", assignee=" + assignee +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", time=" + time +
+                ", tag='" + tag + '\'' +
+                ", priority=" + priority +
+                ", status='" + status + '\'' +
+                ", comments=" + Arrays.toString(comments) +
+                '}';
     }
 }

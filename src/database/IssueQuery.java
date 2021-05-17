@@ -128,21 +128,21 @@ public class IssueQuery extends Query{
     /**
      * insert a new record of issue into database
      */
-    public static void insertNewIssue(int issueID, int projectID, int creatorID, int assigneeID, String title, String description, Timestamp time, String tag, int priority, String status) throws SQLException, ClassNotFoundException {
+    public static void insertNewIssue( Issue i) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO issue VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         Connection con = getConnection();
         PreparedStatement pst = con.prepareStatement(query);
-        pst.setInt(1, issueID);
-        pst.setInt(2, projectID);
-        pst.setInt(3, creatorID);
-        pst.setInt(4, assigneeID);
-        pst.setString(5, title);
-        pst.setString(6, description);
-        pst.setTimestamp(7, time);
-        pst.setString(8, tag);
-        pst.setInt(9, priority);
-        pst.setString(10, status);
+        pst.setInt(1, 0); // PRIMARY KEY (auto_increment)
+        pst.setInt(2, i.getProjectID());
+        pst.setInt(3, i.getCreator().getUserID());
+        pst.setInt(4, i.getAssignee().getUserID());
+        pst.setString(5, i.getTitle());
+        pst.setString(6, i.getDescription());
+        pst.setTimestamp(7, i.getTime());
+        pst.setString(8, i.getTag());
+        pst.setInt(9, i.getPriority());
+        pst.setString(10, i.getStatus());
         pst.executeUpdate();
 
         pst.close();

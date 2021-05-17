@@ -9,6 +9,7 @@ public class Reactions {
     private int angryCount;
 
     /**
+     * 0 0 0 0 0 0
      * construct a reaction object
      * 1) split a string "reactions" into array
      * 2) for each individual component in the array, cast it into int and store in int array

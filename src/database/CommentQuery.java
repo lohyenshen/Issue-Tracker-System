@@ -43,17 +43,19 @@ public class CommentQuery extends Query{
     /**
      * insert a new record of comment into database
      */
-    public static void insertNewComment(int commentID, int issueID, int userID, Timestamp time, String description) throws SQLException, ClassNotFoundException {
+    public static void insertNewComment( Comment c )throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO comment VALUES(?,?,?,?,?,?)";
 
         Connection con = getConnection();
         PreparedStatement pst = con.prepareStatement(query);
-        pst.setInt(1, commentID);
-        pst.setInt(2, issueID);
-        pst.setInt(3, userID);
-        pst.setTimestamp(4, time);
-        pst.setString(5, description);
-        pst.setString(6, "0 0 0 0 0 0");       // new comment has no reactions initially
+
+        // commentID, issueID, userID, time, description, reactions
+        pst.setInt(1, 0); // PRIMARY KEY (auto_increment)
+        pst.setInt(2, c.getIssueID());
+        pst.setInt(3, c.getCommentUser().getUserID());
+        pst.setTimestamp(4, c.getTime());
+        pst.setString(5, c.getDescription());
+        pst.setString(6, c.getReactions().asDatabaseString());// new comment has no reactions initially
         pst.executeUpdate();
 
         pst.close();
