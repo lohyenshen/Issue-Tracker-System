@@ -17,27 +17,11 @@ public class MainPage extends Operations {
      * - after choosing issue
      *      - display the details of issue
      *      - allow user to ADD comments
-     *      - allow user to REACT to comments1
+     *      - allow user to REACT to comments
      */
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        String fastLogin = "l\nloh@gmail.com\nLOH\n";
-        String s = "l\nloh@gmail.com\nLOH\n1\n1\n";
-
-        // REGISTER & LOGIN
         register_and_login();
-
-
-        // PROJECT DASHBOARD
-//        project_dashboard();
-
-
-        // ISSUE DASHBOARD
-//        issue_dashboard();
-
-
-        // issue page
-//        not yet designed
     }
 
     /**
@@ -78,11 +62,7 @@ public class MainPage extends Operations {
             switch (opr){
                 case "a"   -> initialize_Projects_SortedBy_Something();
                 case "b"   -> initialize_Projects_SearchBy_ProjectName();
-                case "c"   -> {
-                    JSON_import_export();
-                    projects = ProjectQuery.getProjects_Unsorted();
-//                    System.exit(0);
-                }
+                case "c"   -> JSON_import_export();
                 case "all" -> initialize_Projects_Unsorted();
                 case "e"   -> register_and_login();
                 default -> {
@@ -121,7 +101,7 @@ public class MainPage extends Operations {
                 case "a"   -> initialise_Issues_SortedBy_Something(); // sort     - (priority) / (time)
                 case "b"   -> initialise_Issues_FilterBy_Something(); // filter   - (status) / (tag)
                 case "c"   -> initialize_Issues_SearchBy_Key_Word();  // search() - title / description / comments
-                case "d"   -> { create_New_Issue(); initialise_Issues_Unsorted();}
+                case "d"   -> create_New_Issue();
                 case "all" -> initialise_Issues_Unsorted();
                 case "e"   -> project_dashboard();
                 default    -> {
@@ -152,22 +132,15 @@ public class MainPage extends Operations {
     private static void issue_page() throws SQLException, ClassNotFoundException {
         do{
             displayCurrentIssue();
-            System.out.print("Enter 'c' to comment\nor 'r' to react\nor 'e' to exit to issue dashboard: ");
+            System.out.print("Enter 'c' to comment\nor 'r' to react\nor 's' to change status\nor 'e' to exit to issue dashboard: ");
             opr = sc.nextLine();
 
             switch (opr) {
-                case "c" -> {
-                    comment_On_Issue();
-                    currrentProject = ProjectQuery.getProject(selected_Project_ID);
-                    currentIssue = IssueQuery.getIssue(selected_Issue_ID);
-                }
-                case "r" -> {
-                    react_On_Comment();
-                    currrentProject = ProjectQuery.getProject(selected_Project_ID);
-                    currentIssue = IssueQuery.getIssue(selected_Issue_ID);
-                }
+                case "c" -> comment_On_Issue();
+                case "r" -> react_On_Comment();
+                case "s" -> changeStatus();
                 case "e" -> issue_dashboard();
-                default -> System.out.println("INVALID OPERATION");
+                default  -> System.out.println("INVALID OPERATION");
             }
         } while (true);
     }

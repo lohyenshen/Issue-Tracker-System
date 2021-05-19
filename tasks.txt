@@ -5,10 +5,11 @@ Requirement
 2) Project Dashboard    -
 3) Issue Dashboard      -
 4) Issue Page           -
-5) Issue Lifecycle      - TODO
+5) Issue Lifecycle      -
 6) Search Feature       -
 7) Undo/Redo            - TODO
 8) Data Storage         -
+9) Report Generation    - TODO
 
 
 ---------------------------
@@ -33,6 +34,8 @@ Full Text Fuzzy Searching
 
 (Machine Learning in "Tagging")
     Deeplearning4j
+
+
 
 
 (Clustering Analysis)

@@ -95,6 +95,9 @@ public class ProjectQuery extends Query{
     }
 
 
+    /**
+     * insert a new record of project into database
+     */
     public static void insertNewProject(Project p) throws SQLException, ClassNotFoundException {
         String query = "INSERT INTO project VALUES(?,?)";
         Connection con = getConnection();

@@ -1,17 +1,11 @@
 https://github.com/jiuntian/IssueTrackerAssignment/issues/
 
-
 1)
 For issues, change histories, or known as changelog should be recorded and can be viewed by
 the user, on their request
 
-?? what does it mean by changelog & what should we display to user?
+??? what does it mean by changelog & what should we display to user?
 
-2)
-The text in issue and comments should be able to redo/undo. You can use stack data structure
-to implement this.
-
-redo/undo???
 
 
 

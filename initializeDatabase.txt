@@ -1,0 +1,2 @@
+1) run (create database and tables.sql) in MySQL      // under External Libraries Used
+2) select to IMPORT example.json

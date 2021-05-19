@@ -158,4 +158,21 @@ public class IssueQuery extends Query{
         pst.close();
         con.close();
     }
+
+    /**
+     * update the "status" of an issue in database
+     */
+    public static void updateStatus(int issueID, String newStatus)  throws SQLException, ClassNotFoundException {
+        String query =
+                "UPDATE issue\n" +
+                "SET status = \""+newStatus+"\"\n" +
+                "WHERE issueID = "+issueID+";";
+
+        Connection con = getConnection();
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.executeUpdate();
+
+        pst.close();
+        con.close();
+    }
 }

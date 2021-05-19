@@ -185,6 +185,10 @@ public class Operations {
     protected static void initialize_Projects_Unsorted() throws SQLException, ClassNotFoundException {
         projects = ProjectQuery.getProjects_Unsorted();
     }
+
+    /**
+     * allow user to sort projects either by "Alphanumeric" or "ProjectID"
+     */
     protected static void initialize_Projects_SortedBy_Something() throws SQLException, ClassNotFoundException {
         do{
             System.out.print("Sort By?\nAlphanumeric(a) OR ProjectID(i): ");
@@ -203,9 +207,9 @@ public class Operations {
         } while(true);
     }
 
-        /**
-         * initialize 'projects' from database sorted by "ALPHANUMERIC"
-         */
+    /**
+     * initialize 'projects' from database sorted by "ALPHANUMERIC"
+     */
     private static void initialize_Projects_SortedBy_Alphanumeric() throws SQLException, ClassNotFoundException {
         projects   = ProjectQuery.getProjects_SortedBy_Alphanumeric( ASC_or_DESC() );
     }
@@ -216,10 +220,16 @@ public class Operations {
     private static void initialize_Projects_SortedBy_projectID() throws SQLException, ClassNotFoundException {
         projects   = ProjectQuery.getProjects_SortedBy_projectID( ASC_or_DESC() );
     }
+    /**
+     * initialize 'projects' from database searched by "project name"
+     */
     protected static void initialize_Projects_SearchBy_ProjectName() throws SQLException, ClassNotFoundException{
         projects   = ProjectQuery.getProjects_SearchBy_ProjectName( projectNameToSearch() );
     }
 
+    /**
+     * return a String of project name to search
+     */
     private static String projectNameToSearch() {
         System.out.print("Enter name of project: ");
         do {
@@ -285,8 +295,7 @@ public class Operations {
      */
     protected static void initialise_Issues_Unsorted() throws SQLException, ClassNotFoundException {
         currrentProject = ProjectQuery.getProject( selected_Project_ID );
-//        issues          = IssueQuery.getIssues( selected_Project_ID );
-        issues = currrentProject.getIssues();
+        issues          = IssueQuery.getIssues( selected_Project_ID );
     }
 
     //////////////////////////SORT//////////////////////////////////////////////////////////////////////////////////////
@@ -436,6 +445,8 @@ public class Operations {
 
         Issue newIssue = new Issue( issueID, projectID, creator, assignee, title, description, time, tag, priority, status, null);
         IssueQuery.insertNewIssue( newIssue );
+
+        initialise_Issues_Unsorted();// need to update "issues" once we have inserted a new issue
     }
 
 
@@ -549,6 +560,10 @@ public class Operations {
         }
         System.out.println(sb.toString());
     }
+
+    /**
+     * determine whether issueID entered is valid
+     */
     protected static boolean validIssueID(int issueIDToVerify) {
         for (Issue i : issues)
             if (i.getIssueID() == issueIDToVerify)
@@ -602,11 +617,21 @@ public class Operations {
         System.out.println( sb.toString() );
     }
     //////////COMMENT//////////////////////
+
+    /**
+     * insert a new comment into database
+     */
     protected static void comment_On_Issue() throws SQLException, ClassNotFoundException {
         Comment newComment = new Comment( 0,  currentIssue.getIssueID(), currentUser,  new Timestamp(new Date(System.currentTimeMillis()).getTime()), inputCommentDescription(), new Reactions("0 0 0 0 0 0"));
         CommentQuery.insertNewComment( newComment );
+
+        currrentProject = ProjectQuery.getProject(selected_Project_ID);
+        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
     }
 
+    /**
+     * allow user to enter description for a comment
+     */
     private static String inputCommentDescription() {
         StringBuilder sb = new StringBuilder();
         System.out.println("Enter comment\nEnter 'e' to stop: ");
@@ -619,12 +644,22 @@ public class Operations {
     }
 
     ///////////////REACT//////////////////////////
+
+    /**
+     * allow user to
+     *      - choose which comment to react on
+     *      - which reaction to use
+     *      - update the changes in database
+     */
     protected static void react_On_Comment() throws SQLException, ClassNotFoundException {
         int commentIndex       = inputCommentIndex();
         Comment comment        = currentIssue.getComments()[commentIndex];
         Reactions reactions    = comment.getReactions();
         reactions.updateCounts( inputReaction() );
         CommentQuery.updateComment( comment.getCommentID(), reactions.asDatabaseString());
+
+        currrentProject = ProjectQuery.getProject(selected_Project_ID);
+        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
     }
 
     /**
@@ -662,7 +697,9 @@ public class Operations {
         } while(true);
     }
 
-
+    /**
+     * for console output display only
+     */
     private static void line( StringBuilder sb, int... lengths){
         sb.append("+");
         for (int length : lengths)
@@ -682,6 +719,7 @@ public class Operations {
             switch (opr){
                 case "i" -> {
                     importJson();
+                    projects = ProjectQuery.getProjects_Unsorted(); // update projects once finished importing new data
                     return;
                 }
                 case "e" -> {
@@ -692,6 +730,10 @@ public class Operations {
             }
         } while (true);
     }
+
+    /**
+     * allow user to import json file & all data in json file will be inserted into database
+     */
     private static void importJson() throws SQLException, ClassNotFoundException {
         // validate filePath
         File pathToJsonFile = pathToJsonFile();
@@ -717,6 +759,9 @@ public class Operations {
         System.out.println("Imported JSON file into database successfully");
     }
 
+    /**
+     * read the content of json file as String and return it
+     */
     private static String jsonString( File pathToJsonFile) {
         Path p = Path.of(pathToJsonFile.getAbsolutePath());
         try{
@@ -729,7 +774,9 @@ public class Operations {
         }
     }
 
-
+    /**
+     * return the path where the (json file to be imported) is located
+     */
     private static File pathToJsonFile() {
         JFileChooser f = new JFileChooser();
         f.setCurrentDirectory( new File(System.getProperty("user.dir")) );
@@ -769,6 +816,9 @@ public class Operations {
         }
     }
 
+    /**
+     * return the (path to directory) where json file is exported
+     */
     private static File pathToExportJsonFile() {
         JFileChooser f = new JFileChooser();
         f.setCurrentDirectory( new File(System.getProperty("user.dir")) );
@@ -783,6 +833,9 @@ public class Operations {
             return null;
     }
 
+    /**
+     * determine whether a String input is a number
+     */
     protected static boolean isNumber(String input) {
         try{
             Integer.parseInt(input);
@@ -791,5 +844,66 @@ public class Operations {
         catch (NumberFormatException e){
             return false;
         }
+    }
+
+    /**
+     * - allow either "creator" or "assignee" to change the (status) of an issue
+     * - reject operation when "currentUser" neither of them
+     *
+     * "creator"  -> OPEN,                        CLOSED
+     * "assignee" -> OPEN, IN PROGRESS, RESOLVED, CLOSED
+     */
+    protected static void changeStatus() throws SQLException, ClassNotFoundException {
+        int currentUserID = currentUser.getUserID();
+        int creatorID     = currentIssue.getCreator().getUserID();
+        int assigneeID    = currentIssue.getAssignee().getUserID();
+
+
+        if (currentUserID == creatorID)
+            IssueQuery.updateStatus( currentIssue.getIssueID(), Open_Close());
+
+        else if (currentUserID == assigneeID)
+            IssueQuery.updateStatus( currentIssue.getIssueID(), Open_InProgress_Resolved_Closed());
+
+        else {
+            System.out.println("You are not allowed to CHANGE the STATUS of this issue!");
+            return; // we don't need to fetch latest issues from database as there are no changes
+        }
+
+        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
+    }
+
+    /**
+     * return "Open" or "Closed"
+     */
+    private static String Open_Close(){
+        do{
+            System.out.print("Enter new status of this issue\nOpen(o)   Closed(c): ");
+            opr = sc.nextLine();
+
+            switch (opr){
+                case "o" -> {return "Open";}
+                case "c" -> {return "Closed";}
+                default  -> System.out.println("Invalid Status");
+            }
+        } while (true);
+    }
+
+    /**
+     * return "Open" or "In Progress" or "Resolved" or "Closed"
+     */
+    private static String Open_InProgress_Resolved_Closed(){
+        do{
+            System.out.print("Enter new status of this issue\nOpen(o)   In Progress(i)   Resolved(r)   Closed(c): ");
+            opr = sc.nextLine();
+
+            switch (opr){
+                case "o" -> {return "Open";}
+                case "i" -> {return "In Progress";}
+                case "r" -> {return "Resolved";}
+                case "c" -> {return "Closed";}
+                default  -> System.out.println("Invalid Status");
+            }
+        } while (true);
     }
 }

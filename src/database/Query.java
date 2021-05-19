@@ -40,8 +40,14 @@ public class Query {
      * con.close();
      */
 
+
+
+
+
+
+
     /**
-     * establish connection to database (MySQL)
+     * establish a connection to database (MySQL)
      */
     protected static Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");

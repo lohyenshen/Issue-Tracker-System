@@ -1,12 +1,14 @@
-https://github.com/jiuntian/IssueTrackerAssignment/issues/
 5) Issue Lifecycle
-
-------------------------------------------------------------------
-7) Undo/Redo    (9pm)
-    - https://alvinalexander.com/java/java-undo-redo/
-    - https://courses.cs.washington.edu/courses/cse143/12au/lectures/UndoRedoStack.java
-    - https://www.geeksforgeeks.org/implement-undo-and-redo-features-of-a-text-editor/
-    - https://coderanch.com/t/630164/java/implement-UNDO-feature
+OPEN -> IN PROGRESS -> RESOLVED -> CLOSED
 
 
 
+status      | creator   | assignee
+----------------------------------
+open        |    yes    |   yes
+----------------------------------
+in progress |           |   yes
+----------------------------------
+resolved    |           |   yes
+----------------------------------
+closed      |    yes    |   yes
