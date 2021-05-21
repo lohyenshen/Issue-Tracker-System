@@ -50,11 +50,21 @@ CREATE TABLE comment
     userID INT,
     time TIMESTAMP,
     description TEXT,
-    reactions TEXT,
 
     PRIMARY KEY(commentID),
     FOREIGN KEY (issueID) REFERENCES issue(issueID),
     FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
+CREATE TABLE reaction
+(
+	userID INT NOT NULL,
+	commentID INT NOT NULL,
+    type VARCHAR(100),
+
+    PRIMARY KEY (userID, commentID),
+    FOREIGN KEY (userID) REFERENCES user(userID),
+    FOREIGN KEY (commentID) REFERENCES comment(commentID)
 );
 
 
