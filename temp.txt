@@ -9,6 +9,6 @@ open        |    yes    |   yes
 ----------------------------------
 in progress |           |   yes
 ----------------------------------
-resolved    |           |   yes
+resolved    |    yes    |   yes
 ----------------------------------
 closed      |    yes    |   yes

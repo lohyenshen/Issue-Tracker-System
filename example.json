@@ -40,7 +40,7 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 1,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
                 "angryCount": 0
@@ -104,10 +104,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 1
+                "angryCount": 0
               }
             },
             {
@@ -124,10 +124,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 5
+                "angryCount": 0
               }
             },
             {
@@ -144,10 +144,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 9
+                "angryCount": 0
               }
             }
           ]
@@ -194,10 +194,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 1
+                "angryCount": 0
               }
             },
             {
@@ -214,10 +214,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 5
+                "angryCount": 0
               }
             },
             {
@@ -234,10 +234,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 1
+                "angryCount": 0
               }
             }
           ]
@@ -298,10 +298,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 3,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 5
+                "angryCount": 0
               }
             }
           ]
@@ -346,12 +346,12 @@
               "time": "2019-09-07 11:00:00",
               "description": "To: https://streamable.com/hkyg3 Apologies for not posting a video when creating the issue!\n",
               "reactions": {
-                "likeCount": 5,
+                "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 1
+                "angryCount": 0
               }
             },
             {
@@ -368,10 +368,10 @@
               "reactions": {
                 "likeCount": 0,
                 "loveCount": 0,
-                "hahaCount": 2,
+                "hahaCount": 0,
                 "wowCount": 0,
                 "sadCount": 0,
-                "angryCount": 9
+                "angryCount": 0
               }
             }
           ]

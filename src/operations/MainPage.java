@@ -21,6 +21,7 @@ public class MainPage extends Operations {
      */
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        String fastLogin = "l\nloh@gmail.com\nLOH\n";
         register_and_login();
     }
 

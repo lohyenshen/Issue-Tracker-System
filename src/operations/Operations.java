@@ -622,7 +622,7 @@ public class Operations {
      * insert a new comment into database
      */
     protected static void comment_On_Issue() throws SQLException, ClassNotFoundException {
-        Comment newComment = new Comment( 0,  currentIssue.getIssueID(), currentUser,  new Timestamp(new Date(System.currentTimeMillis()).getTime()), inputCommentDescription(), new Reactions("0 0 0 0 0 0"));
+        Comment newComment = new Comment( 0,  currentIssue.getIssueID(), currentUser,  new Timestamp(new Date(System.currentTimeMillis()).getTime()), inputCommentDescription(), new Reactions(0,0,0,0,0,0));
         CommentQuery.insertNewComment( newComment );
 
         currrentProject = ProjectQuery.getProject(selected_Project_ID);
@@ -653,10 +653,8 @@ public class Operations {
      */
     protected static void react_On_Comment() throws SQLException, ClassNotFoundException {
         int commentIndex       = inputCommentIndex();
-        Comment comment        = currentIssue.getComments()[commentIndex];
-        Reactions reactions    = comment.getReactions();
-        reactions.updateCounts( inputReaction() );
-        CommentQuery.updateComment( comment.getCommentID(), reactions.asDatabaseString());
+        Comment currentComment        = currentIssue.getComments()[commentIndex];
+        ReactionQuery.updateReaction( currentUser.getUserID(), currentComment.getCommentID(), inputReaction());
 
         currrentProject = ProjectQuery.getProject(selected_Project_ID);
         currentIssue = IssueQuery.getIssue(selected_Issue_ID);
@@ -712,8 +710,8 @@ public class Operations {
      */
     protected static void JSON_import_export() throws SQLException, ClassNotFoundException {
         System.out.println("JSON objects");
-        System.out.print("Import(i) or Export(e): ");
         do{
+            System.out.print("Import(i) or Export(e): ");
             opr = sc.nextLine();
 
             switch (opr){
@@ -850,7 +848,7 @@ public class Operations {
      * - allow either "creator" or "assignee" to change the (status) of an issue
      * - reject operation when "currentUser" neither of them
      *
-     * "creator"  -> OPEN,                        CLOSED
+     * "creator"  -> OPEN,              RESOLVED, CLOSED
      * "assignee" -> OPEN, IN PROGRESS, RESOLVED, CLOSED
      */
     protected static void changeStatus() throws SQLException, ClassNotFoundException {
@@ -860,7 +858,7 @@ public class Operations {
 
 
         if (currentUserID == creatorID)
-            IssueQuery.updateStatus( currentIssue.getIssueID(), Open_Close());
+            IssueQuery.updateStatus( currentIssue.getIssueID(), Open_Resolved_Closed());
 
         else if (currentUserID == assigneeID)
             IssueQuery.updateStatus( currentIssue.getIssueID(), Open_InProgress_Resolved_Closed());
@@ -874,15 +872,16 @@ public class Operations {
     }
 
     /**
-     * return "Open" or "Closed"
+     * return "Open" or "Resolved" or "Closed"
      */
-    private static String Open_Close(){
+    private static String Open_Resolved_Closed(){
         do{
-            System.out.print("Enter new status of this issue\nOpen(o)   Closed(c): ");
+            System.out.print("Enter new status of this issue\nOpen(o)   Resolved(r)   Closed(c): ");
             opr = sc.nextLine();
 
             switch (opr){
                 case "o" -> {return "Open";}
+                case "r" -> {return "Resolved";}
                 case "c" -> {return "Closed";}
                 default  -> System.out.println("Invalid Status");
             }

@@ -30,7 +30,7 @@ public class CommentQuery extends Query{
             User commentUser    = UserQuery.getUser( rs.getInt("userID") );
             Timestamp time      = rs.getTimestamp("time");
             String description  = rs.getString("description");
-            Reactions reaction = new Reactions( rs.getString("reactions") );
+            Reactions reaction  = ReactionQuery.getReactions( commentID );
 
             comments[i] = new Comment(commentID, issueID, commentUser, time, description, reaction);
         }
@@ -44,7 +44,7 @@ public class CommentQuery extends Query{
      * insert a new record of comment into database
      */
     public static void insertNewComment( Comment c )throws SQLException, ClassNotFoundException {
-        String query = "INSERT INTO comment VALUES(?,?,?,?,?,?)";
+        String query = "INSERT INTO comment VALUES(?,?,?,?,?)";
 
         Connection con = getConnection();
         PreparedStatement pst = con.prepareStatement(query);
@@ -55,7 +55,6 @@ public class CommentQuery extends Query{
         pst.setInt(3, c.getCommentUser().getUserID());
         pst.setTimestamp(4, c.getTime());
         pst.setString(5, c.getDescription());
-        pst.setString(6, c.getReactions().asDatabaseString());// new comment has no reactions initially
         pst.executeUpdate();
 
         pst.close();

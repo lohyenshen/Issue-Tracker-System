@@ -8,24 +8,13 @@ public class Reactions {
     private int sadCount;
     private int angryCount;
 
-    /**
-     * 0 0 0 0 0 0
-     * construct a reaction object
-     * 1) split a string "reactions" into array
-     * 2) for each individual component in the array, cast it into int and store in int array
-     */
-    public Reactions(String reactions) {
-        String[] reactionCountsString = reactions.split("\\s+");
-        int[]    reactionCountsInt    = new int[6];
-        for (int i = 0; i < reactionCountsString.length; i++)
-            reactionCountsInt[i] = Integer.parseInt(reactionCountsString[i]);
-
-        likeCount  = reactionCountsInt[0];
-        loveCount  = reactionCountsInt[1];
-        hahaCount  = reactionCountsInt[2];
-        wowCount   = reactionCountsInt[3];
-        sadCount   = reactionCountsInt[4];
-        angryCount = reactionCountsInt[5];
+    public Reactions(int likeCount, int loveCount, int hahaCount, int wowCount, int sadCount, int angryCount) {
+        this.likeCount = likeCount;
+        this.loveCount = loveCount;
+        this.hahaCount = hahaCount;
+        this.wowCount = wowCount;
+        this.sadCount = sadCount;
+        this.angryCount = angryCount;
     }
 
     /**
