@@ -910,4 +910,7 @@ public class Operations {
     protected static void viewChangeLog() {
 
     }
+
+    protected static void generateReport() {
+    }
 }

@@ -57,13 +57,14 @@ public class MainPage extends Operations {
         initialize_Projects_Unsorted();
         do{
             display_Project_Dashboard();
-            System.out.print("\nEnter project ID to check project\nor 'a' to sort\nor 'b' to search\nor 'c' to JSON\nor 'all' to display all projects\nor 'e' to exit to login page: ");
+            System.out.print("\nEnter project ID to check project\nor 'a' to sort\nor 'b' to search\nor 'c' to JSON\nor 'r' to generate report\nor 'all' to display all projects\nor 'e' to exit to login page: ");
             opr = sc.nextLine();
 
             switch (opr){
                 case "a"   -> initialize_Projects_SortedBy_Something();
                 case "b"   -> initialize_Projects_SearchBy_ProjectName();
                 case "c"   -> JSON_import_export();
+                case "r"   -> generateReport();
                 case "all" -> initialize_Projects_Unsorted();
                 case "e"   -> register_and_login();
                 default -> {
