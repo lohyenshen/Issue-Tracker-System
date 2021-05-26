@@ -1,5 +1,0 @@
-SELECT
-tbl_column,
-BIN(tbl_column) AS binray_not_needed_column
-FROM db_table
-ORDER BY binray_not_needed_column ASC , tbl_column ASC

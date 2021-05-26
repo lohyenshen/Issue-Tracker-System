@@ -1,15 +1,13 @@
 package operations;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import database.*;
 import classes.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -904,5 +902,12 @@ public class Operations {
                 default  -> System.out.println("Invalid Status");
             }
         } while (true);
+    }
+
+    /**
+     * display all the changelogs of "currentIssue"
+     */
+    protected static void viewChangeLog() {
+
     }
 }

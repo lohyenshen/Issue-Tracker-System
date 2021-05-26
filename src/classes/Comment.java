@@ -7,7 +7,7 @@ public class Comment {
     private int issueID;///
     private User commentUser;///
     private Timestamp time;
-    private String description;
+    private String description; // allowed to change
     private Reactions reactions;
 
 

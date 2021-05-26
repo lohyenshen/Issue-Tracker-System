@@ -133,15 +133,16 @@ public class MainPage extends Operations {
     private static void issue_page() throws SQLException, ClassNotFoundException {
         do{
             displayCurrentIssue();
-            System.out.print("Enter 'c' to comment\nor 'r' to react\nor 's' to change status\nor 'e' to exit to issue dashboard: ");
+            System.out.print("Enter 'c' to comment\nor 'r' to react\nor 's' to change status\nor 'cl' to view changelog\nor 'e' to exit to issue dashboard: ");
             opr = sc.nextLine();
 
             switch (opr) {
-                case "c" -> comment_On_Issue();
-                case "r" -> react_On_Comment();
-                case "s" -> changeStatus();
-                case "e" -> issue_dashboard();
-                default  -> System.out.println("INVALID OPERATION");
+                case "c"  -> comment_On_Issue();
+                case "r"  -> react_On_Comment();
+                case "s"  -> changeStatus();
+                case "cl" -> viewChangeLog();///////////////////////// not yet implemented!
+                case "e"  -> issue_dashboard();
+                default   -> System.out.println("INVALID OPERATION");
             }
         } while (true);
     }

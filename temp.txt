@@ -12,3 +12,6 @@ in progress |           |   yes
 resolved    |    yes    |   yes
 ----------------------------------
 closed      |    yes    |   yes
+
+
+ChangeLog
