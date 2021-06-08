@@ -7,9 +7,10 @@ Requirement
 4) Issue Page           -
 5) Issue Lifecycle      -
 6) Search Feature       -
-7) Undo/Redo            - TODO
+7) Undo/Redo            - TODO, Upload picture
 8) Data Storage         -
-9) Report Generation    - TODO
+9) Report Generation    -
+10)ChangeLog            -
 
 
 ---------------------------
@@ -28,6 +29,7 @@ EXTRA FEATURES
 Full Text Fuzzy Searching
     - SOUNDEX
     - https://github.com/xdrop/fuzzywuzzy
+
 
 
 

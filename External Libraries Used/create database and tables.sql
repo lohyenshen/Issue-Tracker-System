@@ -43,6 +43,20 @@ CREATE TABLE issue
     FOREIGN KEY (assigneeID) REFERENCES user(userID)
 );
 
+CREATE TABLE issue_change_log
+(
+	issueID INT NOT NULL,
+    projectID INT,
+    creatorID INT,
+    assigneeID INT,
+    title VARCHAR(100),
+    description TEXT,
+    time TIMESTAMP,
+    tag VARCHAR(100),
+    priority INT,
+    status VARCHAR(100)
+);
+
 CREATE TABLE comment
 (
 	commentID INT NOT NULL AUTO_INCREMENT,
@@ -54,6 +68,15 @@ CREATE TABLE comment
     PRIMARY KEY(commentID),
     FOREIGN KEY (issueID) REFERENCES issue(issueID),
     FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
+CREATE TABLE comment_change_log
+(
+	commentID INT NOT NULL,
+    issueID INT,
+    userID INT,
+    time TIMESTAMP,
+    description TEXT
 );
 
 CREATE TABLE reaction
@@ -69,6 +92,8 @@ CREATE TABLE reaction
 
 
 
+
+
 ### some initial values
 USE `issue_tracker_system`;
 INSERT INTO user VALUES(1, "loh", "loh@gmail.com", "LOH");
@@ -76,3 +101,6 @@ INSERT INTO user VALUES(2, "yen", "yen@gmail.com", "YEN");
 INSERT INTO user VALUES(3, "shen", "shen@gmail.com", "SHEN");
 INSERT INTO user VALUES(4, "shawn", "shawn@gmail.com", "SHAWN");
 INSERT INTO user VALUES(5, "mentos", "mentos@gmail.com", "MENTOS");
+
+# required for connection with R
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'wix1002';

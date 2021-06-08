@@ -4,20 +4,10 @@ import classes.*;
 import java.sql.*;
 
 public class CommentQuery extends Query{
-
     /**
-     * return an array of all comments that belong to a issue (based on issueIDToSearch)
+     * return an array of comments based on ResultSet
      */
-    public static Comment[] getComments(int issueIDToSearch) throws SQLException, ClassNotFoundException {
-        String query =
-                "SELECT *\n" +
-                "FROM comment\n" +
-                "WHERE issueID = " + issueIDToSearch +"\n" +
-                "ORDER BY time ASC ; ";
-        Connection con = getConnection();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery( query );
-
+    private static Comment[] constructComments( ResultSet rs) throws SQLException, ClassNotFoundException {
         int L = size( rs );
         Comment[] comments = new Comment[L];
 
@@ -34,10 +24,19 @@ public class CommentQuery extends Query{
 
             comments[i] = new Comment(commentID, issueID, commentUser, time, description, reaction);
         }
-
-        st.close();
-        con.close();
         return comments;
+     }
+
+    /**
+     * return an array of all comments that belong to a issue (based on issueIDToSearch)
+     */
+    public static Comment[] getComments(int issueIDToSearch) throws SQLException, ClassNotFoundException {
+        String query =
+                "SELECT *\n" +
+                "FROM comment\n" +
+                "WHERE issueID = " + issueIDToSearch +"\n" +
+                "ORDER BY time ASC ; ";
+        return constructComments( constructResultSet(query) );
     }
 
     /**
@@ -76,5 +75,67 @@ public class CommentQuery extends Query{
 
         pst.close();
         con.close();
+    }
+
+    /**
+     * update the "description", "time" of a comment in database
+     *
+     * "description" - the new description which user entered
+     * "time"        - the time when a user make changes
+     */
+    public static void updateCommentDescription( int commentID, String newDescription) throws SQLException, ClassNotFoundException {
+        // insert the old record into "comment_change_log" table
+        insert_Into_Comment_Change_Log( commentID );
+
+        // update the details of the comment
+        String query =
+                        "UPDATE comment " +
+                        "SET description = ?, " +
+                        "    time = ? " +
+                        "WHERE commentID = ?;";
+        Connection con = getConnection();
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, newDescription);
+        pst.setTimestamp(2, new Timestamp(new Date(System.currentTimeMillis()).getTime()));
+        pst.setInt(3, commentID);
+        pst.executeUpdate();
+
+        pst.close();
+        con.close();
+    }
+
+
+
+    /**
+     * insert a new record of comment change log once user change the description
+     */
+    private static void insert_Into_Comment_Change_Log( int commentID) throws SQLException, ClassNotFoundException {
+        String query =
+                        "INSERT INTO comment_change_log " +
+                        "SELECT c.* " +
+                        "FROM comment c " +
+                        "WHERE commentID = "+commentID+" ;";
+        Connection con = getConnection();
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.executeUpdate();
+        pst.close();
+        con.close();
+    }
+
+    /**
+     * return an array of "previousComments" based on commentID
+     *
+     * previousComments
+     * 1) once the creator changes the description of an comment
+     * 2) LATEST  comment's information is stored in (comment table)
+     * 3) CURRENT comment's information is stored in (comment_change_log table)
+     */
+    public static Comment[] getPreviousComments(int commentID) throws SQLException, ClassNotFoundException {
+        String query =
+                        "SELECT * " +
+                        "FROM comment_change_log " +
+                        "WHERE commentID = "+commentID+" " +
+                        "ORDER BY time DESC ;";
+        return constructComments( constructResultSet(query) );
     }
 }

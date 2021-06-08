@@ -14,6 +14,7 @@ import java.util.Date;
 
 public class Operations {
     protected static Scanner sc = new Scanner(System.in);
+    private static String path_To_R_Script_Exe;
 
     protected static String opr;
 
@@ -21,7 +22,7 @@ public class Operations {
 
     protected static Project[] projects;
     protected static int selected_Project_ID;
-    protected static Project currrentProject;
+    protected static Project currentProject;
 
     protected static Issue[]   issues;
     protected static int selected_Issue_ID;
@@ -292,7 +293,7 @@ public class Operations {
      * retrieves all issues related to a project (based on projectIndex)
      */
     protected static void initialise_Issues_Unsorted() throws SQLException, ClassNotFoundException {
-        currrentProject = ProjectQuery.getProject( selected_Project_ID );
+        currentProject  = ProjectQuery.getProject( selected_Project_ID );
         issues          = IssueQuery.getIssues( selected_Project_ID );
     }
 
@@ -534,7 +535,7 @@ public class Operations {
         int[] lengths = {3, 38, 15, 15, 10, 25, 10, 10};
         StringBuilder sb = new StringBuilder("\n\n\n");
 
-        String projectTitle =  "Project Title = " + currrentProject.getName();
+        String projectTitle =  "Project Title = " + currentProject.getName();
         sb.append("-".repeat(projectTitle.length())).append("\n");
         sb.append(projectTitle).append("\n");
         sb.append("-".repeat(projectTitle.length())).append("\n");
@@ -623,8 +624,7 @@ public class Operations {
         Comment newComment = new Comment( 0,  currentIssue.getIssueID(), currentUser,  new Timestamp(new Date(System.currentTimeMillis()).getTime()), inputCommentDescription(), new Reactions(0,0,0,0,0,0));
         CommentQuery.insertNewComment( newComment );
 
-        currrentProject = ProjectQuery.getProject(selected_Project_ID);
-        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
+        update_Static_Variables();
     }
 
     /**
@@ -650,12 +650,11 @@ public class Operations {
      *      - update the changes in database
      */
     protected static void react_On_Comment() throws SQLException, ClassNotFoundException {
-        int commentIndex       = inputCommentIndex();
+        int commentIndex              = inputCommentIndex();
         Comment currentComment        = currentIssue.getComments()[commentIndex];
         ReactionQuery.updateReaction( currentUser.getUserID(), currentComment.getCommentID(), inputReaction());
 
-        currrentProject = ProjectQuery.getProject(selected_Project_ID);
-        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
+        update_Static_Variables();
     }
 
     /**
@@ -679,7 +678,7 @@ public class Operations {
     private static int inputCommentIndex(){
         int commentIndex;
         do{
-            System.out.print("Enter comment no. to react on: ");
+            System.out.print("Enter comment no: ");
             opr = sc.nextLine();
             if (isNumber(opr)){
                 commentIndex = Integer.parseInt(opr)-1;
@@ -725,6 +724,57 @@ public class Operations {
                 default  -> System.out.println("Invalid operation");
             }
         } while (true);
+    }
+
+    /**
+     *
+     */
+    protected static void generate_Report() throws IOException {
+        deleteAllFiles();
+
+        String R_Script_Exe = getPathTo_R_Script_Exe();
+        String R_code       = System.getProperty("user.dir") + "\\Rscript\\report_generation_code.R";
+
+        ProcessBuilder pb = new ProcessBuilder(R_Script_Exe, "", R_code);
+        pb.start();
+
+        System.out.println("REPORTS GENERATED SUCCESSFULLY");
+        System.exit(0);
+    }
+    private static void deleteAllFiles() {
+        File dir = new File( System.getProperty("user.dir") + "\\Report Generation");
+        File[] files = dir.listFiles();
+
+        if (files == null)
+            return;
+        for (File file : files)
+            file.delete();
+    }
+    protected static String getPathTo_R_Script_Exe() throws IOException {
+        if (path_To_R_Script_Exe != null)
+            return path_To_R_Script_Exe;
+
+
+        File dir = new File( "C:\\Program Files" );
+        find_R_Script_Exe( dir.listFiles() );
+        if (path_To_R_Script_Exe == null)
+            throw new IOException("Could Not find path to Rscript.exe");
+        return path_To_R_Script_Exe;
+    }
+    private static void find_R_Script_Exe( File[] listFiles) {
+        if (listFiles == null)  return;
+
+        for (File f : listFiles){
+            if (f.isDirectory())
+                find_R_Script_Exe( f.listFiles() );
+
+            else {
+                if (f.getAbsolutePath().endsWith("bin\\Rscript.exe")){
+                    path_To_R_Script_Exe = f.getAbsolutePath();
+                    return;
+                }
+            }
+        }
     }
 
     /**
@@ -849,7 +899,7 @@ public class Operations {
      * "creator"  -> OPEN,              RESOLVED, CLOSED
      * "assignee" -> OPEN, IN PROGRESS, RESOLVED, CLOSED
      */
-    protected static void changeStatus() throws SQLException, ClassNotFoundException {
+    protected static void change_Status() throws SQLException, ClassNotFoundException {
         int currentUserID = currentUser.getUserID();
         int creatorID     = currentIssue.getCreator().getUserID();
         int assigneeID    = currentIssue.getAssignee().getUserID();
@@ -861,13 +911,83 @@ public class Operations {
         else if (currentUserID == assigneeID)
             IssueQuery.updateStatus( currentIssue.getIssueID(), Open_InProgress_Resolved_Closed());
 
-        else {
+        else
             System.out.println("You are not allowed to CHANGE the STATUS of this issue!");
-            return; // we don't need to fetch latest issues from database as there are no changes
-        }
 
-        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
+        update_Static_Variables();
     }
+
+    /**
+     * allows only the (issue creator) to change the description of "currentIssue"
+     */
+    protected static void change_Issue_Description() throws SQLException, ClassNotFoundException {
+        int currentUserID = currentUser.getUserID();
+        int creatorID     = currentIssue.getCreator().getUserID();
+
+        if (currentUserID == creatorID)                              // new issue description
+            IssueQuery.updateDescription( currentIssue.getIssueID(), inputIssueDescription());
+        else
+            System.out.println("You are not allowed to CHANGE the DESCRIPTION of this issue!");
+
+        update_Static_Variables();
+    }
+
+    /**
+     * obtain & prints the change log of "currentIssue"'s description
+     *
+     * for fun, depends on GUI implementation
+     */
+    protected static void issue_Description_Change_Log() throws SQLException, ClassNotFoundException {
+        Issue[] previousIssues = IssueQuery.getPreviousIssues( selected_Issue_ID );
+
+        System.out.println("\n\n\nIssue Description Change Log");
+        if (previousIssues.length == 0)
+            System.out.println("No changes made yet");
+
+        for (int i = 0; i < previousIssues.length; i++)
+            System.out.printf( "%d) Changes made on (%s)\n%s\n\n", (i+1), previousIssues[i].getTime().toString(), previousIssues[i].getDescription()  );
+    }
+
+    /**
+     * allows only the (commenter) to change the description of his/her comment
+     */
+    protected static void change_Comment() throws SQLException, ClassNotFoundException {
+        int currentUserID       = currentUser.getUserID();
+        int commentIndex        = inputCommentIndex();
+        Comment selectedComment = currentIssue.getComments()[commentIndex];
+        int commenterID         = selectedComment.getCommentUser().getUserID();
+
+
+        if (currentUserID == commenterID)                                         // new comment description
+            CommentQuery.updateCommentDescription( selectedComment.getCommentID(), inputCommentDescription());
+        else
+            System.out.println("You are not allowed to CHANGE this COMMENT!");
+
+        update_Static_Variables();
+    }
+
+    /**
+     * obtain & prints the change log of selected comment
+     *
+     * for fun, depends on GUI implementation
+     */
+    protected static void comment_Change_Log() throws SQLException, ClassNotFoundException {
+        int ii = inputCommentIndex();
+        Comment selectedComment = currentIssue.getComments()[ ii ];
+
+        Comment[] previousComments = CommentQuery.getPreviousComments( selectedComment.getCommentID() );
+
+        System.out.println("\n\n\nComment ("+(ii+1)+") Change Log");
+        if (previousComments.length == 0)
+            System.out.println("No changes made yet");
+
+        for (int i = 0; i < previousComments.length; i++)
+            System.out.printf( "%d) Changes made on (%s)\n%s\n\n", (i+1), previousComments[i].getTime().toString(), previousComments[i].getDescription()  );
+    }
+
+    //// maybe we can design a method to check the ownership????
+
+
 
     /**
      * return "Open" or "Resolved" or "Closed"
@@ -903,14 +1023,10 @@ public class Operations {
             }
         } while (true);
     }
-
-    /**
-     * display all the changelogs of "currentIssue"
-     */
-    protected static void viewChangeLog() {
-
-    }
-
-    protected static void generateReport() {
+    protected static void update_Static_Variables() throws SQLException, ClassNotFoundException {
+        projects = ProjectQuery.getProjects_Unsorted();
+        currentProject = ProjectQuery.getProject( selected_Project_ID );
+        issues = IssueQuery.getIssues( selected_Project_ID );
+        currentIssue = IssueQuery.getIssue( selected_Issue_ID );
     }
 }

@@ -9,9 +9,9 @@ public class Issue {
     private String title;
     private String description; // allowed to change
     private Timestamp time;
-    private String tag;         // allowed to change
-    private int priority;       // allowed to change
-    private String status;      // allowed to change
+    private String tag;
+    private int priority;
+    private String status;
     private Comment[] comments;
 
     public Issue(int issueID, int projectID, User creator, User assignee, String title, String description, Timestamp time, String tag, int priority, String status, Comment[] comments) {

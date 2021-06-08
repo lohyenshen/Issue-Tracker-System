@@ -162,17 +162,78 @@ public class IssueQuery extends Query{
     /**
      * update the "status" of an issue in database
      */
-    public static void updateStatus(int issueID, String newStatus)  throws SQLException, ClassNotFoundException {
+    public static void updateStatus( int issueID, String newStatus)  throws SQLException, ClassNotFoundException {
         String query =
-                "UPDATE issue\n" +
-                "SET status = \""+newStatus+"\"\n" +
-                "WHERE issueID = "+issueID+";";
+                "UPDATE issue " +
+                "SET status = ? " +
+                "WHERE issueID = ?";
 
         Connection con = getConnection();
         PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, newStatus);
+        pst.setInt(2, issueID);
         pst.executeUpdate();
-
         pst.close();
         con.close();
+    }
+
+    /**
+     * update the "description", "time" of an issue in database
+     *
+     * "description" - the new description which user entered
+     * "time"        - the time when a user make changes
+     */
+    public static void updateDescription( int issueID, String newDescription)  throws SQLException, ClassNotFoundException {
+        // insert the old record into "issue_change_log" table
+        insert_Into_Issue_Change_Log( issueID );
+
+        // update the details of the issue
+        String query =
+                        "UPDATE issue " +
+                        "SET description = ?, " +
+                        "    time = ? " +
+                        "WHERE issueID = ?;";
+        Connection con = getConnection();
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, newDescription);
+        pst.setTimestamp(2, new Timestamp(new Date(System.currentTimeMillis()).getTime()));
+        pst.setInt(3, issueID);
+        pst.executeUpdate();
+        pst.close();
+        con.close();
+    }
+
+    /**
+     * insert a new record of issue change log once user change the description
+     */
+    private static void insert_Into_Issue_Change_Log( int issueID) throws SQLException, ClassNotFoundException {
+        String query =
+                "INSERT INTO issue_change_log " +
+                "SELECT i.* " +
+                "FROM issue i " +
+                "WHERE issueID = "+issueID+" ;";
+        Connection con = getConnection();
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.executeUpdate();
+        pst.close();
+        con.close();
+    }
+
+
+    /**
+     * return an array of "previousIssues" based on selected_issue_id
+     *
+     * previousIssues
+     * 1) once the creator changes the description of an issue
+     * 2) LATEST  issue's information is stored in (issue table)
+     * 3) CURRENT issue's information is stored in (issue_change_log table)
+     */
+    public static Issue[] getPreviousIssues( int selected_issue_id)  throws SQLException, ClassNotFoundException {
+        String query =
+                        "SELECT * " +
+                        "FROM issue_change_log " +
+                        "WHERE issueID = "+selected_issue_id+" " +
+                        "ORDER BY time DESC ;";
+        return constructIssues( constructResultSet(query) );
     }
 }

@@ -1,4 +1,0 @@
-1) GUI (include undo/redo)
-2) Report Generation
-
-3) Change Log
