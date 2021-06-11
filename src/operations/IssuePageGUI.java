@@ -173,7 +173,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(4, 4, 4)
-                .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jIssuesLayout.createSequentialGroup()
                         .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTissueID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,14 +184,17 @@ public class IssuePageGUI extends javax.swing.JFrame {
                             .addComponent(jTpriority, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                             .addGroup(jIssuesLayout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTdate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6)
-                            .addComponent(jScrollPane1)))
+                                .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jIssuesLayout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTdate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jTtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jIssuesLayout.setVerticalGroup(
             jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,8 +232,8 @@ public class IssuePageGUI extends javax.swing.JFrame {
                         .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTassignee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jbBack1.setText("Back");
@@ -294,34 +297,37 @@ public class IssuePageGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jbComments, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jbeditDes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jbchangelog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(jbComments, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbeditDes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jbchangelog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbComments, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbeditDes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbchangelog, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19)
+                .addComponent(jIssues, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbComments, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbeditDes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbchangelog, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -329,7 +335,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCommentsActionPerformed
-        CommentsGUI2 commt = new CommentsGUI2(selected_Issue_ID,currentUser);
+        CommentsGUI2 commt = new CommentsGUI2(selected_Project_ID,selected_Issue_ID,currentUser);
         commt.setVisible(true);
         dispose();
         
@@ -337,14 +343,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCommentsActionPerformed
 
     private void jbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStatusActionPerformed
-//testing
-//        try {
-//            currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-//        }
-//        catch (SQLException | ClassNotFoundException a){
-//            
-//        }
-//        
+
         try {
         currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
         }
@@ -355,7 +354,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
         int currentUserID = currentUser.getUserID();
         int creatorID     = currentIssue.getCreator().getUserID();
         int assigneeID    = currentIssue.getAssignee().getUserID();
-//testing
+
 
         String[] newStatus;
         
@@ -388,15 +387,18 @@ public class IssuePageGUI extends javax.swing.JFrame {
                 newStatus[0]           
             );
         
-            JOptionPane.showMessageDialog(
-                this,
-                "You have changed the status to: " + status,
-                "Status Changed",
-                JOptionPane.INFORMATION_MESSAGE
-            );
         
             try {
-                IssueQuery.updateStatus(currentIssue.getIssueID(), status);
+                if(status!=null){
+                    IssueQuery.updateStatus(currentIssue.getIssueID(), status);
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "You have changed the status to: " + status,
+                        "Status Changed",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    
+                }
             }
                 catch (SQLException | ClassNotFoundException a){
 
@@ -406,7 +408,24 @@ public class IssuePageGUI extends javax.swing.JFrame {
     }
     
     private void jbchangelogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbchangelogActionPerformed
-        //viewChangeLog();
+        Issue[] previousIssues=null;
+        try {
+            previousIssues = IssueQuery.getPreviousIssues( selected_Issue_ID );
+            if (previousIssues.length == 0)
+                JOptionPane.showMessageDialog(null, "No changes made!");
+            else{
+                IssueDesChangeLog idcl=new IssueDesChangeLog(selected_Project_ID,selected_Issue_ID,currentUser);
+                idcl.setVisible(true);
+                this.dispose();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }//GEN-LAST:event_jbchangelogActionPerformed
 
     private void jbBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBack1ActionPerformed
@@ -424,9 +443,16 @@ public class IssuePageGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jbBack1ActionPerformed
 
     private void jbeditDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeditDesActionPerformed
-        EditIssueDescription edit = new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser);
-        edit.setVisible(true);
-        this.dispose();
+        EditIssueDescription edit;
+        try {
+            edit = new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser);
+            edit.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbeditDesActionPerformed
 
     private void jTtitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTtitleActionPerformed
@@ -463,12 +489,6 @@ public class IssuePageGUI extends javax.swing.JFrame {
 
         void display() {
 
-//        try {
-//        currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-//        }
-//        catch (SQLException | ClassNotFoundException a){
-//            
-//        }
         
         try {
         currentIssue        = IssueQuery.getIssue( selected_Issue_ID );

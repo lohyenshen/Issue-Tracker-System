@@ -4,9 +4,10 @@ import classes.Issue;
 import classes.Project;
 import classes.User;
 import database.IssueQuery;
-import database.ProjectQuery;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,12 +39,13 @@ public class EditIssueDescription extends javax.swing.JFrame {
     /**
      * Creates new form EditIssueDescription
      */
-    public EditIssueDescription(int projectID,int issueID, User currentUser) {
+    public EditIssueDescription(int projectID,int issueID, User currentUser) throws SQLException, ClassNotFoundException {
         initComponents();
         selected_Project_ID=projectID;
         selected_Issue_ID=issueID;
         this.currentUser=currentUser;
         this.setLocationRelativeTo(null);
+        jtEdit.setText(IssueQuery.getIssue(selected_Issue_ID).getDescription());
     }
 
     /**
@@ -61,7 +63,7 @@ public class EditIssueDescription extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtEdit = new javax.swing.JTextArea();
-        jbBack1 = new javax.swing.JButton();
+        done = new javax.swing.JButton();
         jbBack = new javax.swing.JButton();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4), "Comments", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
@@ -104,25 +106,25 @@ public class EditIssueDescription extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jbBack1.setText("Done");
-        jbBack1.setMargin(new java.awt.Insets(2, 10, 2, 10));
-        jbBack1.setMaximumSize(new java.awt.Dimension(65, 25));
-        jbBack1.setMinimumSize(new java.awt.Dimension(65, 25));
-        jbBack1.setPreferredSize(new java.awt.Dimension(65, 25));
-        jbBack1.addActionListener(new java.awt.event.ActionListener() {
+        done.setText("Done");
+        done.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        done.setMaximumSize(new java.awt.Dimension(65, 25));
+        done.setMinimumSize(new java.awt.Dimension(65, 25));
+        done.setPreferredSize(new java.awt.Dimension(65, 25));
+        done.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbBack1ActionPerformed(evt);
+                doneActionPerformed(evt);
             }
         });
 
@@ -148,7 +150,7 @@ public class EditIssueDescription extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jbBack, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(380, 380, 380)
-                .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +160,7 @@ public class EditIssueDescription extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jbBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -173,37 +175,26 @@ public class EditIssueDescription extends javax.swing.JFrame {
         issue.display();
     }//GEN-LAST:event_jbBackActionPerformed
 
-    private void jbBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBack1ActionPerformed
-//testing
-        try {
-        currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
-        
+    private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
         try {
         currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
+        int currentUserID = currentUser.getUserID();
+        int creatorID     = currentIssue.getCreator().getUserID();
+
+        if (currentUserID == creatorID)                              // new issue description
+            IssueQuery.updateDescription( currentIssue.getIssueID(),  jtEdit. getText());
         }
         catch (SQLException | ClassNotFoundException a){
             
         }
-       
-        int currentUserID = currentUser.getUserID();
-        int creatorID     = currentIssue.getCreator().getUserID();
-        int assigneeID    = currentIssue.getAssignee().getUserID();
-//testing
 
-//... incomplete ...
-        jtEdit. getText();
-//... incomplete ...
         
         IssuePageGUI issue = new IssuePageGUI(selected_Project_ID,selected_Issue_ID,currentUser);
         issue.setVisible(true);
         dispose();
 
         issue.display();
-    }//GEN-LAST:event_jbBack1ActionPerformed
+    }//GEN-LAST:event_doneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,18 +226,24 @@ public class EditIssueDescription extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser).setVisible(true);
+                try {
+                    new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser).setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EditIssueDescription.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(EditIssueDescription.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton done;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbBack;
-    private javax.swing.JButton jbBack1;
     private javax.swing.JTextArea jtComments;
     private javax.swing.JTextArea jtEdit;
     // End of variables declaration//GEN-END:variables

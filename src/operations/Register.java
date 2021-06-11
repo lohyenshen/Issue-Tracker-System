@@ -144,27 +144,30 @@ public class Register extends javax.swing.JFrame {
 
             
             // check if any field is empty
-            if(email.equals("") || password.equals("") || resetPassword.equals("")){
+            if(name.equals("") || email.equals("") || password.equals("") || resetPassword.equals("")){
                 JOptionPane.showMessageDialog(null, "ALERT!Please enter all requirement field");
             }
 
             // check if email entered is in valid email format
-            if (!email.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-zA-Z0-9_+&*-]+)*@" +"(?:[a-zA-Z0-9-]+\\.)+[a-z" +"A-Z]{2,7}$")){;
+            else if (!email.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-zA-Z0-9_+&*-]+)*@" +"(?:[a-zA-Z0-9-]+\\.)+[a-z" +"A-Z]{2,7}$")){;
                 JOptionPane.showMessageDialog(null, "Invalid Email!", "Error!",1);
             }
-            // check whether has the entered email been registered before (ensure no duplicated email)
-            for (User user : users) {
-                if (email.getText().equals(user.getEmail())) {
-                    JOptionPane.showMessageDialog(null, "THIS EMAIL IS REGISTERED BEFORE! ", "Error!",1);
-                    break;
-                }
-            }
-            if(!password.getText().equals(resetPassword.getText())){
+            
+            else if(!password.getText().equals(resetPassword.getText())){
                 JOptionPane.showMessageDialog(null,"Password is not matched!");
                 password.setText("");
                 resetPassword.setText("");
             }
             else{
+                // check whether has the entered email been registered before (ensure no duplicated email)
+                
+                for (User user : users) {
+                    if (email.getText().equals(user.getEmail())) {
+                        JOptionPane.showMessageDialog(null, "THIS EMAIL IS REGISTERED BEFORE! ", "Error!",1);
+                        break;
+                    }
+                }
+                
                 User newUser= new User(0,name.getText(),email.getText(),password.getText());
                 JOptionPane.showMessageDialog(null,"Account created successfully, Please proceed to login");
                 UserQuery.insertNewUser(newUser);
@@ -174,7 +177,7 @@ public class Register extends javax.swing.JFrame {
             }
             
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e);
         }
 
     }//GEN-LAST:event_registerActionPerformed

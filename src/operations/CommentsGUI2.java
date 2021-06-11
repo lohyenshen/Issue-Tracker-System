@@ -14,6 +14,8 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,10 +43,13 @@ public class CommentsGUI2 extends javax.swing.JFrame {
     /**
      * Creates new form CommentsGUI2
      */
-    public CommentsGUI2(int issueID,User currentUser) {
+    public CommentsGUI2(int projectID,int issueID,User currentUser) {
         initComponents();
+        selected_Project_ID=projectID;
         selected_Issue_ID=issueID;
         this.currentUser=currentUser;
+        this.setLocationRelativeTo(null);
+        display();
     }
 
     /**
@@ -162,14 +167,6 @@ public class CommentsGUI2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAddReactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddReactionActionPerformed
-//testing
-        try {
-        selected_Project_ID = 1;
-        currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
         
         try {
         
@@ -180,9 +177,7 @@ public class CommentsGUI2 extends javax.swing.JFrame {
         }
        
         int currentUserID = currentUser.getUserID();
-        int creatorID     = currentIssue.getCreator().getUserID();
-        int assigneeID    = currentIssue.getAssignee().getUserID();
-//testing        
+              
         
         String[] reactions = {"LIKE", "LOVE", "HAHA", "WOW", "SAD", "ANGRY"};
         String commentIndex;
@@ -223,8 +218,6 @@ public class CommentsGUI2 extends javax.swing.JFrame {
                     try {
                         ReactionQuery.updateReaction( currentUserID, currentComment.getCommentID(), reaction );
 
-//                        currrentProject = ProjectQuery.getProject(selected_Project_ID);
-//                        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
                     }
                     catch (SQLException | ClassNotFoundException a){
 
@@ -262,17 +255,8 @@ public class CommentsGUI2 extends javax.swing.JFrame {
     }
         
     private void jbAddCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddCommentActionPerformed
-//testing
+
         try {
-        selected_Project_ID = 1;
-        currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
-        
-        try {
-        selected_Issue_ID   = 1;
         currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
         }
         catch (SQLException | ClassNotFoundException a){
@@ -280,9 +264,7 @@ public class CommentsGUI2 extends javax.swing.JFrame {
         }
        
         int currentUserID = currentUser.getUserID();
-        int creatorID     = currentIssue.getCreator().getUserID();
-        int assigneeID    = currentIssue.getAssignee().getUserID();
-//testing        
+        
         
         String comment = (String)JOptionPane.showInputDialog(
             this,
@@ -326,44 +308,31 @@ public class CommentsGUI2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jbBackActionPerformed
 
     private void jbeditCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeditCommentActionPerformed
-//testing
-        try {
-        selected_Project_ID = 1;
-        currrentProject     = ProjectQuery.getProject(selected_Project_ID);
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
-        
-        try {
-//        selected_Issue_ID   = 1;
-        currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
-       
         int currentUserID = currentUser.getUserID();
-        int creatorID     = currentIssue.getCreator().getUserID();
-        int assigneeID    = currentIssue.getAssignee().getUserID();
-//testing        
-        
+        Comment[] comments=null;
         String commentIndex;
+        int index;
         
+        try {
+
+            comments=CommentQuery.getComments(selected_Issue_ID);
             commentIndex = (String)JOptionPane.showInputDialog(
-                    this,
-                    "Choose comment to react: ",
-                    "Comment Selection",
-                    JOptionPane.PLAIN_MESSAGE
-            );
-            
+                            this,
+                            "Choose comment to edit: ",
+                            "Comment Selection",
+                            JOptionPane.PLAIN_MESSAGE
+                            );
+
             if(commentIndex == null || (commentIndex != null && ("".equals(commentIndex))))   
                 return;
             
-            try{
-                int index = Integer.parseInt(commentIndex)-1;
+            else
+                index = Integer.parseInt(commentIndex)-1;
 
-                if (isNumber(commentIndex) && index>=0 && index<currentIssue.getComments().length) {
+            if (isNumber(commentIndex) && index>=0 && index<comments.length) {
+                Comment selectedComment=comments[index];
+                
+                if(selectedComment.getCommentUser().getUserID()==currentUser.getUserID()){
                     String comment = (String)JOptionPane.showInputDialog(
                     this,
                     "Enter your new comment: ",
@@ -373,40 +342,29 @@ public class CommentsGUI2 extends javax.swing.JFrame {
 
                     if(comment == null || (comment != null && ("".equals(comment))))   
                         return;
-
-                    JOptionPane.showMessageDialog(
-                         this,
-                         "You have edited your comment on the current issue: \"" + comment + "\"" ,
-                         "Comment Edited",
-                         JOptionPane.INFORMATION_MESSAGE
-                    );
-
-                    comment += "\n";
-
-    //for now it is being added as new comment
-    //...incomplete...            
-                    try {
-                        Comment newComment = new Comment(0, currentIssue.getIssueID(), currentUser, new Timestamp(new Date(System.currentTimeMillis()).getTime()), comment, new Reactions(0,0,0,0,0,0));
-                        CommentQuery.insertNewComment( newComment );
-
-//                        currrentProject = ProjectQuery.getProject(selected_Project_ID);
-//                        currentIssue = IssueQuery.getIssue(selected_Issue_ID);
-                    }
-                    catch (SQLException | ClassNotFoundException a){
+                    else{                                                                       // new comment description
+                        CommentQuery.updateCommentDescription( selectedComment.getCommentID(), comment);           
+                        JOptionPane.showMessageDialog(
+                             this,
+                             "You have edited your comment on the current issue: \"" + comment + "\"" ,
+                             "Comment Edited",
+                             JOptionPane.INFORMATION_MESSAGE
+                        );
 
                     }
-    //...incomeplete...
-    }
-                else {
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Invalid comment selected!",
-                        "Comment Selection Error",
-                        JOptionPane.WARNING_MESSAGE
-                    );
+
                 }
-            }
-            catch (NumberFormatException e){
+                else{
+                    JOptionPane.showMessageDialog(
+                             this,
+                             "You are not allowed to edit this comment!" ,
+                             "ERROR!",
+                             JOptionPane.INFORMATION_MESSAGE
+                            );
+                }
+
+           }
+            else {
                 JOptionPane.showMessageDialog(
                     this,
                     "Invalid comment selected!",
@@ -414,26 +372,39 @@ public class CommentsGUI2 extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE
                 );
             }
-
-            display();
-    }//GEN-LAST:event_jbeditCommentActionPerformed
-
-    private void jbchangelogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbchangelogActionPerformed
-        //viewChangeLog();
-    }//GEN-LAST:event_jbchangelogActionPerformed
-    
-    void display() {
-//testing
-        try {
-        selected_Project_ID = 1;
-        currrentProject     = ProjectQuery.getProject(selected_Project_ID);
         }
         catch (SQLException | ClassNotFoundException a){
             
         }
         
+
+        
+            display();
+    }//GEN-LAST:event_jbeditCommentActionPerformed
+
+    private void jbchangelogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbchangelogActionPerformed
+        int index = Integer.parseInt(JOptionPane.showInputDialog(this,"Choose comment to view change log: ","Comment change log",JOptionPane.PLAIN_MESSAGE))-1;
+        Comment selectedComment = currentIssue.getComments()[ index ];
+        Comment[] previousComments=null;
         try {
-//        selected_Issue_ID   = 1;
+            previousComments = CommentQuery.getPreviousComments( selectedComment.getCommentID() );
+        } catch (SQLException ex) {
+            Logger.getLogger(CommentsGUI2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CommentsGUI2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+        if (previousComments.length == 0)
+            JOptionPane.showMessageDialog(null, "No changes made!");
+        else{
+            CommentDesChangeLog idcl=new CommentDesChangeLog(selected_Project_ID,selected_Issue_ID,selectedComment.getCommentID(),currentUser);
+            idcl.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_jbchangelogActionPerformed
+    
+    void display() {       
+        try {
         currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
         }
         catch (SQLException | ClassNotFoundException a){
@@ -442,8 +413,7 @@ public class CommentsGUI2 extends javax.swing.JFrame {
        
         int currentUserID = currentUser.getUserID();
         int creatorID     = currentIssue.getCreator().getUserID();
-        int assigneeID    = currentIssue.getAssignee().getUserID();
-//testing
+        
 
         jtComments.setText("");
         
@@ -486,7 +456,7 @@ public class CommentsGUI2 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CommentsGUI2 commt = new CommentsGUI2(selected_Issue_ID,currentUser);
+                CommentsGUI2 commt = new CommentsGUI2(selected_Project_ID,selected_Issue_ID,currentUser);
                 commt.setVisible(true);
                 commt.display();
             }

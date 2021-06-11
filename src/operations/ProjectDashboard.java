@@ -36,6 +36,8 @@ public class ProjectDashboard extends javax.swing.JFrame {
      */
     static Project[] projects;
     static User currentUser;
+    private static String path_To_R_Script_Exe;
+    
     public ProjectDashboard(User currentUser) throws SQLException, ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -172,6 +174,43 @@ public class ProjectDashboard extends javax.swing.JFrame {
         else
             return null;
     }
+    
+    // Report
+    private static void deleteAllFiles() {
+        File dir = new File( System.getProperty("user.dir") + "\\Report Generation");
+        File[] files = dir.listFiles();
+
+        if (files == null)
+            return;
+        for (File file : files)
+            file.delete();
+    }
+    protected static String getPathTo_R_Script_Exe() throws IOException {
+        if (path_To_R_Script_Exe != null)
+            return path_To_R_Script_Exe;
+
+
+        File dir = new File( "C:\\Program Files" );
+        find_R_Script_Exe( dir.listFiles() );
+        if (path_To_R_Script_Exe == null)
+            throw new IOException("Could Not find path to Rscript.exe");
+        return path_To_R_Script_Exe;
+    }
+    private static void find_R_Script_Exe( File[] listFiles) {
+        if (listFiles == null)  return;
+
+        for (File f : listFiles){
+            if (f.isDirectory())
+                find_R_Script_Exe( f.listFiles() );
+
+            else {
+                if (f.getAbsolutePath().endsWith("bin\\Rscript.exe")){
+                    path_To_R_Script_Exe = f.getAbsolutePath();
+                    return;
+                }
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -255,6 +294,11 @@ public class ProjectDashboard extends javax.swing.JFrame {
         });
 
         report.setText("Report");
+        report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportActionPerformed(evt);
+            }
+        });
 
         logout.setText("Log Out");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -296,16 +340,16 @@ public class ProjectDashboard extends javax.swing.JFrame {
                         .addComponent(projectName)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(73, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(50, 50, 50)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +378,9 @@ public class ProjectDashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,6 +475,31 @@ public class ProjectDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_refreshActionPerformed
 
+    private void reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportActionPerformed
+        generate_Report_Folder_If_Not_Exits();
+        deleteAllFiles();
+
+        String R_Script_Exe;
+        try {
+            R_Script_Exe        = getPathTo_R_Script_Exe();
+            String R_code       = System.getProperty("user.dir") + "\\Rscript\\report_generation_code.R";
+
+            ProcessBuilder pb = new ProcessBuilder(R_Script_Exe, "", R_code);
+            pb.start();
+            JOptionPane.showMessageDialog(null,"REPORTS GENERATED SUCCESSFULLY");
+        } catch (IOException ex) {
+            Logger.getLogger(ProjectDashboard.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(null,"REPORTS GENERATED FAILEDY");
+        }
+           
+
+        
+    }//GEN-LAST:event_reportActionPerformed
+private static void generate_Report_Folder_If_Not_Exits() {
+        File report_directory = new File(System.getProperty("user.dir") + "\\Report Generation");
+        if (!report_directory.exists())
+            report_directory.mkdirs();
+    }
     /**
      * @param args the command line arguments
      */

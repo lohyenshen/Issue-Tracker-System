@@ -32,7 +32,6 @@ public class IssueDashboard extends javax.swing.JFrame {
     
     public IssueDashboard(int projectID,User currentUser) throws SQLException, ClassNotFoundException{ 
         initComponents();
-        this.ans=ans;
         this.projectID=projectID;
         this.currentUser=currentUser;
         display_Issue_Dashboard(projectID,1);
@@ -138,7 +137,15 @@ public class IssueDashboard extends javax.swing.JFrame {
             new String [] {
                 "ID", "Title", "Status", "Tag", "Priority", "Time", "Assignee", "CreatedBy"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         issueTable.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 issueTableFocusGained(evt);
@@ -166,6 +173,11 @@ public class IssueDashboard extends javax.swing.JFrame {
         });
 
         time.setText("Time");
+        time.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeActionPerformed(evt);
+            }
+        });
 
         status.setText("Status");
         status.addActionListener(new java.awt.event.ActionListener() {
@@ -240,10 +252,10 @@ public class IssueDashboard extends javax.swing.JFrame {
                                 .addGap(173, 173, 173)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(searchTextField))))
+                                .addComponent(searchTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addIssue)
                 .addGap(23, 23, 23))
@@ -278,10 +290,10 @@ public class IssueDashboard extends javax.swing.JFrame {
                                     .addComponent(tag)
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(showAll, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addComponent(showAll, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,10 +319,10 @@ public class IssueDashboard extends javax.swing.JFrame {
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
         try {
             int reaction = 6;
-            ans = JOptionPane.showInputDialog("Enter status to be filtered");
+            ans = JOptionPane.showInputDialog("Enter status to be filtered(Open, Closed, In Progress)");
             while (ans.isEmpty() || ans.isBlank()){
                 JOptionPane.showMessageDialog(null,"Status cannot be BLANK or EMPTY");
-                ans = JOptionPane.showInputDialog("Enter status to be filtered");}
+                ans = JOptionPane.showInputDialog("Enter status to be filtered(Open, Closed, In Progress)");}
             DefaultTableModel model = (DefaultTableModel)issueTable.getModel();
             model.setRowCount(0); 
             display_Issue_Dashboard(projectID,reaction);
@@ -335,9 +347,9 @@ public class IssueDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
        int column = 0;
        int row = issueTable.getSelectedRow();
-       int issueID = (Integer) issueTable.getModel().getValueAt(row, column);
+       int selected_Issue_ID = (Integer) issueTable.getModel().getValueAt(row, column);
         try {
-            IssuePageGUI issuePage = new IssuePageGUI(projectID,issueID, currentUser);
+            IssuePageGUI issuePage = new IssuePageGUI(projectID,selected_Issue_ID, currentUser);
             issuePage.setVisible(true);
             this.dispose();
         } catch (Exception e) {
@@ -362,34 +374,16 @@ public class IssueDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }                                        
 
-    private void timeActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        String[] options={"Ascending","Descending"};
-        
-        try {
-            int reaction=JOptionPane.showOptionDialog(null, "Do you want to sort in ascending or descending order?","Sorting..",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
-            if(reaction==0){
-                reaction=4;
-            }
-            else if(reaction==1)
-                reaction=5;
-            DefaultTableModel model = (DefaultTableModel)issueTable.getModel();
-            model.setRowCount(0);   
-            display_Issue_Dashboard(projectID,reaction);
-        
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }//GEN-LAST:event_priorityActionPerformed
 
     private void tagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tagActionPerformed
         try {
             int reaction = 7;
-            ans = JOptionPane.showInputDialog("Enter tag to be filtered");
+            ans = JOptionPane.showInputDialog("Enter tag to be filtered(Frontend, Backend, cmty:bug-report)");
             while (ans.isEmpty() || ans.isBlank()){
                 JOptionPane.showMessageDialog(null,"Tag cannot be BLANK or EMPTY");
-                ans = JOptionPane.showInputDialog("Enter tag to be filtered");}
+                ans = JOptionPane.showInputDialog("Enter tag to be filtered(Frontend, Backend, cmty:bug-report)");}
             DefaultTableModel model = (DefaultTableModel)issueTable.getModel();
             model.setRowCount(0); 
             display_Issue_Dashboard(projectID,reaction);
@@ -454,25 +448,30 @@ public class IssueDashboard extends javax.swing.JFrame {
                 display_Issue_Dashboard(projectID,1);
             }
         
-            
-//            int issueID   = 0; // actual issueID will be handled by MySQL auto increment feature
-//            int projectID = selected_Project_ID;
-//            User creator  = currentUser;
-//            User assignee = UserQuery.getUser(inputAssigneeID());
-//            String title = inputTitle();
-//            Timestamp time = new Timestamp(new Date(System.currentTimeMillis()).getTime());
-//            String tag   = inputTag();
-//            int priority = inputPriority();
-//            String description = inputIssueDescription();
-//            String status = "Open";
-//            
-//            Issue newIssue = new Issue( issueID, projectID, creator, assignee, title, description, time, tag, priority, status, null);
-//            IssueQuery.insertNewIssue( newIssue );
         }
         catch (Exception e) {
            JOptionPane.showMessageDialog(null, "Issue not added");
         }
     }//GEN-LAST:event_addIssueActionPerformed
+
+    private void timeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeActionPerformed
+        String[] options={"Ascending","Descending"};
+        
+        try {
+            int reaction=JOptionPane.showOptionDialog(null, "Do you want to sort in ascending or descending order?","Sorting..",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
+            if(reaction==0){
+                reaction=4;
+            }
+            else if(reaction==1)
+                reaction=5;
+            DefaultTableModel model = (DefaultTableModel)issueTable.getModel();
+            model.setRowCount(0);   
+            display_Issue_Dashboard(projectID,reaction);
+        
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_timeActionPerformed
 
     /**
      * @param args the command line arguments

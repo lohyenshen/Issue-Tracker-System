@@ -89,7 +89,7 @@
               <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
               <Component id="jbBack" min="-2" pref="80" max="-2" attributes="0"/>
               <EmptySpace min="380" pref="380" max="-2" attributes="0"/>
-              <Component id="jbBack1" min="-2" pref="80" max="-2" attributes="0"/>
+              <Component id="done" min="-2" pref="80" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,7 +101,7 @@
               <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jbBack" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbBack1" min="-2" max="-2" attributes="0"/>
+                  <Component id="done" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -163,7 +163,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jbBack1">
+    <Component class="javax.swing.JButton" name="done">
       <Properties>
         <Property name="text" type="java.lang.String" value="Done"/>
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
@@ -180,7 +180,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbBack1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="doneActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbBack">
