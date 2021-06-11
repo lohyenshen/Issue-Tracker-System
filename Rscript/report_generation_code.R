@@ -2,6 +2,10 @@
 
 # establish connection with database
 rm(list = ls())
+# install.packages('RMySQL')
+# install.packages('dplyr')
+# install.packages('ggplot2')
+# install.packages('lubridate')
 library('RMySQL')
 library('dplyr')
 library('ggplot2')
@@ -37,12 +41,23 @@ issue_by_status <-
     summarise( frequency = n() )
 
 pdf( paste0(getwd(),'/Report Generation/Number of Issues for each STATUS.pdf') )
-ggplot(issue_by_status, aes(x=status, y=frequency, fill=status)) +
-  geom_bar(stat="identity") +
-  geom_text(aes(label=frequency), vjust=1.6, color="black", size=5) +
-  ggtitle('Number of Issues for each STATUS')
-  theme_minimal()
+# ggplot(issue_by_status, aes(x=status, y=frequency, fill=status)) +
+#   geom_bar(stat="identity") +
+#   geom_text(aes(label=frequency), vjust=1.6, color="black", size=5) +
+#   ggtitle('Number of Issues for each STATUS') +
+#   theme_minimal()
+ggplot(issue_by_status, aes(x="", y=frequency, fill=status)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+  geom_text(aes(label = frequency), position = position_stack(vjust=0.5), color="black", size=5) +
+  ggtitle('Number of Issues for each STATUS') +
+  labs(x = NULL, y = NULL, fill = NULL)
 dev.off()
+
+
+
+
+
 
 
 ########################################################################################################################
@@ -63,8 +78,8 @@ pdf( paste0(getwd(),'/Report Generation/Number of Issues for each TAG.pdf') )
 ggplot(issue_by_label, aes(x=tag, y=frequency, fill=tag)) +
   geom_bar(stat="identity") +
   geom_text(aes(label=frequency), vjust=1.6, color="black", size=5) +
-  ggtitle(most_frequent_label_title)
-  theme_minimal()
+  ggtitle(most_frequent_label_title) +
+  theme_classic()
 dev.off()
 
 
@@ -115,14 +130,19 @@ pdf( paste0(getwd(),'/Report Generation/Number of Issues Solved per ASSIGNEE.pdf
 ggplot(assignee_issuesResolved, aes(x=assignee_name, y=issues_resolved, fill=assignee_name)) +
   geom_bar(stat="identity") +
   geom_text(aes(label=issues_resolved), vjust=1.6, color="black", size=5) +
-  ggtitle(top_performing_assignee_title)
-  theme_minimal()
+  ggtitle(top_performing_assignee_title) +
+  theme_classic()
 dev.off()
 
 
 
 ########################################################################################################################
+# line graph - issue frequency VS time (day/week/month)
+
+
+
+
+
+
 
 dbDisconnect(con)
-
-
