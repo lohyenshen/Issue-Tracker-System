@@ -7,41 +7,20 @@ Requirement
 4) Issue Page           -
 5) Issue Lifecycle      -
 6) Search Feature       -
-7) Undo/Redo            - TODO, Upload picture
+7) Undo/Redo            - TODO,  Upload picture
 8) Data Storage         -
 9) Report Generation    -
 10)ChangeLog            -
 
-
----------------------------
-EXTRA FEATURES
----------------------------
-(Statistics)
-(((((Report Generation)))))
-    (Java R)
-    - https://rforge.net/Rserve/files/
-    - Rserve
-
-    (SQL R)
-
-
-(Advance Searching)
-Full Text Fuzzy Searching
-    - SOUNDEX
-    - https://github.com/xdrop/fuzzywuzzy
+YY & SW
+GUI - supports add picture in comment
 
 
 
+HJ & DL
+undo/redo - using stack
+	    (code out a separate GUI component that returns a String)
 
 
-(Machine Learning in "Tagging")
-    Deeplearning4j
-
-
-
-
-(Clustering Analysis)
-    - KNN
-    - Word Embedding, PCA, t-SNE
-
-
+Sunday - finish src code
+Monday - finish reports

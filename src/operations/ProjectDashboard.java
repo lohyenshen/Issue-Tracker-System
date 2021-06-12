@@ -495,7 +495,7 @@ public class ProjectDashboard extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_reportActionPerformed
-private static void generate_Report_Folder_If_Not_Exits() {
+    private static void generate_Report_Folder_If_Not_Exits() {
         File report_directory = new File(System.getProperty("user.dir") + "\\Report Generation");
         if (!report_directory.exists())
             report_directory.mkdirs();

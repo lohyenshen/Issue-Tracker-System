@@ -9,15 +9,17 @@ public class Comment {
     private Timestamp time;
     private String description; // allowed to change
     private Reactions reactions;
+    private boolean hasPicture;
 
 
-    public Comment(int commentID, int issueID, User commentUser, Timestamp time, String description, Reactions reactions) {
+    public Comment(int commentID, int issueID, User commentUser, Timestamp time, String description, Reactions reactions, boolean hasPicture) {
         this.commentID = commentID;
         this.issueID = issueID;
         this.commentUser = commentUser;
         this.time = time;
         this.description = description;
         this.reactions = reactions;
+        this.hasPicture = hasPicture;
     }
 
 

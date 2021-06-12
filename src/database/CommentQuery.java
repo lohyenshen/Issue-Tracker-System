@@ -21,8 +21,9 @@ public class CommentQuery extends Query{
             Timestamp time      = rs.getTimestamp("time");
             String description  = rs.getString("description");
             Reactions reaction  = ReactionQuery.getReactions( commentID );
+            boolean hasPicture  = rs.getBoolean("hasPicture");
 
-            comments[i] = new Comment(commentID, issueID, commentUser, time, description, reaction);
+            comments[i] = new Comment(commentID, issueID, commentUser, time, description, reaction, hasPicture);
         }
         return comments;
      }
@@ -137,5 +138,15 @@ public class CommentQuery extends Query{
                         "WHERE commentID = "+commentID+" " +
                         "ORDER BY time DESC ;";
         return constructComments( constructResultSet(query) );
+    }
+
+    public static int getLastID() throws SQLException, ClassNotFoundException {
+        String query =
+                "SELECT commentID \n" +
+                        "FROM comment\n" +
+                        "ORDER BY commentID DESC;";
+        ResultSet rs = constructResultSet( query );
+        rs.next();
+        return rs.getInt("commentID");
     }
 }

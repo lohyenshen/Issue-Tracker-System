@@ -12,5 +12,6 @@
     <orderEntry type="library" name="JRI" level="project" />
     <orderEntry type="library" name="REngine" level="project" />
     <orderEntry type="library" name="RserveEngine" level="project" />
+    <orderEntry type="library" name="-Issue-Tracker-System" level="project" />
   </component>
 </module>

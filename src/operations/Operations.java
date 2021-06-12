@@ -621,10 +621,20 @@ public class Operations {
      * insert a new comment into database
      */
     protected static void comment_On_Issue() throws SQLException, ClassNotFoundException {
-        Comment newComment = new Comment( 0,  currentIssue.getIssueID(), currentUser,  new Timestamp(new Date(System.currentTimeMillis()).getTime()), inputCommentDescription(), new Reactions(0,0,0,0,0,0));
+        Comment newComment = new Comment( 
+                0,  
+                currentIssue.getIssueID(), 
+                currentUser,  
+                new Timestamp(new Date(System.currentTimeMillis()).getTime()), 
+                inputCommentDescription(), 
+                new Reactions(0,0,0,0,0,0), 
+                hasPictureOrNot());
         CommentQuery.insertNewComment( newComment );
 
         update_Static_Variables();
+    }
+
+    private static boolean hasPictureOrNot() {
     }
 
     /**
@@ -1028,5 +1038,55 @@ public class Operations {
         currentProject = ProjectQuery.getProject( selected_Project_ID );
         issues = IssueQuery.getIssues( selected_Project_ID );
         currentIssue = IssueQuery.getIssue( selected_Issue_ID );
+    }
+
+    /**
+     * allow user to upload a picture
+     */
+    protected static void uploadPicture() throws IOException, SQLException, ClassNotFoundException {
+        String from = pathToPicture();
+        String to   = System.getProperty("user.dir") + "\\Pictures\\" + CommentQuery.getLastID() + ".png";
+        savePictureToDirectory( from, to );
+    }
+
+
+    /**
+     * return the path where the (json file to be imported) is located
+     */
+    private static String pathToPicture() {
+        JFileChooser f = new JFileChooser();
+        f.setCurrentDirectory( new File(System.getProperty("user.dir")) );
+        FileFilter filter = new FileNameExtensionFilter("png", "png");
+        f.setFileFilter(filter);
+        f.setAcceptAllFileFilterUsed(false);
+        f.setDialogTitle("Choose picture to IMPORT");
+        f.setApproveButtonText("Import this");
+
+        int result = f.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION)
+            return f.getSelectedFile().getAbsolutePath();
+        else
+            return null;
+    }
+    private static void savePictureToDirectory (String from, String to) throws IOException {
+        generate_Picture_Folder_If_Not_Exits();
+
+
+        final int BUFFERSIZE = 5 * 1024;
+        FileInputStream fin   = new FileInputStream(new File(from));
+        FileOutputStream fout = new FileOutputStream(new File(to));
+
+        byte[] buffer = new byte[BUFFERSIZE];
+
+        while (fin.available() != 0) {
+            fin.read(buffer);
+            fout.write(buffer);
+        }
+    }
+
+    private static void generate_Picture_Folder_If_Not_Exits() {
+        File report_directory = new File(System.getProperty("user.dir") + "\\Pictures");
+        if (!report_directory.exists())
+            report_directory.mkdirs();
     }
 }

@@ -64,6 +64,7 @@ CREATE TABLE comment
     userID INT,
     time TIMESTAMP,
     description TEXT,
+    hasPicture BOOLEAN,
 
     PRIMARY KEY(commentID),
     FOREIGN KEY (issueID) REFERENCES issue(issueID),
