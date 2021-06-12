@@ -77,7 +77,8 @@ CREATE TABLE comment_change_log
     issueID INT,
     userID INT,
     time TIMESTAMP,
-    description TEXT
+    description TEXT,
+    hasPicture BOOLEAN
 );
 
 CREATE TABLE reaction

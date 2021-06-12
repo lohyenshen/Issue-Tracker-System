@@ -60,6 +60,10 @@ public class Comment {
         this.commentUser = commentUser;
     }
 
+    public void setHasPicture( boolean hasPicture){
+        this.hasPicture = hasPicture;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -56,6 +56,7 @@ public class Projects_And_Users {
                     System.out.println(i.getTitle());
                     c.setIssueID( IssueQuery.getIssue(i.getTitle()).getIssueID() );     // get actual issueID in database
                     c.setCommentUser( UserQuery.getUser(c.getCommentUser().getName()) );// get actual commentUser (with actual userID in database)
+                    c.setHasPicture(false);
 
                     CommentQuery.insertNewComment( c );
                 }
