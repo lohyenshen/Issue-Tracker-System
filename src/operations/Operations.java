@@ -1062,11 +1062,11 @@ public class Operations {
         f.setDialogTitle("Choose picture to IMPORT");
         f.setApproveButtonText("Import this");
 
-        int result = f.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION)
-            return f.getSelectedFile().getAbsolutePath();
-        else
-            return null;
+        while (true) {
+            int result = f.showOpenDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION)
+                return f.getSelectedFile().getAbsolutePath();
+        }
     }
     private static void savePictureToDirectory (String from, String to) throws IOException {
         generate_Picture_Folder_If_Not_Exits();
