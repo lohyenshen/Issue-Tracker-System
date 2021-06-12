@@ -139,7 +139,7 @@ dev.off()
 ########################################################################################################################
 # line graph - issue frequency VS time (day/week/month)
 
-# week
+# day
 issue <-
   issue_original %>%
     filter( time > (now()-hours(24))  )
