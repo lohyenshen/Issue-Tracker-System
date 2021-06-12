@@ -28,6 +28,10 @@ public class Comment {
         return commentID;
     }
 
+    public boolean hasPicture() {
+        return hasPicture;
+    }
+
     public int getIssueID() {
         return issueID;
     }

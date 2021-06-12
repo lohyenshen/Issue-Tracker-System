@@ -44,7 +44,7 @@ public class CommentQuery extends Query{
      * insert a new record of comment into database
      */
     public static void insertNewComment( Comment c )throws SQLException, ClassNotFoundException {
-        String query = "INSERT INTO comment VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO comment VALUES(?,?,?,?,?,?)";
 
         Connection con = getConnection();
         PreparedStatement pst = con.prepareStatement(query);
@@ -55,6 +55,7 @@ public class CommentQuery extends Query{
         pst.setInt(3, c.getCommentUser().getUserID());
         pst.setTimestamp(4, c.getTime());
         pst.setString(5, c.getDescription());
+        pst.setBoolean(6, c.hasPicture());
         pst.executeUpdate();
 
         pst.close();
