@@ -113,7 +113,7 @@ public class IssueDashboard extends javax.swing.JFrame {
         showAll = new javax.swing.JButton();
         searchTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        exit = new javax.swing.JButton();
+        back = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -219,10 +219,10 @@ public class IssueDashboard extends javax.swing.JFrame {
 
         jLabel3.setText("Search: ");
 
-        exit.setText("Exit");
-        exit.addActionListener(new java.awt.event.ActionListener() {
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitActionPerformed(evt);
+                backActionPerformed(evt);
             }
         });
 
@@ -261,7 +261,7 @@ public class IssueDashboard extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(123, 123, 123))
@@ -298,7 +298,7 @@ public class IssueDashboard extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(logout)
-                            .addComponent(exit))
+                            .addComponent(back))
                         .addGap(24, 24, 24))))
         );
 
@@ -427,7 +427,7 @@ public class IssueDashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_showAllActionPerformed
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         try {
             ProjectDashboard pd=new ProjectDashboard(currentUser);
             pd.setVisible(true);
@@ -435,11 +435,11 @@ public class IssueDashboard extends javax.swing.JFrame {
         } catch (Exception e) {
            JOptionPane.showMessageDialog(null, e);
         }
-    }//GEN-LAST:event_exitActionPerformed
+    }//GEN-LAST:event_backActionPerformed
 
     private void addIssueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addIssueActionPerformed
         try{
-            addIssueFrame frame = new addIssueFrame(projectID,currentUser);
+            AddIssueFrame frame = new AddIssueFrame(projectID,currentUser);
             frame.setVisible(true);
             
             if(!frame.isShowing()){
@@ -518,7 +518,7 @@ public class IssueDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addIssue;
-    private javax.swing.JButton exit;
+    private javax.swing.JButton back;
     private javax.swing.JTable issueTable;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;

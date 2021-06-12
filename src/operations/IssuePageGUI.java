@@ -154,9 +154,12 @@ public class IssuePageGUI extends javax.swing.JFrame {
 
         jLabel6.setText("Description: ");
 
-        jtissueDescription.setColumns(20);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jtissueDescription.setColumns(5);
         jtissueDescription.setRows(5);
         jScrollPane1.setViewportView(jtissueDescription);
+        jtissueDescription.setLineWrap(true);
 
         javax.swing.GroupLayout jIssuesLayout = new javax.swing.GroupLayout(jIssues);
         jIssues.setLayout(jIssuesLayout);
@@ -445,9 +448,16 @@ public class IssuePageGUI extends javax.swing.JFrame {
     private void jbeditDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeditDesActionPerformed
         EditIssueDescription edit;
         try {
-            edit = new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser);
-            edit.setVisible(true);
-            this.dispose();
+            int currentUserID = currentUser.getUserID();
+            int creatorID     = currentIssue.getCreator().getUserID();
+
+            if (currentUserID == creatorID){
+                edit = new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser);
+                edit.setVisible(true);
+                this.dispose();
+                }
+            else
+                JOptionPane.showMessageDialog(null, "You are not allowed to change this issue description!");
         } catch (SQLException ex) {
             Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

@@ -635,6 +635,7 @@ public class Operations {
     }
 
     private static boolean hasPictureOrNot() {
+        return false;
     }
 
     /**
