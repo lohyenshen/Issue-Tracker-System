@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class EditIssueDescription extends javax.swing.JFrame {
 
-    protected static Scanner sc = new Scanner(System.in);
+
 
     protected static String opr;
 
@@ -96,9 +96,17 @@ public class EditIssueDescription extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4), "Editing Issue Desciption...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
         jPanel3.setPreferredSize(new java.awt.Dimension(600, 350));
 
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         jtEdit.setColumns(20);
         jtEdit.setRows(5);
+        jtEdit.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jtEditCaretUpdate(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtEdit);
+        jtEdit.setLineWrap(true);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -172,16 +180,12 @@ public class EditIssueDescription extends javax.swing.JFrame {
         issue.setVisible(true);
         dispose();
 
-        issue.display();
     }//GEN-LAST:event_jbBackActionPerformed
 
     private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
         try {
         currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
-        int currentUserID = currentUser.getUserID();
-        int creatorID     = currentIssue.getCreator().getUserID();
-
-        if (currentUserID == creatorID)                              // new issue description
+                                                                      // new issue description
             IssueQuery.updateDescription( currentIssue.getIssueID(),  jtEdit. getText());
         }
         catch (SQLException | ClassNotFoundException a){
@@ -193,8 +197,11 @@ public class EditIssueDescription extends javax.swing.JFrame {
         issue.setVisible(true);
         dispose();
 
-        issue.display();
     }//GEN-LAST:event_doneActionPerformed
+
+    private void jtEditCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jtEditCaretUpdate
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtEditCaretUpdate
 
     /**
      * @param args the command line arguments
