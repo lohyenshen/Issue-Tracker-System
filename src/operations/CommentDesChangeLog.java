@@ -22,17 +22,17 @@ public class CommentDesChangeLog extends javax.swing.JFrame {
     /**
      * Creates new form CommentDesChangeLog
      */
-    static int projectID;
-    static int issueID;
+
+    static int selected_Issue_ID;
     static User currentUser;
     static int commentID;
-    public CommentDesChangeLog(int projectID,int issueID,int commentID,User currentUser) {
+    
+    public CommentDesChangeLog(int issueID,int commentID,User currentUser) {
         initComponents();
-        this.projectID=projectID;
-        this.issueID=issueID;
+        this.selected_Issue_ID=issueID;
         this.commentID=commentID;
         this.currentUser=currentUser;
-        this.setTitle("Comment Change Log");
+        this.setTitle("Bugs Everywhere SDN BHD");
         display();
         this.setLocationRelativeTo(null);
     }
@@ -68,7 +68,9 @@ public class CommentDesChangeLog extends javax.swing.JFrame {
         changeLogTable = new javax.swing.JTable();
         back = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4), "Comment Changelog", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
 
         changeLogTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,7 +80,29 @@ public class CommentDesChangeLog extends javax.swing.JFrame {
                 "Time", "Comment"
             }
         ));
+        changeLogTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                changeLogTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(changeLogTable);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
 
         back.setText("Back");
         back.addActionListener(new java.awt.event.ActionListener() {
@@ -87,46 +111,51 @@ public class CommentDesChangeLog extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(back)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(back)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        CommentsGUI2 comments=new CommentsGUI2( projectID,issueID, currentUser);
+        CommentsGUI2 comments=new CommentsGUI2( selected_Issue_ID, currentUser);
         comments.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
+
+    private void changeLogTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_changeLogTableMouseClicked
+       Comment[] previousComments;
+       int row = changeLogTable.getSelectedRow();
+        try {
+            previousComments = CommentQuery.getComments( selected_Issue_ID );
+            Comment selectedChangelog=previousComments[row];
+            CommentChangelogDetails changelogDetail = new CommentChangelogDetails(selectedChangelog,currentUser);
+            changelogDetail.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_changeLogTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -158,7 +187,7 @@ public class CommentDesChangeLog extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CommentDesChangeLog(projectID,issueID,commentID, currentUser).setVisible(true);
+                new CommentDesChangeLog(selected_Issue_ID,commentID, currentUser).setVisible(true);
             }
         });
     }

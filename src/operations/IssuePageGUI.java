@@ -1,12 +1,9 @@
 package operations;
 
 import classes.Issue;
-import classes.Project;
 import classes.User;
 import database.IssueQuery;
-import database.ProjectQuery;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,27 +21,44 @@ import javax.swing.JOptionPane;
  */
 public class IssuePageGUI extends javax.swing.JFrame {
     
-    protected static Scanner sc = new Scanner(System.in);
-    protected static String opr;
+
     protected static User currentUser ;
-    protected static Project[] projects;
-    protected static int selected_Project_ID;
-    protected static Project currrentProject;
-    protected static Issue[] issues;
     protected static int selected_Issue_ID;
     protected static Issue currentIssue;
 
     /**
      * Creates new form IsuuePageGUI
      */
-    public IssuePageGUI(int projectID, int issueID, User currentUser) {
+    public IssuePageGUI( int issueID, User currentUser) throws SQLException, ClassNotFoundException {
         initComponents();
-        selected_Project_ID=projectID;
         selected_Issue_ID=issueID;
         this.currentUser=currentUser;
+        currentIssue=IssueQuery.getIssue(selected_Issue_ID);
         this.setLocationRelativeTo(null);
+        this.setTitle("Bugs Everywhere SDN BHD");
         display();
     }
+    
+    public void display() {
+
+        try {
+        currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
+        }
+        catch (SQLException | ClassNotFoundException a){
+            
+        }
+       
+            jTtitle.setText(currentIssue.getTitle());
+            jTissueID.setText(String.valueOf(currentIssue.getIssueID()));
+            jTstatus.setText(currentIssue.getStatus());
+            jTtag.setText(currentIssue.getTag());
+            jTpriority.setText(String.valueOf(currentIssue.getPriority()));
+            jTdate.setText(currentIssue.getTime().toString());
+            jTcreator.setText(currentIssue.getCreator().getName());
+            jTassignee.setText(currentIssue.getAssignee().getName());
+            
+            jtissueDescription.setText(currentIssue.getDescription());
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,48 +118,56 @@ public class IssuePageGUI extends javax.swing.JFrame {
 
         jLabel9.setText("Assigned to:");
 
+        jTtitle.setEditable(false);
         jTtitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTtitleActionPerformed(evt);
             }
         });
 
+        jTassignee.setEditable(false);
         jTassignee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTassigneeActionPerformed(evt);
             }
         });
 
+        jTcreator.setEditable(false);
         jTcreator.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTcreatorActionPerformed(evt);
             }
         });
 
+        jTissueID.setEditable(false);
         jTissueID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTissueIDActionPerformed(evt);
             }
         });
 
+        jTtag.setEditable(false);
         jTtag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTtagActionPerformed(evt);
             }
         });
 
+        jTstatus.setEditable(false);
         jTstatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTstatusActionPerformed(evt);
             }
         });
 
+        jTdate.setEditable(false);
         jTdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTdateActionPerformed(evt);
             }
         });
 
+        jTpriority.setEditable(false);
         jTpriority.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTpriorityActionPerformed(evt);
@@ -156,6 +178,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        jtissueDescription.setEditable(false);
         jtissueDescription.setColumns(5);
         jtissueDescription.setRows(5);
         jScrollPane1.setViewportView(jtissueDescription);
@@ -187,7 +210,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
                             .addComponent(jTpriority, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addGroup(jIssuesLayout.createSequentialGroup()
                                 .addGroup(jIssuesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jIssuesLayout.createSequentialGroup()
@@ -195,7 +218,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTdate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel6))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 195, Short.MAX_VALUE))))
                     .addComponent(jTtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -300,22 +323,22 @@ public class IssuePageGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jbBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addComponent(jbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbComments, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(33, 33, 33)
                         .addComponent(jbeditDes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGap(37, 37, 37)
                         .addComponent(jbchangelog, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jIssues, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,24 +359,15 @@ public class IssuePageGUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jbCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCommentsActionPerformed
-        CommentsGUI2 commt = new CommentsGUI2(selected_Project_ID,selected_Issue_ID,currentUser);
+        CommentsGUI2 commt = new CommentsGUI2(selected_Issue_ID,currentUser);
         commt.setVisible(true);
-        dispose();
-        
-        commt.display();
+        this.dispose();
     }//GEN-LAST:event_jbCommentsActionPerformed
 
     private void jbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStatusActionPerformed
 
-        try {
-        currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
-       
         int currentUserID = currentUser.getUserID();
         int creatorID     = currentIssue.getCreator().getUserID();
         int assigneeID    = currentIssue.getAssignee().getUserID();
@@ -379,7 +393,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbStatusActionPerformed
 
-    void changeStatus(String[] newStatus) {
+    public void changeStatus(String[] newStatus) {
         String status = (String)JOptionPane.showInputDialog(
                 this,
                 "Choose new status of current issue: ",
@@ -414,13 +428,15 @@ public class IssuePageGUI extends javax.swing.JFrame {
         Issue[] previousIssues=null;
         try {
             previousIssues = IssueQuery.getPreviousIssues( selected_Issue_ID );
+            
             if (previousIssues.length == 0)
                 JOptionPane.showMessageDialog(null, "No changes made!");
             else{
-                IssueDesChangeLog idcl=new IssueDesChangeLog(selected_Project_ID,selected_Issue_ID,currentUser);
+                IssueDesChangeLog idcl=new IssueDesChangeLog(selected_Issue_ID,currentUser);
                 idcl.setVisible(true);
                 this.dispose();
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -433,8 +449,7 @@ public class IssuePageGUI extends javax.swing.JFrame {
 
     private void jbBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBack1ActionPerformed
         try {
-            // TODO add your handling code here:
-            IssueDashboard issueD=new IssueDashboard(selected_Project_ID,currentUser);
+            IssueDashboard issueD=new IssueDashboard(currentIssue.getProjectID(),currentUser);
             issueD.setVisible(true);
             this.dispose();
         } catch (SQLException ex) {
@@ -447,22 +462,21 @@ public class IssuePageGUI extends javax.swing.JFrame {
 
     private void jbeditDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeditDesActionPerformed
         EditIssueDescription edit;
-        try {
-            int currentUserID = currentUser.getUserID();
-            int creatorID     = currentIssue.getCreator().getUserID();
-
-            if (currentUserID == creatorID){
-                edit = new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser);
+        int currentUserID = currentUser.getUserID();
+        int creatorID     = currentIssue.getCreator().getUserID();
+        if (currentUserID == creatorID){
+            try {
+                edit = new EditIssueDescription(selected_Issue_ID,currentUser);
                 edit.setVisible(true);
                 this.dispose();
-                }
-            else
-                JOptionPane.showMessageDialog(null, "You are not allowed to change this issue description!");
-        } catch (SQLException ex) {
-            Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        else
+            JOptionPane.showMessageDialog(null, "You are not allowed to change this issue description!");
     }//GEN-LAST:event_jbeditDesActionPerformed
 
     private void jTtitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTtitleActionPerformed
@@ -497,39 +511,6 @@ public class IssuePageGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTassigneeActionPerformed
 
-        void display() {
-
-        
-        try {
-        currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
-        }
-        catch (SQLException | ClassNotFoundException a){
-            
-        }
-       
-
-
-            jtissueDescription.setEditable(false);
-            jTtitle.setEditable(false);
-            jTissueID.setEditable(false);
-            jTtag.setEditable(false);
-            jTstatus.setEditable(false);
-            jTpriority.setEditable(false);
-            jTdate.setEditable(false);
-            jTcreator.setEditable(false);
-            jTassignee.setEditable(false);
-
-            jTtitle.setText(currentIssue.getTitle());
-            jTissueID.setText(String.valueOf(currentIssue.getIssueID()));
-            jTstatus.setText(currentIssue.getStatus());
-            jTtag.setText(currentIssue.getTag());
-            jTpriority.setText(String.valueOf(currentIssue.getPriority()));
-            jTdate.setText(currentIssue.getTime().toString());
-            jTcreator.setText(currentIssue.getCreator().getName());
-            jTassignee.setText(currentIssue.getAssignee().getName());
-            
-            jtissueDescription.setText(currentIssue.getDescription());
-        }
         
     /**
      * @param args the command line arguments
@@ -562,9 +543,13 @@ public class IssuePageGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {               
-                IssuePageGUI issue = new IssuePageGUI(selected_Project_ID,selected_Issue_ID,currentUser);
-                issue.setVisible(true);
-                issue.display();      
+                try {
+                    IssuePageGUI issue = new IssuePageGUI(selected_Issue_ID,currentUser);
+                } catch (SQLException ex) {
+                    Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(IssuePageGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

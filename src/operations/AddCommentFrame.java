@@ -11,15 +11,13 @@ import classes.Reactions;
 import classes.User;
 import database.CommentQuery;
 import database.IssueQuery;
-import database.UserQuery;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static operations.CommentsGUI2.currentIssue;
-import static operations.CommentsGUI2.currentUser;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
 import static operations.Operations.uploadPicture;
 
 /**
@@ -31,22 +29,30 @@ public class AddCommentFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddComment
      */
-    static int projectID;
     static int issueID;
     static User currentUser;
-    
-    public AddCommentFrame(int projectID,int issueID,User currentUser) {
+    protected UndoManager manager = new UndoManager();
+
+    public AddCommentFrame(int issueID,User currentUser) {
         initComponents();
-        this.projectID=projectID;
         this.issueID=issueID;
         this.currentUser=currentUser;
         this.setLocationRelativeTo(null);
+        this.setTitle("Bugs Everywhere SDN BHD");
+        //Undo redo
+        commentArea.getDocument().addUndoableEditListener(
+        new UndoableEditListener() {
+          public void undoableEditHappened(UndoableEditEvent e) {
+            manager.addEdit(e.getEdit());
+            updateButtons();
+          }
+        });
     }
 
-    public void comment(){
-        
-        
-    }
+    public void updateButtons() {
+        undo.setEnabled(manager.canUndo());
+        redo.setEnabled(manager.canRedo());
+  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,17 +62,18 @@ public class AddCommentFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        commentArea = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
         back = new javax.swing.JButton();
         done = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        commentArea = new javax.swing.JTextArea();
+        undo = new javax.swing.JButton();
+        redo = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jButton2.setText("jButton2");
 
-        commentArea.setColumns(20);
-        commentArea.setRows(5);
-        jScrollPane1.setViewportView(commentArea);
-        commentArea.setLineWrap(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         back.setText("Back");
         back.addActionListener(new java.awt.event.ActionListener() {
@@ -82,32 +89,78 @@ public class AddCommentFrame extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4), "Write your comment..", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
+
+        commentArea.setColumns(20);
+        commentArea.setRows(5);
+        jScrollPane1.setViewportView(commentArea);
+        commentArea.setLineWrap(true);
+
+        undo.setText("Undo");
+        undo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoActionPerformed(evt);
+            }
+        });
+
+        redo.setText("Redo");
+        redo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(undo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(redo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(undo)
+                    .addComponent(redo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(64, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76))))
+                .addGap(74, 74, 74)
+                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(back)
                     .addComponent(done))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -136,7 +189,7 @@ public class AddCommentFrame extends javax.swing.JFrame {
             
             else JOptionPane.showMessageDialog(null, "You have uploaded your comment!");
             
-            CommentsGUI2 comGUI=new CommentsGUI2(projectID,issueID,currentUser);
+            CommentsGUI2 comGUI=new CommentsGUI2(issueID,currentUser);
             comGUI.setVisible(true);
             this.dispose();
         }
@@ -148,10 +201,28 @@ public class AddCommentFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_doneActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        CommentsGUI2 comGUI=new CommentsGUI2(projectID,issueID,currentUser);
+        CommentsGUI2 comGUI=new CommentsGUI2(issueID,currentUser);
             comGUI.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_backActionPerformed
+
+    private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed
+        try {
+          manager.redo();
+        } catch (CannotRedoException cre) {
+          cre.printStackTrace();
+        }
+        updateButtons();
+    }//GEN-LAST:event_redoActionPerformed
+
+    private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
+        try {
+          manager.undo();
+        } catch (CannotRedoException cre) {
+          cre.printStackTrace();
+        }
+        updateButtons();
+    }//GEN-LAST:event_undoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,7 +255,7 @@ public class AddCommentFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddCommentFrame(projectID,issueID,currentUser).setVisible(true);
+                new AddCommentFrame(issueID,currentUser).setVisible(true);
             }
         });
     }
@@ -193,6 +264,10 @@ public class AddCommentFrame extends javax.swing.JFrame {
     private javax.swing.JButton back;
     private javax.swing.JTextArea commentArea;
     private javax.swing.JButton done;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton redo;
+    private javax.swing.JButton undo;
     // End of variables declaration//GEN-END:variables
 }

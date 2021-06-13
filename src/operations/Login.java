@@ -8,9 +8,6 @@ package operations;
 import classes.User;
 import database.UserQuery;
 import java.awt.Color;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -23,7 +20,8 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    private User currentUser;
+    public static User currentUser;
+    
     public Login() {
         initComponents();
         this.setTitle("Bugs Everywhere SDN BHD");
@@ -197,14 +195,15 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinActionPerformed
-        // TODO add your handling code here:
         User[] users = null;
         boolean userExist= false;
         try {
             users = UserQuery.getUsers();
        
             for (User user : users) {
+                //check if the email is valid
                 if (email.getText().equals(user.getEmail())) {
+                    //check if the password is matched
                     if (password.getText().equals(user.getPassword())) {
                         currentUser = new User( user.getUserID(), user.getName(), user.getEmail(), user.getPassword());
                         userExist = true;
@@ -247,7 +246,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusGained
-        // TODO add your handling code here:
         if(email.getText().equals("E-mail")){
             email.setText("");
             email.setForeground(new Color(0,0,0));
@@ -255,7 +253,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFocusGained
 
     private void passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusGained
-        // TODO add your handling code here:
         if(password.getText().equals("*****")){
             password.setText("");
             password.setForeground(new Color(0,0,0));
@@ -263,7 +260,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFocusGained
 
     private void emailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusLost
-        // TODO add your handling code here:
         if(email.getText().equals("")){
             email.setText("E-mail");
             email.setForeground(new Color(153,153,153));
@@ -271,7 +267,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFocusLost
 
     private void passwordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusLost
-        // TODO add your handling code here:
         if(password.getText().equals("")){
             password.setText("*****");
             password.setForeground(new Color(153,153,153));

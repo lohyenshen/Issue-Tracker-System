@@ -1,13 +1,15 @@
 package operations;
 
 import classes.Issue;
-import classes.Project;
 import classes.User;
 import database.IssueQuery;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.UndoManager;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,33 +23,35 @@ import java.util.logging.Logger;
  */
 public class EditIssueDescription extends javax.swing.JFrame {
 
-
-
-    protected static String opr;
-
-
     protected static User currentUser;
-    
-    protected static Project[] projects;
-    protected static int selected_Project_ID;
-    protected static Project currrentProject;
-
-    protected static Issue[] issues;
     protected static int selected_Issue_ID;
-    protected static Issue currentIssue;
-    
+    protected UndoManager manager = new UndoManager();
     /**
      * Creates new form EditIssueDescription
      */
-    public EditIssueDescription(int projectID,int issueID, User currentUser) throws SQLException, ClassNotFoundException {
+    public EditIssueDescription(int issueID, User currentUser) throws SQLException, ClassNotFoundException {
         initComponents();
-        selected_Project_ID=projectID;
         selected_Issue_ID=issueID;
         this.currentUser=currentUser;
         this.setLocationRelativeTo(null);
+        this.setTitle("Bugs Everywhere SDN BHD");
+        
         jtEdit.setText(IssueQuery.getIssue(selected_Issue_ID).getDescription());
+        
+        //Undo redo
+        jtEdit.getDocument().addUndoableEditListener(
+        new UndoableEditListener() {
+          public void undoableEditHappened(UndoableEditEvent e) {
+            manager.addEdit(e.getEdit());
+            updateButtons();
+          }
+        });
     }
 
+    public void updateButtons() {
+        undo.setEnabled(manager.canUndo());
+        redo.setEnabled(manager.canRedo());
+  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,6 +67,8 @@ public class EditIssueDescription extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtEdit = new javax.swing.JTextArea();
+        undo = new javax.swing.JButton();
+        redo = new javax.swing.JButton();
         done = new javax.swing.JButton();
         jbBack = new javax.swing.JButton();
 
@@ -90,7 +96,7 @@ public class EditIssueDescription extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Issue Tracker System - Edit Issue Description");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4), "Editing Issue Desciption...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
@@ -108,21 +114,45 @@ public class EditIssueDescription extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jtEdit);
         jtEdit.setLineWrap(true);
 
+        undo.setText("Undo");
+        undo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoActionPerformed(evt);
+            }
+        });
+
+        redo.setText("Redo");
+        redo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(undo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(redo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(undo)
+                    .addComponent(redo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         done.setText("Done");
@@ -153,22 +183,25 @@ public class EditIssueDescription extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jbBack, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(380, 380, 380)
-                .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(done, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9))
         );
 
         pack();
@@ -176,32 +209,54 @@ public class EditIssueDescription extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
-        IssuePageGUI issue = new IssuePageGUI(selected_Project_ID,selected_Issue_ID,currentUser);
-        issue.setVisible(true);
-        dispose();
+        try {
+            IssuePageGUI issue = new IssuePageGUI(selected_Issue_ID,currentUser);
+            issue.setVisible(true);
+            dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(EditIssueDescription.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditIssueDescription.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jbBackActionPerformed
 
     private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
         try {
-        currentIssue        = IssueQuery.getIssue( selected_Issue_ID );
+            Issue currentIssue = IssueQuery.getIssue( selected_Issue_ID );
                                                                       // new issue description
             IssueQuery.updateDescription( currentIssue.getIssueID(),  jtEdit. getText());
+            IssuePageGUI issue = new IssuePageGUI(selected_Issue_ID,currentUser);
+            issue.setVisible(true);
+            dispose();
         }
         catch (SQLException | ClassNotFoundException a){
             
         }
-
-        
-        IssuePageGUI issue = new IssuePageGUI(selected_Project_ID,selected_Issue_ID,currentUser);
-        issue.setVisible(true);
-        dispose();
 
     }//GEN-LAST:event_doneActionPerformed
 
     private void jtEditCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jtEditCaretUpdate
         // TODO add your handling code here:
     }//GEN-LAST:event_jtEditCaretUpdate
+
+    private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed
+       try {
+          manager.redo();
+        } catch (CannotRedoException cre) {
+          cre.printStackTrace();
+        }
+        updateButtons();
+    }//GEN-LAST:event_redoActionPerformed
+
+    private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
+        try {
+          manager.undo();
+        } catch (CannotRedoException cre) {
+          cre.printStackTrace();
+        }
+        updateButtons();
+    }//GEN-LAST:event_undoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,7 +289,7 @@ public class EditIssueDescription extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new EditIssueDescription(selected_Project_ID,selected_Issue_ID,currentUser).setVisible(true);
+                    new EditIssueDescription(selected_Issue_ID,currentUser).setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(EditIssueDescription.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -253,5 +308,7 @@ public class EditIssueDescription extends javax.swing.JFrame {
     private javax.swing.JButton jbBack;
     private javax.swing.JTextArea jtComments;
     private javax.swing.JTextArea jtEdit;
+    private javax.swing.JButton redo;
+    private javax.swing.JButton undo;
     // End of variables declaration//GEN-END:variables
 }

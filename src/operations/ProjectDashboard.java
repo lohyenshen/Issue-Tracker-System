@@ -34,14 +34,15 @@ public class ProjectDashboard extends javax.swing.JFrame {
     /**
      * Creates new form ProjectDashboard
      */
-    static Project[] projects;
-    static User currentUser;
+    private static Project[] projects;
+    private static User currentUser;
     private static String path_To_R_Script_Exe;
     
     public ProjectDashboard(User currentUser) throws SQLException, ClassNotFoundException {
         initComponents();
         this.setLocationRelativeTo(null);
         this.currentUser=currentUser;
+        this.setTitle("Bugs Everywhere SDN BHD");
         display_Project_Dashboard(1);
     }
     
@@ -52,16 +53,16 @@ public class ProjectDashboard extends javax.swing.JFrame {
             projects = ProjectQuery.getProjects_Unsorted();  
              }
              else if(selection==2){
-              projects = ProjectQuery.getProjects_SortedBy_Alphanumeric( true );
+              projects = ProjectQuery.getProjects_SortedBy_Alphanumeric( true );    //sort by alphanumeric in asc
              }
              else if(selection==3){
-              projects = ProjectQuery.getProjects_SortedBy_Alphanumeric( false );
+              projects = ProjectQuery.getProjects_SortedBy_Alphanumeric( false );   //sort by alphanumeric in dsc
              }
              else if(selection==4){
-               projects = ProjectQuery.getProjects_SortedBy_projectID( true );
+               projects = ProjectQuery.getProjects_SortedBy_projectID( true );      //sort by id in asc
              }
-             else if(selection==5){
-                projects = ProjectQuery.getProjects_SortedBy_projectID( false );
+             else if(selection==5){ 
+                projects = ProjectQuery.getProjects_SortedBy_projectID( false );    //sort by id in dsc
              }
             DefaultTableModel dtm = (DefaultTableModel)projectTable.getModel();
             Object[] row=new Object[3];
@@ -175,7 +176,7 @@ public class ProjectDashboard extends javax.swing.JFrame {
             return null;
     }
     
-    // Report
+    // Report generation
     private static void deleteAllFiles() {
         File dir = new File( System.getProperty("user.dir") + "\\Report Generation");
         File[] files = dir.listFiles();
@@ -212,6 +213,11 @@ public class ProjectDashboard extends javax.swing.JFrame {
         }
     }
 
+    private static void generate_Report_Folder_If_Not_Exits() {
+        File report_directory = new File(System.getProperty("user.dir") + "\\Report Generation");
+        if (!report_directory.exists())
+            report_directory.mkdirs();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -223,7 +229,6 @@ public class ProjectDashboard extends javax.swing.JFrame {
 
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         projectTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
@@ -232,13 +237,12 @@ public class ProjectDashboard extends javax.swing.JFrame {
         json = new javax.swing.JButton();
         report = new javax.swing.JButton();
         logout = new javax.swing.JButton();
-        refresh = new javax.swing.JButton();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Project Dashboard");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 4), "Project Dashboard", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
 
         projectTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -293,24 +297,10 @@ public class ProjectDashboard extends javax.swing.JFrame {
             }
         });
 
-        report.setText("Report");
+        report.setText("Generate Report");
         report.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reportActionPerformed(evt);
-            }
-        });
-
-        logout.setText("Log Out");
-        logout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutActionPerformed(evt);
-            }
-        });
-
-        refresh.setText("Refresh");
-        refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshActionPerformed(evt);
             }
         });
 
@@ -319,72 +309,71 @@ public class ProjectDashboard extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(projectName)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(report, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
-                                .addComponent(json, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(175, 175, 175))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(projectName)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(50, 50, 50)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                        .addComponent(report)
+                        .addGap(47, 47, 47)
+                        .addComponent(json, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(id)
                     .addComponent(projectName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(refresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(json)
                     .addComponent(report))
-                .addGap(14, 14, 14)
-                .addComponent(logout)
-                .addGap(18, 18, 18))
+                .addGap(40, 40, 40))
         );
+
+        logout.setText("Log Out");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logout)
+                .addContainerGap())
         );
 
         pack();
@@ -410,7 +399,6 @@ public class ProjectDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_idActionPerformed
 
     private void projectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectNameActionPerformed
-        // TODO add your handling code here:
         String[] options={"Ascending","Descending"};
         try {
             int reaction=JOptionPane.showOptionDialog(null, "Do you want to sort in ascending or descending order?","Sorting..",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
@@ -428,14 +416,12 @@ public class ProjectDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_projectNameActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        // TODO add your handling code here:
         Login login=new Login();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void jsonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsonActionPerformed
-        // TODO add your handling code here:
         String[] options={"Import","Export"};
         try{
             int reaction=JOptionPane.showOptionDialog(null, "Do you want to IMPORT or EXPORT JSON file?","",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
@@ -443,6 +429,11 @@ public class ProjectDashboard extends javax.swing.JFrame {
                 importJson();
             else if(reaction==1)
                 exportJson();
+            
+            //refresh the table
+            DefaultTableModel model = (DefaultTableModel)projectTable.getModel();
+            model.setRowCount(0);
+            display_Project_Dashboard(1);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -450,7 +441,6 @@ public class ProjectDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jsonActionPerformed
 
     private void projectTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projectTableMouseClicked
-        // TODO add your handling code here:
        int column = 0;
        int row = projectTable.getSelectedRow();
        int projectID = (Integer) projectTable.getModel().getValueAt(row, column);
@@ -464,16 +454,6 @@ public class ProjectDashboard extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_projectTableMouseClicked
-
-    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
-        try {
-            DefaultTableModel model = (DefaultTableModel)projectTable.getModel();
-            model.setRowCount(0);
-            display_Project_Dashboard(1);
-        } catch (Exception e) {
-           JOptionPane.showMessageDialog(null, e);
-        }
-    }//GEN-LAST:event_refreshActionPerformed
 
     private void reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportActionPerformed
         generate_Report_Folder_If_Not_Exits();
@@ -495,11 +475,7 @@ public class ProjectDashboard extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_reportActionPerformed
-    private static void generate_Report_Folder_If_Not_Exits() {
-        File report_directory = new File(System.getProperty("user.dir") + "\\Report Generation");
-        if (!report_directory.exists())
-            report_directory.mkdirs();
-    }
+    
     /**
      * @param args the command line arguments
      */
@@ -544,7 +520,6 @@ public class ProjectDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton id;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -552,7 +527,6 @@ public class ProjectDashboard extends javax.swing.JFrame {
     private javax.swing.JButton logout;
     private javax.swing.JButton projectName;
     private javax.swing.JTable projectTable;
-    private javax.swing.JButton refresh;
     private javax.swing.JButton report;
     // End of variables declaration//GEN-END:variables
 
