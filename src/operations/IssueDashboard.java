@@ -111,7 +111,6 @@ public class IssueDashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         addIssue = new javax.swing.JButton();
         back = new javax.swing.JButton();
-        logout = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -289,26 +288,18 @@ public class IssueDashboard extends javax.swing.JFrame {
             }
         });
 
-        logout.setText("Log Out");
-        logout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logoutActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,9 +307,7 @@ public class IssueDashboard extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(back)
-                    .addComponent(logout))
+                .addComponent(back)
                 .addContainerGap())
         );
 
@@ -341,12 +330,6 @@ public class IssueDashboard extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_statusActionPerformed
-
-    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
-        Login login=new Login();
-        login.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_logoutActionPerformed
 
     private void issueTableFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_issueTableFocusGained
         // TODO add your handling code here:
@@ -452,12 +435,7 @@ public class IssueDashboard extends javax.swing.JFrame {
         try{
             AddIssueFrame frame = new AddIssueFrame(projectID,currentUser);
             frame.setVisible(true);
-            
-            if(!frame.isShowing()){
-                DefaultTableModel model = (DefaultTableModel)issueTable.getModel();
-                model.setRowCount(0);
-                display_Issue_Dashboard(projectID,1);
-            }
+            this.dispose();
         
         }
         catch (Exception e) {
@@ -540,7 +518,6 @@ public class IssueDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton logout;
     private javax.swing.JButton priority;
     private javax.swing.JTextField searchTextField;
     private javax.swing.JButton showAll;

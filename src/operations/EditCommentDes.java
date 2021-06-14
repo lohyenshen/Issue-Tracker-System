@@ -200,17 +200,22 @@ public class EditCommentDes extends javax.swing.JFrame {
 
     private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
         try {
-                                                                            // new issue description
-            CommentQuery.updateCommentDescription( selectedComment.getCommentID(),  jtEditCom. getText());
-            JOptionPane.showMessageDialog(null,"You have changed your comment!" );
+            if(jtEditCom. getText().trim().isEmpty())
+                JOptionPane.showMessageDialog(null, "Please enter your comment!");
+            else{
+                CommentQuery.updateCommentDescription( selectedComment.getCommentID(),  jtEditCom. getText());
+                JOptionPane.showMessageDialog(null,"You have changed your comment!" );
+                CommentsGUI2 comGUI=new CommentsGUI2( issueID,currentUser);
+                comGUI.setVisible(true);
+                this.dispose();
+                
+            }
+
         }
         catch (SQLException | ClassNotFoundException a){
             
         }
 
-        CommentsGUI2 comGUI=new CommentsGUI2( issueID,currentUser);
-        comGUI.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_doneActionPerformed
 
     private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed

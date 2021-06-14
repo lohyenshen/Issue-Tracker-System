@@ -282,10 +282,19 @@ public class AddIssueFrame extends javax.swing.JFrame {
             String description = getText();
             String status = "Open";
             
-            Issue newIssue = new Issue( issueID, projectID, currentUser, assignee, title, description, time, tag, priority, status, null);
-            IssueQuery.insertNewIssue( newIssue );       
-            JOptionPane.showMessageDialog(null, "Added issue succesfully. \nPress Show All to show new issue added.");
-            this.dispose();
+            if(description.trim().isEmpty())
+                JOptionPane.showMessageDialog(null, "Please enter your issue description.");
+
+            else{
+                Issue newIssue = new Issue( issueID, projectID, currentUser, assignee, title, description, time, tag, priority, status, null);
+                IssueQuery.insertNewIssue( newIssue );       
+                JOptionPane.showMessageDialog(null, "Added issue succesfully.");
+                
+            
+                IssueDashboard issueDashboard = new IssueDashboard(projectID,currentUser);
+                issueDashboard.setVisible(true); 
+                this.dispose();
+            }
         }
         
         

@@ -6,6 +6,7 @@ import database.IssueQuery;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.CannotRedoException;
@@ -224,11 +225,18 @@ public class EditIssueDescription extends javax.swing.JFrame {
     private void doneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneActionPerformed
         try {
             Issue currentIssue = IssueQuery.getIssue( selected_Issue_ID );
-                                                                      // new issue description
-            IssueQuery.updateDescription( currentIssue.getIssueID(),  jtEdit. getText());
-            IssuePageGUI issue = new IssuePageGUI(selected_Issue_ID,currentUser);
-            issue.setVisible(true);
-            dispose();
+            
+            if(jtEdit.getText().trim().isEmpty())
+                JOptionPane.showMessageDialog(null, "Please enter your issue description!");
+            
+            else{
+                IssueQuery.updateDescription( currentIssue.getIssueID(),  jtEdit. getText());
+                JOptionPane.showMessageDialog(null, "You have changed your issue description successfully!");
+                IssuePageGUI issue = new IssuePageGUI(selected_Issue_ID,currentUser);
+                issue.setVisible(true);
+                dispose();
+                
+            }
         }
         catch (SQLException | ClassNotFoundException a){
             

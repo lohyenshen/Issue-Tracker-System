@@ -227,28 +227,33 @@ public class AddCommentFrame extends javax.swing.JFrame {
         Issue currentIssue;
         String[] options={"Yes","No"};
         try {
-            int ans=JOptionPane.showOptionDialog(null, "Do you want to upload image?","",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
-            boolean wantsPicture = (ans==0);
-            
-            currentIssue        = IssueQuery.getIssue( issueID );
-            Comment newComment = new Comment(
-                    0, 
-                    currentIssue.getIssueID(), 
-                    currentUser,
-                    new Timestamp( new Date(System.currentTimeMillis()).getTime()),
-                    commentArea.getText(),
-                    new Reactions(0,0,0,0,0,0), 
-                    wantsPicture);
-            CommentQuery.insertNewComment( newComment );
-            
-            if (wantsPicture){ uploadPicture();
-            JOptionPane.showMessageDialog(null, "You have uploaded your comment and image!");}
-            
-            else JOptionPane.showMessageDialog(null, "You have uploaded your comment!");
-            
-            CommentsGUI2 comGUI=new CommentsGUI2(issueID,currentUser);
-            comGUI.setVisible(true);
-            this.dispose();
+            if(commentArea.getText().trim().isEmpty())
+                JOptionPane.showMessageDialog(null, "Please enter your comment!");
+            else{
+                int ans=JOptionPane.showOptionDialog(null, "Do you want to upload image?","",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
+                boolean wantsPicture = (ans==0);
+
+                currentIssue        = IssueQuery.getIssue( issueID );
+                Comment newComment = new Comment(
+                        0, 
+                        currentIssue.getIssueID(), 
+                        currentUser,
+                        new Timestamp( new Date(System.currentTimeMillis()).getTime()),
+                        commentArea.getText(),
+                        new Reactions(0,0,0,0,0,0), 
+                        wantsPicture);
+                CommentQuery.insertNewComment( newComment );
+
+                if (wantsPicture){ uploadPicture();
+                JOptionPane.showMessageDialog(null, "You have uploaded your comment and image!");}
+
+                else JOptionPane.showMessageDialog(null, "You have uploaded your comment!");
+
+                CommentsGUI2 comGUI=new CommentsGUI2(issueID,currentUser);
+                comGUI.setVisible(true);
+                this.dispose();
+                
+            }
         }
         catch (Exception a){
             
