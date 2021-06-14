@@ -469,7 +469,7 @@ public class ProjectDashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"REPORTS GENERATED SUCCESSFULLY");
         } catch (IOException ex) {
             Logger.getLogger(ProjectDashboard.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(null,"REPORTS GENERATED FAILEDY");
+                        JOptionPane.showMessageDialog(null,"REPORTS GENERATION FAILED");
         }
            
 
