@@ -139,10 +139,106 @@ dev.off()
 ########################################################################################################################
 # line graph - issue frequency VS time (day/week/month)
 
+# day
+issue <-
+  issue_original %>%
+    filter( time > (now()-hours(24))  )
+
+time      <- c()
+frequency <- c()
+for (i in 23:0){
+  current <- now()-hours(i)
+
+  time      <- append( time, current)
+  frequency <- append( frequency, sum( issue$time < current) )
+}
+df <- data.frame( time, frequency)
 
 
 
+pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 DAY from now.pdf') )
+ggplot(df, aes(x=time, y=frequency)) +
+  geom_line() +
+  ggtitle(paste0('Issue Frequency 1 DAY from now')) +
+  theme_classic()
+dev.off()
 
+
+# week
+issue <-
+  issue_original %>%
+    filter( time > (now()-days(7))  )
+
+time  <- c()
+frequency <- c()
+for (i in 6:0){
+  current <- now()-days(i)
+
+  time      <- append( time, current)
+  frequency <- append( frequency, sum( issue$time < current) )
+}
+df <- data.frame( time, frequency)
+
+
+
+pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 WEEK from now.pdf') )
+ggplot(df, aes(x=time, y=frequency)) +
+  geom_line() +
+  ggtitle(paste0('Issue Frequency 1 WEEK from now')) +
+  theme_classic()
+dev.off()
+
+
+# month
+issue <-
+  issue_original %>%
+    filter( time > (now()-days(30))  )
+
+time      <- c()
+frequency <- c()
+for (i in 29:0){
+  current   <- now()-days(i)
+
+  time      <- append( time, current)
+  frequency <- append( frequency, sum( issue$time < current) )
+}
+df <- data.frame( time, frequency)
+
+
+
+pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 MONTH from now.pdf') )
+ggplot(df, aes(x=time, y=frequency)) +
+  geom_line() +
+  ggtitle(paste0('Issue Frequency 1 MONTH from now')) +
+  theme_classic()
+dev.off()
+
+
+# year
+issue <-
+  issue_original %>%
+    filter( time > (now()-months(12))  )
+
+time      <- c()
+frequency <- c()
+for (i in 11:0){
+  current   <- now()-months(i)
+
+  time      <- append( time, current)
+  frequency <- append( frequency, sum( issue$time < current) )
+}
+df <- data.frame( time, frequency)
+
+
+
+pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 YEAR from now.pdf') )
+ggplot(df, aes(x=time, y=frequency)) +
+  geom_line() +
+  ggtitle(paste0('Issue Frequency 1 YEAR from now')) +
+  theme_classic()
+dev.off()
 
 
 dbDisconnect(con)
+
+
