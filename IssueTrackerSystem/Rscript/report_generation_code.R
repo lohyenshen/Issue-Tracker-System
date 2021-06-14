@@ -40,7 +40,7 @@ issue_by_status <-
     group_by(status) %>%
     summarise( frequency = n() )
 
-pdf( paste0(getwd(),'/Report Generation/Number of Issues for each STATUS.pdf') )
+pdf( paste0(getwd(),'/Report Generation/1) Number of Issues for each STATUS.pdf') )
 # ggplot(issue_by_status, aes(x=status, y=frequency, fill=status)) +
 #   geom_bar(stat="identity") +
 #   geom_text(aes(label=frequency), vjust=1.6, color="black", size=5) +
@@ -74,7 +74,7 @@ most_frequent_label <-
     filter( frequency == max(frequency) )
 most_frequent_label_title <- paste( "Most Frequent Tag(s) = ", paste(most_frequent_label$tag, collapse=", ") )
 
-pdf( paste0(getwd(),'/Report Generation/Number of Issues for each TAG.pdf') )
+pdf( paste0(getwd(),'/Report Generation/2) Number of Issues for each TAG.pdf') )
 ggplot(issue_by_label, aes(x=tag, y=frequency, fill=tag)) +
   geom_bar(stat="identity") +
   geom_text(aes(label=frequency), vjust=1.6, color="black", size=5) +
@@ -126,7 +126,7 @@ top_performing_assignee <-
 top_performing_assignee_title <- paste( "Top Perfomer(s) = ", paste(top_performing_assignee$assignee_name, collapse=", ") )
 
 
-pdf( paste0(getwd(),'/Report Generation/Number of Issues Solved per ASSIGNEE.pdf') )
+pdf( paste0(getwd(),'/Report Generation/3) Number of Issues Solved per ASSIGNEE.pdf') )
 ggplot(assignee_issuesResolved, aes(x=assignee_name, y=issues_resolved, fill=assignee_name)) +
   geom_bar(stat="identity") +
   geom_text(aes(label=issues_resolved), vjust=1.6, color="black", size=5) +
@@ -156,7 +156,7 @@ df <- data.frame( time, frequency)
 
 
 
-pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 DAY from now.pdf') )
+pdf( paste0(getwd(),'/Report Generation/4) Issue Frequency 1 DAY from now.pdf') )
 ggplot(df, aes(x=time, y=frequency)) +
   geom_line() +
   ggtitle(paste0('Issue Frequency 1 DAY from now')) +
@@ -181,7 +181,7 @@ df <- data.frame( time, frequency)
 
 
 
-pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 WEEK from now.pdf') )
+pdf( paste0(getwd(),'/Report Generation/5) Issue Frequency 1 WEEK from now.pdf') )
 ggplot(df, aes(x=time, y=frequency)) +
   geom_line() +
   ggtitle(paste0('Issue Frequency 1 WEEK from now')) +
@@ -206,7 +206,7 @@ df <- data.frame( time, frequency)
 
 
 
-pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 MONTH from now.pdf') )
+pdf( paste0(getwd(),'/Report Generation/6) Issue Frequency 1 MONTH from now.pdf') )
 ggplot(df, aes(x=time, y=frequency)) +
   geom_line() +
   ggtitle(paste0('Issue Frequency 1 MONTH from now')) +
@@ -231,7 +231,7 @@ df <- data.frame( time, frequency)
 
 
 
-pdf( paste0(getwd(),'/Report Generation/Issue Frequency 1 YEAR from now.pdf') )
+pdf( paste0(getwd(),'/Report Generation/7) Issue Frequency 1 YEAR from now.pdf') )
 ggplot(df, aes(x=time, y=frequency)) +
   geom_line() +
   ggtitle(paste0('Issue Frequency 1 YEAR from now')) +
