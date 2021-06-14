@@ -1,3 +1,0 @@
-STATS
-3) Time (the number of issues in day/week/month)
-    -Plot a line graph that show the issue frequency over selected time range
