@@ -284,7 +284,10 @@ public class AddIssueFrame extends javax.swing.JFrame {
             
             if(description.trim().isEmpty())
                 JOptionPane.showMessageDialog(null, "Please enter your issue description.");
-
+            
+            else if (currentUser.getUserID() == assignee.getUserID()){
+                JOptionPane.showMessageDialog(null, "Cannot assign issue to yourself");
+            }
             else{
                 Issue newIssue = new Issue( issueID, projectID, currentUser, assignee, title, description, time, tag, priority, status, null);
                 IssueQuery.insertNewIssue( newIssue );       
