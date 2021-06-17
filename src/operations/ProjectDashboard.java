@@ -19,6 +19,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -467,12 +468,14 @@ public class ProjectDashboard extends javax.swing.JFrame {
             ProcessBuilder pb = new ProcessBuilder(R_Script_Exe, "", R_code);
             pb.start();
             JOptionPane.showMessageDialog(null,"REPORTS GENERATED SUCCESSFULLY");
+            
+            displayGraphs();
         } catch (IOException ex) {
             Logger.getLogger(ProjectDashboard.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(null,"REPORTS GENERATION FAILED");
         }
            
-
+        
         
     }//GEN-LAST:event_reportActionPerformed
     
@@ -530,5 +533,26 @@ public class ProjectDashboard extends javax.swing.JFrame {
     private javax.swing.JButton report;
     // End of variables declaration//GEN-END:variables
 
+    private void displayGraphs() throws IOException {
+        String chrome_exe = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
+        // intelliJ
+//        String reports_directory = System.getProperty("user.dir") + "\\IssueTrackerSystem" + "\\Report Generation";
+        // netbeans
+        String reports_directory = System.getProperty("user.dir") + "\\Report Generation";
+
+//        String reports_directory = "C:\\Users\\lohye\\Documents\\GitHub\\-Issue-Tracker-System\\IssueTrackerSystem\\Report Generation";
+        File[] files             = new File(reports_directory).listFiles();
+        String[] paths           = new String[ files.length ];
+        for (int i = 0; i < files.length; i++)
+            paths[i] = files[i].getAbsolutePath();
+        Arrays.sort( paths );
+
+        for (int i = 0; i < paths.length; i++) {
+            ProcessBuilder pb = new ProcessBuilder(chrome_exe, "", paths[i]);
+            pb.start();
+        }
+        
+       
+    }
 }
