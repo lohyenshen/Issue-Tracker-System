@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import java.util.concurrent.TimeUnit;
 /**
  *
  * @author User 1
@@ -551,6 +552,13 @@ public class ProjectDashboard extends javax.swing.JFrame {
         for (int i = 0; i < paths.length; i++) {
             ProcessBuilder pb = new ProcessBuilder(chrome_exe, "", paths[i]);
             pb.start();
+            
+            try {
+                Thread.sleep(1000);
+            }
+            catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
         }
         
        
