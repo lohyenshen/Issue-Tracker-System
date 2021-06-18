@@ -152,25 +152,23 @@ public class Register extends javax.swing.JFrame {
 
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
         // TODO add your handling code here:
-        User uniqueUser;
-        boolean isUniqueEmail;
+        boolean isUniqueEmail=true;
         try {
             // extract all registered user from database
             User[] users = UserQuery.getUsers();
-
             
             // check if any field is empty
-            if(name.equals("") || email.equals("") || password.equals("") || resetPassword.equals("")){
-                JOptionPane.showMessageDialog(null, "ALERT!Please enter all requirement field");
+            if(name.getText().equals("") || email.getText().equals("") || password.getText().equals("") || resetPassword.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "ALERT!\nPlease enter all requirement field","Error",1);
             }
-
+            
             // check if email entered is in valid email format
             else if (!email.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-zA-Z0-9_+&*-]+)*@" +"(?:[a-zA-Z0-9-]+\\.)+[a-z" +"A-Z]{2,7}$")){;
                 JOptionPane.showMessageDialog(null, "Invalid Email!", "Error!",1);
             }
             
             else if(!password.getText().equals(resetPassword.getText())){
-                JOptionPane.showMessageDialog(null,"Password is not matched!");
+                JOptionPane.showMessageDialog(null,"Password is not matched!","Error!",1);
                 password.setText("");
                 resetPassword.setText("");
             }
@@ -180,16 +178,20 @@ public class Register extends javax.swing.JFrame {
                 for (User user : users) {
                     if (email.getText().equals(user.getEmail())) {
                         JOptionPane.showMessageDialog(null, "THIS EMAIL IS REGISTERED BEFORE! ", "Error!",1);
+                        isUniqueEmail=false;
                         break;
                     }
                 }
                 
-                User newUser= new User(0,name.getText(),email.getText(),password.getText());
-                JOptionPane.showMessageDialog(null,"Account created successfully, Please proceed to login");
-                UserQuery.insertNewUser(newUser);
-                Login login=new Login();
-                login.setVisible(true);
-                this.dispose();
+                if(isUniqueEmail){
+                        User newUser= new User(0,name.getText(),email.getText(),password.getText());
+                        JOptionPane.showMessageDialog(null,"Account created successfully, Please proceed to login");
+                        UserQuery.insertNewUser(newUser);
+                        Login login=new Login();
+                        login.setVisible(true);
+                        this.dispose();
+                    
+                }
             }
             
         } catch (Exception e) {
