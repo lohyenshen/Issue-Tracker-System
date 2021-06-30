@@ -1,0 +1,408 @@
+{
+  "projects": [
+    {
+      "projectID": 1,
+      "name": "Nuxtjs",
+      "issues": [
+        {
+          "issueID": 1,
+          "projectID": 1,
+          "creator": {
+            "userID": 1,
+            "email": "jhoe@gmail.com",
+            "password": "password",
+            "name": "jhoe"
+          },
+          "assignee": {
+            "userID": 2,
+            "email": "btan@gmail.com",
+            "password": "password",
+            "name": "btan"
+          },
+          "title": "Can't display the table",
+          "description": "Hi,\n\nI'm receiving the \"Can't display the data because Power BI can't determine the relationship between two or more fields.\" error message and I do not understand why. I have searched the net for help but can't find a post that answers my question.\n\nIt may well be a straight modelling restriction but best to check.\n\n\nI have two datasources (Sheet 1 and Sheet 2). Both are Excel files.\n",
+          "time": "2019-08-07 15:44:00",
+          "tag": "Frontend",
+          "priority": 4,
+          "status": "In Progress",
+          "comments": [
+            {
+              "commentID": 1,
+              "issueID": 1,
+              "commentUser": {
+                "userID": 3,
+                "email": "liew@gmail.com",
+                "password": "password",
+                "name": "liew"
+              },
+              "time": "2019-08-07 16:20:00",
+              "description": "Please find below links to the two .pbix files I've created in an attempt toconquer this error I'm receiving.\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            },
+            {
+              "commentID": 2,
+              "issueID": 1,
+              "commentUser": {
+                "userID": 4,
+                "email": "ang@gmail.com",
+                "password": "password",
+                "name": "ang"
+              },
+              "time": "2019-09-01 12:22:00",
+              "description": "Try this https://www.dropbox.com/home?preview=Relationships.pbix\n\nJust I removed the relationship between sheet1 and sheet1BridgingTable, sheet2 and sheet2BrdgingTable\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            }
+          ]
+        },
+        {
+          "issueID": 2,
+          "projectID": 1,
+          "creator": {
+            "userID": 2,
+            "email": "btan@gmail.com",
+            "password": "password",
+            "name": "btan"
+          },
+          "assignee": {
+            "userID": 1,
+            "email": "jhoe@gmail.com",
+            "password": "password",
+            "name": "jhoe"
+          },
+          "title": "Can't open file",
+          "description": "Windows 10 Photo will not open a jpg file. I get \"We can't open this file.\" error message.\n\nThey're family photo that I sure would like to salvage.  Thanks\n",
+          "time": "2019-08-08 15:44:00",
+          "tag": "Backend",
+          "priority": 3,
+          "status": "Open",
+          "comments": [
+            {
+              "commentID": 3,
+              "issueID": 2,
+              "commentUser": {
+                "userID": 3,
+                "email": "liew@gmail.com",
+                "password": "password",
+                "name": "liew"
+              },
+              "time": "2019-08-08 16:00:00",
+              "description": "I am having the same issue with a disc of photos from Christmas given to me by my sister. I have tried opening all of the photos with all of my available opening options and still get the same message as above poster.\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            },
+            {
+              "commentID": 4,
+              "issueID": 2,
+              "commentUser": {
+                "userID": 2,
+                "email": "btan@gmail.com",
+                "password": "password",
+                "name": "btan"
+              },
+              "time": "2019-08-08 21:55:00",
+              "description": "lad photos of windows 8 & 10 are worst possible application ever developed!\n\njust change default view to \"windows photo viewer\" if you dont have any other application\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            },
+            {
+              "commentID": 5,
+              "issueID": 2,
+              "commentUser": {
+                "userID": 4,
+                "email": "ang@gmail.com",
+                "password": "password",
+                "name": "ang"
+              },
+              "time": "2019-08-10 01:41:40",
+              "description": "Window 10 can but window vista does not work\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "projectID": 2,
+      "name": "Vuejs",
+      "issues": [
+        {
+          "issueID": 3,
+          "projectID": 2,
+          "creator": {
+            "userID": 2,
+            "email": "btan@gmail.com",
+            "password": "password",
+            "name": "btan"
+          },
+          "assignee": {
+            "userID": 4,
+            "email": "ang@gmail.com",
+            "password": "password",
+            "name": "ang"
+          },
+          "title": "Flash of unstyled content",
+          "description": "What is expected ?\nExpected correct scrollspy active link highlighting and all links work.\n\nWhat is actually happening?\nPage jumps to top before smooth scroll, which leads to weird links highlighting. Also, sometimes some links doesn't highlight (like Server Rendered in demo video)\n\nAdditional comments?\nDemonstration - https://imgur.com/a/GGvITVB\n",
+          "time": "2019-10-01 09:00:00",
+          "tag": "cmty:bug-report",
+          "priority": 6,
+          "status": "Open",
+          "comments": [
+            {
+              "commentID": 6,
+              "issueID": 3,
+              "commentUser": {
+                "userID": 3,
+                "email": "liew@gmail.com",
+                "password": "password",
+                "name": "liew"
+              },
+              "time": "2019-10-07 05:00:00",
+              "description": "Here is what I am referring to: https://streamable.com/hkyg3 Apologies for not posting a video when creating the issue!\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            },
+            {
+              "commentID": 7,
+              "issueID": 3,
+              "commentUser": {
+                "userID": 4,
+                "email": "ang@gmail.com",
+                "password": "password",
+                "name": "ang"
+              },
+              "time": "2019-08-07 09:00:00",
+              "description": "Thanks for video, seems interesting, weirdly enough I couldn't reproduce.\nWill see what can be done.\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            },
+            {
+              "commentID": 8,
+              "issueID": 3,
+              "commentUser": {
+                "userID": 1,
+                "email": "jhoe@gmail.com",
+                "password": "password",
+                "name": "jhoe"
+              },
+              "time": "2019-10-07 19:46:40",
+              "description": "Thanks for everything",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            }
+          ]
+        },
+        {
+          "issueID": 4,
+          "projectID": 2,
+          "creator": {
+            "userID": 4,
+            "email": "ang@gmail.com",
+            "password": "password",
+            "name": "ang"
+          },
+          "assignee": {
+            "userID": 1,
+            "email": "jhoe@gmail.com",
+            "password": "password",
+            "name": "jhoe"
+          },
+          "title": "User is trapped on 404 page",
+          "description": "When hitting the 404 page, the Nuxt layout isn't applied correctly.\n",
+          "time": "2019-10-08 04:00:00",
+          "tag": "Backend",
+          "priority": 8,
+          "status": "Closed",
+          "comments": [
+            {
+              "commentID": 9,
+              "issueID": 4,
+              "commentUser": {
+                "userID": 2,
+                "email": "btan@gmail.com",
+                "password": "password",
+                "name": "btan"
+              },
+              "time": "2019-10-08 09:00:00",
+              "description": "Still a problem. ",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 2,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 6
+              }
+            },
+            {
+              "commentID": 10,
+              "issueID": 4,
+              "commentUser": {
+                "userID": 4,
+                "email": "ang@gmail.com",
+                "password": "password",
+                "name": "ang"
+              },
+              "time": "2019-10-08 12:00:00",
+              "description": "/cc @clarkdo",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "projectID": 3,
+      "name": "Reactjs",
+      "issues": [
+        {
+          "issueID": 5,
+          "projectID": 3,
+          "creator": {
+            "userID": 3,
+            "email": "liew@gmail.com",
+            "password": "password",
+            "name": "liew"
+          },
+          "assignee": {
+            "userID": 2,
+            "email": "btan@gmail.com",
+            "password": "password",
+            "name": "btan"
+          },
+          "title": "Flash of unstyled content",
+          "description": "What is expected ?\nThere is no flash of unstyled content\n\nWhat is actually happening?\nThere is a brief flash of unstyled content\n\nAdditional comments? \nDoesn't occur in Chrome\n",
+          "time": "2019-09-01 12:00:00",
+          "tag": "cmty:bug-report",
+          "priority": 1,
+          "status": "Open",
+          "comments": [
+            {
+              "commentID": 11,
+              "issueID": 5,
+              "commentUser": {
+                "userID": 3,
+                "email": "liew@gmail.com",
+                "password": "password",
+                "name": "liew"
+              },
+              "time": "2019-09-07 11:00:00",
+              "description": "To: https://streamable.com/hkyg3 Apologies for not posting a video when creating the issue!\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            },
+            {
+              "commentID": 12,
+              "issueID": 5,
+              "commentUser": {
+                "userID": 4,
+                "email": "ang@gmail.com",
+                "password": "password",
+                "name": "ang"
+              },
+              "time": "2020-03-10 15:56:06",
+              "description": "Thanks for video, seems interesting, weirdly enough I couldn't reproduce.\nWill see what can be done.\n",
+              "reactions": {
+                "likeCount": 0,
+                "loveCount": 0,
+                "hahaCount": 0,
+                "wowCount": 0,
+                "sadCount": 0,
+                "angryCount": 0
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "userID": 1,
+      "email": "jhoe@gmail.com",
+      "password": "password",
+      "name": "jhoe"
+    },
+    {
+      "userID": 2,
+      "email": "btan@gmail.com",
+      "password": "password",
+      "name": "btan"
+    },
+    {
+      "userID": 3,
+      "email": "liew@gmail.com",
+      "password": "password",
+      "name": "liew"
+    },
+    {
+      "userID": 4,
+      "email": "ang@gmail.com",
+      "password": "password",
+      "name": "ang"
+    }
+  ]
+}
